@@ -26,11 +26,17 @@ class Product(models.Model):
     brand = models.ForeignKey("Brand", verbose_name=('Brand'), related_name='product_brand', on_delete=models.SET_NULL, null=True, blank=True)
     categories = models.ForeignKey("Categories", verbose_name=('Categories'), related_name='product_categories', on_delete=models.SET_NULL, null=True)
     slug = models.SlugField(_("Slug"), null=True, blank=True)
+    active = models.BooleanField(_("Active"), default=True)
     create_at = models.DateTimeField(_("Create at"), default=timezone.now, null=True, blank=True)
-    tags = TaggableManager()     
+    tags = TaggableManager()    
+
+
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
+        
         super(Product, self).save(*args, **kwargs)
+
 
     # def ave_rate(self):
     #       avg = self.review_product.aggregate(rate_ave=Avg('rate'))
