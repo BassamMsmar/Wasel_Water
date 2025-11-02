@@ -1,0 +1,33 @@
+# settings/context_processors.py
+from .models import Company
+
+def company(request):
+    """
+    يقوم بجلب بيانات الشركة من قاعدة البيانات
+    ويجعلها متاحة في جميع القوالب.
+    """
+    try:
+        # نفترض أن لديك شركة واحدة فقط في الجدول
+        company = Company.objects.first()
+    except Company.DoesNotExist:
+        company = None
+
+    if company:
+        return {
+            'company_name': company.name,
+            'company_description': company.description,
+            'company_logo': company.logo.url if company.logo else '',
+            'company_cover': company.cover.url if company.cover else '',
+            'company_phone': company.phone,
+            'company_email': company.email,
+            'company_address': company.address,
+            'company_facebook': company.facebook,
+            'company_twitter': company.twitter,
+            'company_instagram': company.instagram,
+            'company_linkedin': company.linkedin,
+            'company_tiktok': company.tiktok,
+            'company_whatsapp': company.whatsapp,
+        }
+    else:
+        # في حال لا توجد شركة بعد
+        return {}

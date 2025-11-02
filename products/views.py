@@ -3,14 +3,14 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.db.models import Count, Q
 from django.db.models.aggregates import Avg
 # from .tasks import send_emails
-from .models import Product, Brand, Review, ProductImages, Categories
+from .models import Product, Brand, Review, ProductImages, Category, Offer
 # Create your views here.
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 
 class ProductList(ListView):
-    model = Product
+    model = Product 
     queryset = Product.objects.all()
     paginate_by = 20
 
@@ -57,9 +57,9 @@ class BrandDetail(ListView):
 
 
 class CategoryList(ListView):
-    model = Categories
+    model = Category
     paginate_by = 20
-    queryset = Categories.objects.all()
+    queryset = Category.objects.all()
 
 
 class CategoryDetail(ListView):
@@ -67,11 +67,26 @@ class CategoryDetail(ListView):
     template_name = 'product/category_detail.html'
 
     def get_queryset(self):
-        category = Categories.objects.get(slug=self.kwargs['slug'])
+        category = Category.objects.get(slug=self.kwargs['slug'])
         return super().get_queryset().filter(categories=category) 
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["category"] = Categories.objects.get(slug=self.kwargs['slug'])
+        context["category"] = Category.objects.get(slug=self.kwargs['slug'])
 
+
+class OfferList(ListView):
+    model = Offer
+    queryset = Offer.objects.all()
+    paginate_by = 20
+
+
+class OfferDetail(DetailView):
+    model = Offer
+    queryset = Offer.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["offer"] = Offer.objects.get(slug=self.kwargs['slug'])
+        return context
 

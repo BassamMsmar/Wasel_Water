@@ -1,3 +1,4 @@
+from turtle import title
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
@@ -24,7 +25,7 @@ class Product(models.Model):
     descriptions = models.TextField(_("Descriptions"), max_length=40000, null=True, blank=True)
     quantity = models.IntegerField(_("Quantity"))
     brand = models.ForeignKey("Brand", verbose_name=('Brand'), related_name='product_brand', on_delete=models.SET_NULL, null=True, blank=True)
-    categories = models.ForeignKey("Categories", verbose_name=('Categories'), related_name='product_categories', on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey("Category", verbose_name=('Category'), related_name='product_category', on_delete=models.SET_NULL, null=True)
     slug = models.SlugField(_("Slug"), null=True, blank=True)
     active = models.BooleanField(_("Active"), default=True)
     create_at = models.DateTimeField(_("Create at"), default=timezone.now, null=True, blank=True)
@@ -49,7 +50,7 @@ class Product(models.Model):
 
 
 class ProductImages(models.Model):
-    products = models.ForeignKey(Product, related_name='product_image', verbose_name=_("Product"), on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='product_image', verbose_name=_("Product"), on_delete=models.CASCADE)
     image = models.ImageField(_("Image"), upload_to='product_images')
 
     def __str__(self) -> str:
@@ -70,9 +71,9 @@ class Brand(models.Model):
         super(Brand, self).save(*args, **kwargs)
 
 
-class Categories(models.Model):
+class Category(models.Model):
     name = models.CharField(_("Name"), max_length=50)
-    image = models.ImageField(_("Images"), upload_to='categories')
+    image = models.ImageField(_("Images"), upload_to='Category')
     slug = models.SlugField(_("Slug"), null=True, blank=True)
 
     def __str__(self) -> str:
@@ -80,7 +81,17 @@ class Categories(models.Model):
     
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        super(Categories, self).save(*args, **kwargs)
+        super(Category, self).save(*args, **kwargs)
+
+
+class Offer(models.Model):
+    title = models.CharField(_("Title"), max_length=50)
+    description = models.TextField(_("Description"), max_length=40000, null=True, blank=True)
+    image = models.ImageField(_("Image"), upload_to='offers')
+    products = models.ForeignKey(Product, related_name='offers_product', verbose_name=_("Product"), on_delete=models.SET_NULL, null=True)
+
+    def __str__(self) -> str:
+            return self.title
 
 class Review(models.Model):
     user = models.ForeignKey(User, verbose_name=('User'), related_name='rebiew_user', on_delete=models.SET_NULL, null=True)

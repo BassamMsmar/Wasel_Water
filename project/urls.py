@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from settings.views import home
+from core.views import home
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -33,7 +33,7 @@ urlpatterns = [
     path('products/', include('products.urls')),
     path('orders/', include('orders.urls')),
     path('cart/', include('cart.urls')),
-    path('settings/', include('settings.urls')),
+    path('core/', include('core.urls')),
 
 ]
 

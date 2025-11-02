@@ -1,6 +1,9 @@
 from django.shortcuts import render
-from products.models import Product, Categories
+from products.models import Product, Offer, Brand, Category
 from django.db.models import Count
+
+
+from .models import Banner
 
 # Create your views here.
 def home(request):
@@ -13,12 +16,15 @@ def home(request):
     # featured_products = Product.objects.filter(active=True)[:8]  # Get 8 active products
     
     # # Get main categories (you might want to adjust this based on your category structure)
-    # main_categories = Categories.objects.filter(parent__isnull=True)[:6]  # Get top 6 main categories
+    # main_categories = Category.objects.filter(parent__isnull=True)[:6]  # Get top 6 main categories
     
     # Get latest products
     # latest_products = Product.objects.filter(active=True).order_by('-created_at')[:6]
+    offers = Offer.objects.all()
     latest_products = Product.objects.filter(active=True)[:6]
-    
+    banners = Banner.objects.all()
+    brands = Brand.objects.all()
+    categories = Category.objects.all()
     # Get best selling products (you'll need to implement this logic based on your sales data)
     # best_selling = Product.objects.filter(active=True).annotate(
     #     order_count=Count('order_items')
@@ -30,6 +36,10 @@ def home(request):
         # 'featured_products': featured_products,
         # 'main_categories': main_categories,
         'latest_products': latest_products,
+        'offers': offers,
+        'banners': banners,
+        'brands': brands,
+        'categories': categories,
         # 'best_selling': best_selling,
         # Add more context variables as needed
     }
