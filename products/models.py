@@ -14,6 +14,11 @@ FLAG_TYPES = (
     ('new', 'new'),
     ('feature', 'feature'),
 )
+
+PRODUCT_TYPES = (
+    ('single', 'منتج أساسي مفرد'),
+    ('bundle', 'عرض مجمّع'),
+)
 # Create your models here.
 class Product(models.Model):
     name = models.CharField(_("Name"), max_length=120)
@@ -31,8 +36,8 @@ class Product(models.Model):
     slug = models.SlugField(_("Slug"), null=True, blank=True)
     active = models.BooleanField(_("Active"), default=True)
     create_at = models.DateTimeField(_("Create at"), default=timezone.now, null=True, blank=True)
+    product_type = models.CharField(_("Product Type"), max_length=10, choices=PRODUCT_TYPES, default='single')
     tags = TaggableManager()    
-
 
 
     def save(self, *args, **kwargs):

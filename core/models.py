@@ -20,9 +20,19 @@ class Company(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+TYPE_BANNER = (
+    ('offer', 'offer'),
+    ('bundle', 'bundle'),
+)
 class Banner(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to='Banner')
     link = models.URLField()
-    
+    type = models.CharField(max_length=10, choices=TYPE_BANNER, default='offer')   
+
+    def __str__(self):
+        return self.title 

@@ -21,7 +21,6 @@
               </div>
               <ul class="preview-slider slider-arrow">
                 <li><img src="{{ product.image.url }}" alt="product" /></li>
-
               </ul>
               <ul class="thumb-slider">
                 <li><img src="{{ product.image.url }}" alt="product" /></li>
@@ -47,11 +46,11 @@
               </div>
               <h3 class="view-price">
                 <del>{{ product.basePrice }}</del>
-                <span>{{ product.discountedPrice }}<small>/per kilo</small></span>
+                <span
+                  >{{ product.discountedPrice }}<small>/per kilo</small></span
+                >
               </h3>
-              <p class="view-desc">
-              {{ product.description }}
-              </p>
+              <p class="view-desc">{{ product.description }}</p>
               <div class="view-list-group">
                 <label class="view-list-title">tags:</label>
                 <ul class="view-tag-list">
@@ -60,7 +59,7 @@
                   {% endfor %}
                 </ul>
               </div>
-            
+
               <div class="view-add-group">
                 <button class="product-add" title="Add to Cart">
                   <i class="fas fa-shopping-basket"></i>
@@ -82,7 +81,6 @@
                   </button>
                 </div>
               </div>
-              
             </div>
           </div>
         </div>
@@ -96,6 +94,7 @@
 
 <!--=====================================
                     BANNER PART START
+                    فئات العروض 
         =======================================-->
 <section class="home-index-slider slider-arrow slider-dots">
   <div class="banner-part banner-1">
@@ -266,19 +265,21 @@
 
 <!--=====================================
                     PROMOTION PART START
-         صورة عرضية فاصلة بين المنتجات و العروض 
+                    بنر عروض الجملة 
         =======================================-->
+{% for banner in bundle_offer_banner %}
 <div class="section promo-part">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
         <div class="promo-img">
-          <a href="#"><img src="images/promo/home/03.jpg" alt="promo" /></a>
+          <a href="#"><img src="{{ banner.image.url }}" alt="promo" /></a>
         </div>
       </div>
     </div>
   </div>
 </div>
+{% endfor %}
 <!--=====================================
                     PROMOTION PART END
         =======================================-->

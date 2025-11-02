@@ -20,8 +20,11 @@ def home(request):
     
     # Get latest products
     # latest_products = Product.objects.filter(active=True).order_by('-created_at')[:6]
+
+    #products 
     offers = Offer.objects.all()
-    latest_products = Product.objects.filter(active=True)[:6]
+    latest_products = Product.objects.filter(active=True)[:10]
+    bundle_products = Product.objects.filter(product_type='bundle')[:6]
     banners = Banner.objects.all()
     brands = Brand.objects.all()
     categories = Category.objects.all()
@@ -32,11 +35,17 @@ def home(request):
     
     # You can add more queries for ads, special offers, etc.
     
+
+    #banners
+    banner_offer = Banner.objects.filter(type='offer')
+    banner_bundle = Banner.objects.filter(type='bundle')
+
     context = {
         # 'featured_products': featured_products,
         # 'main_categories': main_categories,
         'latest_products': latest_products,
         'offers': offers,
+        'bundle_products': bundle_products,
         'banners': banners,
         'brands': brands,
         'categories': categories,

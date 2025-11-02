@@ -10,16 +10,11 @@ from django.template.loader import render_to_string
 
 
 class ProductList(ListView):
-    model = Product 
-    queryset = Product.objects.all()
+    model = Product
+    queryset = Product.objects.filter(product_type='single')    
     paginate_by = 20
-
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.annotate(ave_rate=Avg('review_product__rate'))
-        return queryset
     
+
 
 
 class ProductDetail(DetailView):
