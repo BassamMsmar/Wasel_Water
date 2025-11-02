@@ -1,5 +1,99 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
+
+<!--=====================================
+                    PRODUCT VIEW START 
+                    النافذة المنبثقة من النقر على المنتج
+        =======================================-->
+<div class="modal fade" id="product-view">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <button
+        class="modal-close icofont-close"
+        data-bs-dismiss="modal"
+      ></button>
+      <div class="product-view">
+        <div class="row">
+          <div class="col-md-6 col-lg-6">
+            <div class="view-gallery">
+              <div class="view-label-group">
+                <label class="view-label new">new</label>
+                <label class="view-label off">-10%</label>
+              </div>
+              <ul class="preview-slider slider-arrow">
+                <li><img src="{{ product.image.url }}" alt="product" /></li>
+
+              </ul>
+              <ul class="thumb-slider">
+                <li><img src="{{ product.image.url }}" alt="product" /></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-6">
+            <div class="view-details">
+              <h3 class="view-name">
+                <a href="product-video.html">{{ product.name }}</a>
+              </h3>
+              <div class="view-meta">
+                <p>SKU:<span>{{ product.sku }}</span></p>
+                <p>BRAND:<a href="#">radhuni</a></p>
+              </div>
+              <div class="view-rating">
+                <i class="active icofont-star"></i>
+                <i class="active icofont-star"></i>
+                <i class="active icofont-star"></i>
+                <i class="active icofont-star"></i>
+                <i class="icofont-star"></i>
+                <a href="product-video.html">(3 reviews)</a>
+              </div>
+              <h3 class="view-price">
+                <del>{{ product.basePrice }}</del>
+                <span>{{ product.discountedPrice }}<small>/per kilo</small></span>
+              </h3>
+              <p class="view-desc">
+              {{ product.description }}
+              </p>
+              <div class="view-list-group">
+                <label class="view-list-title">tags:</label>
+                <ul class="view-tag-list">
+                  {% for tag in product.tags.all %}
+                  <li><a href="#">{{ tag }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            
+              <div class="view-add-group">
+                <button class="product-add" title="Add to Cart">
+                  <i class="fas fa-shopping-basket"></i>
+                  <span>add to cart</span>
+                </button>
+                <div class="product-action">
+                  <button class="action-minus" title="Quantity Minus">
+                    <i class="icofont-minus"></i>
+                  </button>
+                  <input
+                    class="action-input"
+                    title="Quantity Number"
+                    type="text"
+                    name="quantity"
+                    value="1"
+                  />
+                  <button class="action-plus" title="Quantity Plus">
+                    <i class="icofont-plus"></i>
+                  </button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--=====================================
+                    PRODUCT VIEW END
+        =======================================-->
+
 <!--=====================================
                     BANNER PART START
         =======================================-->
@@ -49,7 +143,10 @@
       <li>
         <a class="suggest-card" href="shop-4column.html">
           <img src="{{ category.image.url }}" alt="suggest" />
-          <h5>{{ category.name}} <span>{{ category.product_category.count }} عرض</span></h5>
+          <h5>
+            {{ category.name}}
+            <span>{{ category.product_category.count }} عرض</span>
+          </h5>
         </a>
       </li>
       {% endfor %}
@@ -84,7 +181,10 @@
             <button class="product-wish wish">
               <i class="fas fa-heart"></i>
             </button>
-            <a class="product-image" href="{% url 'product_detail' product.id %}">
+            <a
+              class="product-image"
+              href="{% url 'product_detail' product.id %}"
+            >
               <img src="{{ product.image.url }}" alt="product" />
             </a>
             <div class="product-widget">
@@ -103,7 +203,7 @@
                 title="Product View"
                 href="#"
                 class="fas fa-eye"
-                data-bs-toggle="existing product name"
+                data-bs-toggle="modal"
                 data-bs-target="#product-view"
               ></a>
             </div>
@@ -151,9 +251,9 @@
     <div class="row">
       <div class="col-lg-12">
         <div class="section-btn-25">
-          <a href="shop-4column.html" class="btn btn-outline">
+          <a href="{% url 'product_list' %}" class="btn btn-outline">
             <i class="fas fa-eye"></i>
-            <span>show more</span>
+            <span>منتجات اكثر</span>
           </a>
         </div>
       </div>

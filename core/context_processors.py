@@ -16,6 +16,7 @@ def company(request):
         return {
             'company_name': company.name,
             'company_description': company.description,
+            'company_title': company.title,
             'company_logo': company.logo.url if company.logo else '',
             'company_cover': company.cover.url if company.cover else '',
             'company_phone': company.phone,
