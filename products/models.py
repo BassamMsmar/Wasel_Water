@@ -20,6 +20,7 @@ class Product(models.Model):
     flag = models.CharField(_("Flag"),max_length=10, choices=FLAG_TYPES)    
     image = models.ImageField(_("Image"), upload_to='products')
     price = models.FloatField(_("Price"))
+    linkVideo = models.CharField(_("Link Video"), max_length=100, null=True, blank=True)
     sku = models.CharField(_("Sku"), max_length=50, null=True, blank=True)
     subtitle = models.CharField(_("Subtitle"), max_length=300, null=True, blank=True)
     descriptions = models.TextField(_("Descriptions"), max_length=40000, null=True, blank=True)

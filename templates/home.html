@@ -84,27 +84,26 @@
             <button class="product-wish wish">
               <i class="fas fa-heart"></i>
             </button>
-            <a class="product-image" href="#">
+            <a class="product-image" href="{% url 'product_detail' product.id %}">
               <img src="{{ product.image.url }}" alt="product" />
             </a>
             <div class="product-widget">
-              <a
-                title="Product Compare"
-                href="compare.html"
-                class="fas fa-random"
-              ></a>
+              {% if product.linkVideo %}
               <a
                 title="Product Video"
-                href="https://youtu.be/9xzcVxSBbG8"
+                href="{{ product.linkVideo }}"
                 class="venobox fas fa-play"
                 data-autoplay="true"
                 data-vbtype="video"
+                data-vbwidth="640"
+                data-vbheight="360"
               ></a>
+              {% endif %}
               <a
                 title="Product View"
                 href="#"
                 class="fas fa-eye"
-                data-bs-toggle="modal"
+                data-bs-toggle="existing product name"
                 data-bs-target="#product-view"
               ></a>
             </div>
