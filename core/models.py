@@ -24,8 +24,8 @@ class Company(models.Model):
 
 
 TYPE_BANNER = (
-    ('offer', 'offer'),
-    ('bundle', 'bundle'),
+    ('offer', 'offer'), #عرض
+    ('bundle', 'bundle'), #حزمة
 )
 class Banner(models.Model):
     title = models.CharField(max_length=100)
