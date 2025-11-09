@@ -1,4 +1,6 @@
-from turtle import title
+import os
+from PIL import Image
+from io import BytesIO
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
@@ -6,8 +8,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from taggit.managers import TaggableManager
 from django.db.models.aggregates import Avg
-
-
+from .utils import convert_image_to_webp
 
 FLAG_TYPES = (
     ('sale', 'sale'),
@@ -42,8 +43,19 @@ class Product(models.Model):
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
-        
         super(Product, self).save(*args, **kwargs)
+
+        if self.image:
+            img_path = self.image.path
+            webp_path = convert_image_to_webp(img_path)
+
+            # Delete the original image after conversion
+            if os.path.exists(img_path):
+                os.remove(img_path)
+
+            webp_rel_path = f'products/{os.path.basename(webp_path)}'
+            self.image.name = webp_rel_path
+            super().save(update_fields=['image'])
 
 
     # def ave_rate(self):
