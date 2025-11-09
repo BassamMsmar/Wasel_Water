@@ -3,7 +3,7 @@ from products.models import Product, Offer, Brand, Category
 from django.db.models import Count
 
 
-from .models import Banner
+from .models import Banner, Company
 
 # Create your views here.
 def home(request):
@@ -28,6 +28,7 @@ def home(request):
     banners = Banner.objects.all()
     brands = Brand.objects.all()
     categories = Category.objects.all()
+    company = Company.objects.first()
     # Get best selling products (you'll need to implement this logic based on your sales data)
     # best_selling = Product.objects.filter(active=True).annotate(
     #     order_count=Count('order_items')
@@ -49,6 +50,7 @@ def home(request):
         'banners': banners,
         'brands': brands,
         'categories': categories,
+        'company': company,
         # 'best_selling': best_selling,
         # Add more context variables as needed
     }

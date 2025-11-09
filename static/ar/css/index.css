@@ -29,20 +29,66 @@
   height: 100%;
   z-index: -1;
   opacity: 0.05;
-  background: url(../images/banner-shape.png);
+  background: var(--blue-chalk);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
 }
 
 .banner-1 {
-  background: -webkit-gradient(linear, left top, right top, from(#45f76354), to(#ffc3d024));
-  background: linear-gradient(to right, #45f76354, #ffc3d024);
+  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to right, #a0daf3, #ffffff);
+  direction: ltr;
 }
 
 .banner-2 {
-  background: -webkit-gradient(linear, right top, left top, from(#45f76354), to(#ffc3d024));
-  background: linear-gradient(to left, #45f76354, #ffc3d024);
+  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to left, #a0daf3, #ffffff);
+  direction: rtl;
+}
+.banner-3 {
+  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to right, #a0daf3, #ffffff);
+  direction: ltr;
+}
+
+.banner-4 {
+  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to left, #a0daf3, #ffffff);
+  direction: rtl;
+}
+.banner-5 {
+  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to right, #a0daf3, #ffffff);
+  direction: ltr;
+}
+
+.banner-6 {
+  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to left, #a0daf3, #ffffff);
+  direction: rtl;
+}
+.banner-7 {
+  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to right, #a0daf3, #ffffff);
+  direction: ltr;
+}
+
+.banner-8 {
+  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to left, #a0daf3, #ffffff);
+  direction: rtl;
+}
+.banner-9 {
+  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to right, #a0daf3, #ffffff);
+  direction: ltr;
+}
+
+.banner-10 {
+  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
+  background: linear-gradient(to left, #a0daf3, #ffffff);
+  direction: rtl;
 }
 
 .banner-2 .banner-content {

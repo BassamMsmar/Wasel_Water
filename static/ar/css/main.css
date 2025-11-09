@@ -4039,12 +4039,14 @@ tbody tr td:last-child {
 
 .header-logo {
   margin-left: 50px;
+  border-radius: 8px;
 }
 
 .header-logo img {
   width: auto;
   height: 45px;
   transition: all linear 0.3s;
+  border-radius: 8px;
   -webkit-transition: all linear 0.3s;
   -moz-transition: all linear 0.3s;
   -ms-transition: all linear 0.3s;
@@ -5999,6 +6001,7 @@ tbody tr td:last-child {
 
 .footer-logo img {
   width: 180px;
+  border-radius: 8px;
 }
 
 .footer-desc {

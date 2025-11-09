@@ -10,6 +10,8 @@
   .brand-wrap {
     width: 100%;
     padding: 15px 0px 30px;
+    flex: 0 0 19%;
+    max-width: 19%;
   }
   .brand-media::before {
     width: 135px;
@@ -21,5 +23,19 @@
   }
   .brand-meta h4 {
     font-size: 16px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 1199px) {
+  .brand-wrap {
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
+}
+
+@media (min-width: 1200px) {
+  .brand-wrap {
+    flex: 0 0 20%;
+    max-width: 20%;
   }
 }

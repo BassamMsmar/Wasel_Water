@@ -10,15 +10,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- AUTHOR META -->
-        <meta name="author" content="mironcoder">
-        <meta name="email" content="mironcoder@gmail.com">
-        <meta name="profile" content="https://themeforest.net/user/mironcoder">
+        <!-- SEO META -->
+        <meta name="title" content="واصِل للمياه – توصيل مياه نقية إلى باب منزلك في السعودية">
+        <meta name="description" content="واصِل للمياه يقدم خدمة توصيل مياه الشرب النقية إلى المنازل والمكاتب بجودة عالية وسرعة في التوصيل. اطلب الآن بكل سهولة!">
+        <meta name="keywords" content=" المياه, مياه نقية, توصيل مياه, شراء مياه, واصل للمياه, مياه طبيعية, مياه معدنية, متجر مياه, مياه للمنازل, مياه للمكاتب, مياه السعودية">
+        <meta name="author" content="شركة واصِل للمياه">
+        <meta name="robots" content="index, follow">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-        <!-- TEMPLATE META -->
-        <meta name="name" content="Greeny">
-        <meta name="title" content="Greeny - eCommerce HTML Template">
-        <meta name="keywords" content="organic, food, shop, ecommerce, store, html, bootstrap, template, agriculture, vegetables, webshop, farm, grocery, natural, online store">
         <!--=====================================
                     META-TAG PART END
         =======================================-->
@@ -46,6 +45,8 @@
         <!-- CUSTOM -->
         <link rel="stylesheet" href="{% static 'ar/css/main.css' %}">
         <link rel="stylesheet" href="{% static 'ar/css/index.css' %}">
+
+
         <!--=====================================
                     CSS LINK PART END
         =======================================-->
@@ -63,7 +64,7 @@
                 <div class="row">
                     <div class="col-md-12 col-lg-6">
                         <div class="header-top-welcome">
-                            <p>Welcome to Ecomart in Your Dream Online Store!</p>
+                            <p>مرحبا بكم في واصِل للمياه</p>
                         </div>
                     </div>
                     <!-- <div class="col-md-5 col-lg-3">
@@ -88,9 +89,9 @@
                     </div> -->
                     <div class="col-md-12 col-lg-6">
                         <ul class="header-top-list">
-                            <li><a href="offer.html">offers</a></li>
-                            <li><a href="faq.html">need help</a></li>
-                            <li><a href="contact.html">contact us</a></li>
+                            <li><a href="offer.html">العروض</a></li>
+                            <li><a href="faq.html">المساعدة</a></li>
+                            <li><a href="contact.html">اتصل بنا</a></li>
                         </ul>
                     </div>
                 </div>
@@ -108,7 +109,7 @@
             <div class="container">
                 <div class="header-content">
                     <div class="header-media-group">
-                        <button class="header-user"><img src="images/user.png" alt="user"></button>
+                        <button class="header-user"><img src="{% static 'ar/images/user.png' %}" alt="user"></button>
                         <a href="index.html"><img src="{{ company_logo }}" alt="logo"></a>
                         <button class="header-src"><i class="fas fa-search"></i></button>
                     </div>
@@ -117,7 +118,7 @@
                         <img src="{{ company_logo }}" alt="logo">
                     </a>
                     <a href="login.html" class="header-widget" title="My Account">
-                        <img src="images/user.png" alt="user">
+                        <img src="{% static 'ar/images/user.png' %}" alt="user">
                         <span>join</span>
                     </a>
 
@@ -793,15 +794,16 @@
                     <div class="col-sm-6 col-xl-3">
                         <div class="footer-widget">
                             <a class="footer-logo" href="/">
-                                <img src="images/logo.png" alt="logo">
+                                <img src="{{ company.logo.url }}" alt="logo">
                             </a>
-                            <p class="footer-desc">Adipisci asperiores ipsum ipsa repellat consequatur repudiandae quisquam assumenda dolor perspiciatis sit ipsum dolor amet.</p>
+                            <p class="footer-desc">{{ company.description }}</p>
                             <ul class="footer-social">
                                 <li><a class="icofont-facebook" href="#"></a></li>
                                 <li><a class="icofont-twitter" href="#"></a></li>
                                 <li><a class="icofont-linkedin" href="#"></a></li>
                                 <li><a class="icofont-instagram" href="#"></a></li>
-                                <li><a class="icofont-pinterest" href="#"></a></li>
+                                <li><a class="icofont-brand-whatsapp" href="#"></a></li>
+                                
                             </ul>
                         </div>
                     </div>
@@ -812,20 +814,24 @@
                                 <li>
                                     <i class="icofont-ui-email"></i>
                                     <p>
-                                        <span>support@greeny.com</span>
-                                        <span>carrer@greeny.com</span>
+                                        <span>{{ company.email }}</span>
+                                    </p>
+                                </li>
+                                <li>
+                                    <i class="icofont-speech-comments"></i>
+                                    <p>
+                                        <span>{{ company.phone }}</span>
                                     </p>
                                 </li>
                                 <li>
                                     <i class="icofont-ui-touch-phone"></i>
                                     <p>
-                                        <span>+120 279 532 13</span>
-                                        <span>+120 279 532 14</span>
+                                        <span>{{ company.phone }}</span>
                                     </p>
                                 </li>
                                 <li>
                                     <i class="icofont-location-pin"></i>
-                                    <p>1Hd- 50, 010 Avenue, NY 90001 United States</p>
+                                    <p>{{ company.address }}</p>
                                 </li>
                             </ul>
                         </div>
@@ -835,43 +841,43 @@
                             <h3 class="footer-title">quick Links</h3>
                             <div class="footer-links">
                                 <ul>
-                                    <li><a href="#">My Account</a></li>
-                                    <li><a href="#">Order History</a></li>
-                                    <li><a href="#">Order Tracking</a></li>
-                                    <li><a href="#">Best Seller</a></li>
-                                    <li><a href="#">New Arrivals</a></li>
+                                    <li><a href="#">حسابي</a></li>
+                                    <li><a href="#">طلباتي</a></li>
+                                    <li><a href="#">تتبع طلب</a></li>
+                                    <li><a href="#">الاكثر شعبية</a></li>
+                                    <li><a href="#">الاحدث</a></li>
                                 </ul>
                                 <ul>
-                                    <li><a href="#">Location</a></li>
-                                    <li><a href="#">Affiliates</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                    <li><a href="#">Carrer</a></li>
-                                    <li><a href="#">Faq</a></li>
+                                    <li><a href="#">الموقع</a></li>
+                                    <li><a href="#">طلبات الجملة</a></li>
+                                    <li><a href="#">اتصل بنا</a></li>
+                                    <li><a href="#">الوظائف</a></li>
+                                    <li><a href="#">الأسئلة الشائعة</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
+                    <!-- <div class="col-sm-6 col-xl-3">
                         <div class="footer-widget">
-                            <h3 class="footer-title">Download App</h3>
-                            <p class="footer-desc">Lorem ipsum dolor sit amet tenetur dignissimos ipsum eligendi autem obcaecati minus ducimus totam reprehenderit exercitationem!</p>
+                            <h3 class="footer-title">تحميل التطبيق</h3>
+                            <p class="footer-desc">{{ settings.app_description }}</p>
                             <div class="footer-app">
-                                <a href="#"><img src="images/google-store.png" alt="google"></a>
-                                <a href="#"><img src="images/app-store.png" alt="app"></a>
+                                <a href="{{ settings.app_url }}"><img src="images/google-store.png" alt="google"></a>
+                                <a href="{{ settings.app_url }}"><img src="images/app-store.png" alt="app"></a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <div class="footer-bottom">
-                            <p class="footer-copytext">&copy;  All Copyrights Reserved by <a target="_blank" href="https://themeforest.net/user/mironcoder">Mironcoder</a></p>
-                            <div class="footer-card">
+                            <p class="footer-copytext">&copy;  جميع الحقوق محفوظة ل <a target="_blank" href="#">الفضاء الامنة للبرمجيات</a></p>
+                            <!-- <div class="footer-card">
                                 <a href="#"><img src="images/payment/jpg/01.jpg" alt="payment"></a>
                                 <a href="#"><img src="images/payment/jpg/02.jpg" alt="payment"></a>
                                 <a href="#"><img src="images/payment/jpg/03.jpg" alt="payment"></a>
                                 <a href="#"><img src="images/payment/jpg/04.jpg" alt="payment"></a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
