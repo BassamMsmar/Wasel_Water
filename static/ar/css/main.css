@@ -2816,7 +2816,7 @@ tbody tr td:last-child {
 
 .category-wrap:hover .category-overlay {
   -webkit-transform: scale(1);
-  transform: scale(1);
+          transform: scale(1);
 }
 
 .category-media {
@@ -2840,21 +2840,21 @@ tbody tr td:last-child {
   text-align: center;
   background: rgba(0, 0, 0, 0.4);
   -webkit-transform: scale(0);
-  transform: scale(0);
+          transform: scale(0);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  transition: all linear 0.3s;
-  -webkit-transition: all linear 0.3s;
-  -moz-transition: all linear 0.3s;
-  -ms-transition: all linear 0.3s;
-  -o-transition: all linear 0.3s;
+      -ms-flex-pack: center;
+          justify-content: center;
+  transition: all linear .3s;
+  -webkit-transition: all linear .3s;
+  -moz-transition: all linear .3s;
+  -ms-transition: all linear .3s;
+  -o-transition: all linear .3s;
 }
 
 .category-overlay a i {
@@ -2865,11 +2865,11 @@ tbody tr td:last-child {
   text-align: center;
   color: var(--white);
   background: var(--primary);
-  transition: all linear 0.3s;
-  -webkit-transition: all linear 0.3s;
-  -moz-transition: all linear 0.3s;
-  -ms-transition: all linear 0.3s;
-  -o-transition: all linear 0.3s;
+  transition: all linear .3s;
+  -webkit-transition: all linear .3s;
+  -moz-transition: all linear .3s;
+  -ms-transition: all linear .3s;
+  -o-transition: all linear .3s;
 }
 
 .category-overlay a i:hover {
@@ -2913,12 +2913,12 @@ tbody tr td:last-child {
 .brand-wrap:hover .brand-media::before {
   border-color: var(--primary);
   -webkit-animation-play-state: running;
-  animation-play-state: running;
+          animation-play-state: running;
 }
 
 .brand-wrap:hover .brand-overlay {
   -webkit-transform: scale(1);
-  transform: scale(1);
+          transform: scale(1);
 }
 
 .brand-media {
@@ -2940,11 +2940,11 @@ tbody tr td:last-child {
   background: var(--white);
   border: 2px dashed var(--border);
   -webkit-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   -webkit-animation: rotate360 1.2s linear infinite;
-  animation: rotate360 1.2s linear infinite;
+          animation: rotate360 1.2s linear infinite;
   -webkit-animation-play-state: paused;
-  animation-play-state: paused;
+          animation-play-state: paused;
 }
 
 .brand-media img {
@@ -2956,14 +2956,14 @@ tbody tr td:last-child {
 @-webkit-keyframes rotate360 {
   to {
     -webkit-transform: translate(-50%, -50%) rotate(360deg);
-    transform: translate(-50%, -50%) rotate(360deg);
+            transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
 @keyframes rotate360 {
   to {
     -webkit-transform: translate(-50%, -50%) rotate(360deg);
-    transform: translate(-50%, -50%) rotate(360deg);
+            transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 
@@ -2977,21 +2977,21 @@ tbody tr td:last-child {
   text-align: center;
   background: rgba(0, 0, 0, 0.4);
   -webkit-transform: scale(0);
-  transform: scale(0);
+          transform: scale(0);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  transition: all linear 0.3s;
-  -webkit-transition: all linear 0.3s;
-  -moz-transition: all linear 0.3s;
-  -ms-transition: all linear 0.3s;
-  -o-transition: all linear 0.3s;
+      -ms-flex-pack: center;
+          justify-content: center;
+  transition: all linear .3s;
+  -webkit-transition: all linear .3s;
+  -moz-transition: all linear .3s;
+  -ms-transition: all linear .3s;
+  -o-transition: all linear .3s;
 }
 
 .brand-overlay a i {
@@ -3002,11 +3002,11 @@ tbody tr td:last-child {
   text-align: center;
   color: var(--white);
   background: var(--primary);
-  transition: all linear 0.3s;
-  -webkit-transition: all linear 0.3s;
-  -moz-transition: all linear 0.3s;
-  -ms-transition: all linear 0.3s;
-  -o-transition: all linear 0.3s;
+  transition: all linear .3s;
+  -webkit-transition: all linear .3s;
+  -moz-transition: all linear .3s;
+  -ms-transition: all linear .3s;
+  -o-transition: all linear .3s;
 }
 
 .brand-overlay a i:hover {
@@ -3024,7 +3024,6 @@ tbody tr td:last-child {
     width: 200px;
   }
 }
-
 .choose-card {
   display: -webkit-box;
   display: -ms-flexbox;
