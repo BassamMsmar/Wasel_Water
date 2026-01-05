@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
 <!--=====================================
                     PRODUCT VIEW START 
@@ -159,54 +161,7 @@
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
       {% for product in latest_products %}
       <div class="col">
-        <div class="product-card">
-          <div class="product-media">
-            <div class="product-label">
-              <label class="label-text sale">{{ product.flag }}</label>
-            </div>
-
-            <a class="product-image" href="{% url 'product_detail' product.id %}">
-              <img src="{{ product.image.url }}" alt="product" />
-            </a>
-            <div class="product-widget">
-              {% if product.linkVideo %}
-              <a title="Product Video" href="{{ product.linkVideo }}" class="venobox fas fa-play" data-autoplay="true"
-                data-vbtype="video" data-vbwidth="640" data-vbheight="360"></a>
-              {% endif %}
-              <a title="Product View" href="#" class="fas fa-eye" data-bs-toggle="modal"
-                data-bs-target="#product-view"></a>
-            </div>
-          </div>
-          <div class="product-content">
-
-            <h6 class="product-name">
-              <a href="#">{{ product.name }}</a>
-            </h6>
-            <h6 class="product-price">
-              {% if product.new_price > 0 %}
-              {% if product.old_price > product.new_price %}
-              <del>{{ product.old_price }}</del>
-              {% endif %}
-              <span>{{ product.new_price }}</span>
-              {% else %}
-              <span>{{ product.old_price }}</span>
-              {% endif %}
-            </h6>
-            <button class="product-add" title="Add to Cart">
-              <i class="fas fa-shopping-basket"></i>
-              <span>add</span>
-            </button>
-            <div class="product-action">
-              <button class="action-minus" title="Quantity Minus">
-                <i class="icofont-minus"></i>
-              </button>
-              <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1" />
-              <button class="action-plus" title="Quantity Plus">
-                <i class="icofont-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+        {% include 'includes/product_card.html' with product=product %}
       </div>
       {% endfor %}
     </div>
@@ -306,66 +261,10 @@
         </div>
       </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
       {% for product in bundle_products %}
       <div class="col">
-        <div class="feature-card">
-          <div class="feature-media">
-            <div class="feature-label">
-              <label class="label-text feat">عروض واصل</label>
-            </div>
-
-            <a class="feature-image" href="product-video.html">
-              <img src="{{ product.image.url }}" alt="product" />
-            </a>
-            <div class="feature-widget">
-              <a title="Product Compare" href="compare.html" class="fas fa-random"></a>
-              <a title="Product Video" href="https://youtu.be/9xzcVxSBbG8" class="venobox fas fa-play"
-                data-autoplay="true" data-vbtype="video"></a>
-              <a title="Product View" href="#" class="fas fa-eye" data-bs-toggle="modal"
-                data-bs-target="#product-view"></a>
-            </div>
-          </div>
-          <div class="feature-content">
-            <h6 class="feature-name">
-              <a href="product-video.html">{{ product.name }}</a>
-            </h6>
-            <div class="feature-rating">
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="icofont-star"></i>
-              <a href="product-video.html">(3 Reviews)</a>
-            </div>
-            <h6 class="feature-price">
-              {% if product.new_price > 0 %}
-              {% if product.old_price > product.new_price %}
-              <del>{{ product.old_price }}</del>
-              {% endif %}
-              <span>{{ product.new_price }}</span>
-              {% else %}
-              <span>{{ product.old_price }}</span>
-              {% endif %}
-            </h6>
-            <p class="feature-desc">
-              {{ product.descriptions }}
-            </p>
-            <button class="product-add" title="Add to Cart">
-              <i class="fas fa-shopping-basket"></i>
-              <span>add</span>
-            </button>
-            <div class="product-action">
-              <button class="action-minus" title="Quantity Minus">
-                <i class="icofont-minus"></i>
-              </button>
-              <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1" />
-              <button class="action-plus" title="Quantity Plus">
-                <i class="icofont-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+        {% include 'includes/product_card.html' with product=product %}
       </div>
       {% endfor %}
     </div>
