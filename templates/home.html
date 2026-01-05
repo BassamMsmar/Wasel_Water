@@ -139,6 +139,7 @@
   <div class="container">
     <ul class="suggest-slider slider-arrow">
       {% for category in categories %}
+      {% if category.product_category.count > 0 %}
       <li>
         <a class="suggest-card" href="#">
           <img src="{{ category.image.url }}" alt="suggest" />
@@ -148,6 +149,7 @@
           </h5>
         </a>
       </li>
+      {% endif %}
       {% endfor %}
     </ul>
   </div>
@@ -208,20 +210,13 @@
             </div>
           </div>
           <div class="product-content">
-            <div class="product-rating">
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="icofont-star"></i>
-              <a href="#">(3)</a>
-            </div>
+
             <h6 class="product-name">
               <a href="#">{{ product.name }}</a>
             </h6>
             <h6 class="product-price">
-              <del>{{ product.price }}</del>
-              <span>{{ product.price }}</span>
+              <del>{{ product.old_price }}</del>
+              <span>{{ product.new_price }}</span>
             </h6>
             <button class="product-add" title="Add to Cart">
               <i class="fas fa-shopping-basket"></i>
