@@ -13,6 +13,12 @@
   bottom: 50px;
 }
 
+.home-index-slider .dandik,
+.home-index-slider .bamdik {
+  opacity: 1;
+  visibility: visible;
+}
+
 .banner-part {
   margin-bottom: 25px;
   position: relative;
@@ -35,68 +41,9 @@
   background-size: cover;
 }
 
-.banner-1 {
+.banner {
   background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
   background: linear-gradient(to right, #a0daf3, #ffffff);
-  direction: ltr;
-}
-
-.banner-2 {
-  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to left, #a0daf3, #ffffff);
-  direction: rtl;
-}
-
-.banner-3 {
-  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to right, #a0daf3, #ffffff);
-  direction: ltr;
-}
-
-.banner-4 {
-  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to left, #a0daf3, #ffffff);
-  direction: rtl;
-}
-
-.banner-5 {
-  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to right, #a0daf3, #ffffff);
-  direction: ltr;
-}
-
-.banner-6 {
-  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to left, #a0daf3, #ffffff);
-  direction: rtl;
-}
-
-.banner-7 {
-  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to right, #a0daf3, #ffffff);
-  direction: ltr;
-}
-
-.banner-8 {
-  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to left, #a0daf3, #ffffff);
-  direction: rtl;
-}
-
-.banner-9 {
-  background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to right, #a0daf3, #ffffff);
-  direction: ltr;
-}
-
-.banner-10 {
-  background: -webkit-gradient(linear, right top, left top, from(#a0daf3), to(#ffffff));
-  background: linear-gradient(to left, #a0daf3, #ffffff);
-  direction: rtl;
-}
-
-.banner-2 .banner-content {
-  text-align: right;
 }
 
 .banner-content h1 {
@@ -150,13 +97,80 @@
   }
 }
 
+/* Suggest Part Redesign - Compact Grid */
+.suggest-part {
+  margin-top: -60px;
+  /* Overlap banner for premium feel */
+  position: relative;
+  z-index: 2;
+  padding-bottom: 10px;
+  /* Reduced from 40px */
+}
+
+/* Compact Product Card overrides for Suggest Part */
+/* Compact Product Card overrides for Suggest Part */
+/* Compact Product Card overrides for Suggest Part */
+.suggest-part .product-card {
+  padding: 5px;
+  /* Minimal container padding */
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 0px;
+  /* Remove bottom margin of card itself */
+}
+
+.suggest-part .product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.suggest-part .product-media {
+  margin-bottom: 0px;
+  /* No gap between image and text */
+}
+
+.suggest-part .product-media img {
+  height: 50px;
+  /* Reduced further to 50px */
+  width: auto;
+  margin: 0 auto;
+  object-fit: contain;
+  display: block;
+  /* Ensure no inline quirks */
+}
+
+.suggest-part .product-content {
+  padding-top: 2px;
+  /* Minimal gap */
+  border-top: none;
+}
+
+/* Ensure text remains visible but card is small */
+.suggest-part .product-name {
+  margin-bottom: 0px;
+}
+
+.suggest-part .product-meta {
+  font-size: 11px;
+  /* Slightly smaller meta if needed, or keep standard */
+  display: block;
+  line-height: 1;
+  margin-top: 2px;
+}
+
 .suggest-slider li {
-  margin: 0px 10px;
+  margin: 15px 10px;
+  /* Adjust spacing for shadows */
 }
 
 @media (max-width: 575px) {
   .suggest-slider li {
-    margin: 0px 5px;
+    margin: 10px 5px;
+  }
+
+  .suggest-part {
+    margin-top: -30px;
+    /* Less overlap on mobile */
   }
 }
 

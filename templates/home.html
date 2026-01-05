@@ -89,7 +89,7 @@
         =======================================-->
 <section class="home-index-slider slider-arrow slider-dots">
   {% for banner in banners %}
-  <div class="banner-part banner-{{ forloop.counter }}">
+  <div class="banner-part banner">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-6 col-lg-6">
@@ -122,23 +122,33 @@
                     SUGGEST PART START
                     الخيارات من تحت البنرات الاعلانية 
         =======================================-->
-<section class="section suggest-part">
+<section class="section-home-categories suggest-part">
   <div class="container">
-    <ul class="suggest-slider slider-arrow">
+
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 justify-content-center">
       {% for category in categories %}
       {% if category.product_category.count > 0 %}
-      <li>
-        <a class="suggest-card" href="#">
-          <img src="{{ category.image.url }}" alt="suggest" />
-          <h5>
-            {{ category.name}}
-            <span>{{ category.product_category.count }} عرض</span>
-          </h5>
-        </a>
-      </li>
+      <div class="col">
+        <div class="product-card text-center">
+          <div class="product-media">
+            <a class="product-image" href="{% url 'category_detail' category.pk %}">
+              {% if category.image %}
+              <img src="{{ category.image.url }}" alt="{{ category.name }}" />
+              {% else %}
+              <img src="{% static 'ar/images/default-product.png' %}" alt="{{ category.name }}" />
+              {% endif %}
+            </a>
+          </div>
+          <div class="product-content">
+            <h6 class="product-name">
+              <a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
+            </h6>
+          </div>
+        </div>
+      </div>
       {% endif %}
       {% endfor %}
-    </ul>
+    </div>
   </div>
 </section>
 <!--=====================================
