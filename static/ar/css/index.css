@@ -108,15 +108,16 @@
 }
 
 /* Compact Product Card overrides for Suggest Part */
-/* Compact Product Card overrides for Suggest Part */
-/* Compact Product Card overrides for Suggest Part */
 .suggest-part .product-card {
-  padding: 5px;
-  /* Minimal container padding */
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  padding: 8px 12px;
+  /* Increased padding (~20% bigger feel) */
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   margin-bottom: 0px;
-  /* Remove bottom margin of card itself */
+  width: fit-content;
+  /* We are controlling width via flex item in HTML or standard class now,
+     but keeping fit-content as fallback or for internal wrapping */
+  max-width: 100%;
 }
 
 .suggest-part .product-card:hover {
@@ -125,37 +126,37 @@
 }
 
 .suggest-part .product-media {
-  margin-bottom: 0px;
-  /* No gap between image and text */
+  margin-bottom: 5px;
+  /* Restored slight gap */
 }
 
 .suggest-part .product-media img {
-  height: 50px;
-  /* Reduced further to 50px */
+  height: 100px;
+  /* Increased from 45px to 60px (~33% bigger) */
   width: auto;
   margin: 0 auto;
   object-fit: contain;
   display: block;
-  /* Ensure no inline quirks */
 }
 
 .suggest-part .product-content {
   padding-top: 2px;
-  /* Minimal gap */
   border-top: none;
 }
 
 /* Ensure text remains visible but card is small */
 .suggest-part .product-name {
   margin-bottom: 0px;
+  white-space: nowrap;
 }
 
 .suggest-part .product-meta {
-  font-size: 11px;
-  /* Slightly smaller meta if needed, or keep standard */
+  font-size: 12px;
+  /* Restored to standard readable size */
   display: block;
-  line-height: 1;
-  margin-top: 2px;
+  line-height: 1.2;
+  margin-top: 3px;
+  white-space: nowrap;
 }
 
 .suggest-slider li {
