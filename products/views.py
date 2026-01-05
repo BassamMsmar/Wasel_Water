@@ -63,7 +63,7 @@ class CategoryDetail(ListView):
 
     def get_queryset(self):
         category = Category.objects.get(slug=self.kwargs['slug'])
-        return super().get_queryset().filter(categories=category) 
+        return super().get_queryset().filter(category=category)  
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -80,8 +80,5 @@ class OfferDetail(DetailView):
     model = Offer
     queryset = Offer.objects.all()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["offer"] = Offer.objects.get(slug=self.kwargs['slug'])
-        return context
+
 

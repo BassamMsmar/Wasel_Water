@@ -145,9 +145,7 @@
                 <div class="product-label">
                   <label class="label-text new">{{product.flag}}</label>
                 </div>
-                <button class="product-wish wish">
-                  <i class="fas fa-heart"></i>
-                </button>
+
                 <a class="product-image" href="product-video.html">
                   <img src="{{ product.image.url }}" alt="product" />
                 </a>
@@ -173,8 +171,14 @@
                   <a href="product-video.html">{{product.name}}</a>
                 </h6>
                 <h6 class="product-price">
+                  {% if product.new_price > 0 %}
+                  {% if product.old_price > product.new_price %}
                   <del>{{product.old_price}}</del>
+                  {% endif %}
                   <span>{{product.new_price}}<small>/piece</small></span>
+                  {% else %}
+                  <span>{{product.old_price}}<small>/piece</small></span>
+                  {% endif %}
                 </h6>
                 <button class="product-add" title="Add to Cart">
                   <i class="fas fa-shopping-basket"></i>

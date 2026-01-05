@@ -142,16 +142,20 @@
                     <div class="navbar-content">
                         <ul class="navbar-list">
                             <li class="navbar-item">
-                                <a class="navbar-link active" href="index.html">الرئيسية</a>
+                                <a class="navbar-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                                    href="{% url 'home' %}">الرئيسية</a>
                             </li>
                             <li class="navbar-item">
-                                <a class="navbar-link" href="#">المنتجات</a>
+                                <a class="navbar-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}"
+                                    href="{% url 'product_list' %}">المنتجات</a>
                             </li>
                             <li class="navbar-item">
-                                <a class="navbar-link" href="#">التصنيفات</a>
+                                <a class="navbar-link {% if request.resolver_match.url_name == 'category_list' %}active{% endif %}"
+                                    href="{% url 'category_list' %}">التصنيفات</a>
                             </li>
                             <li class="navbar-item">
-                                <a class="navbar-link" href="#">العروض</a>
+                                <a class="navbar-link {% if request.resolver_match.url_name == 'offer_list' %}active{% endif %}"
+                                    href="{% url 'offer_list' %}">العروض</a>
                             </li>
                         </ul>
                     </div>

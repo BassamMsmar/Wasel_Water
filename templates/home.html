@@ -97,11 +97,7 @@
             <div class="banner-btn">
               <a class="btn btn-inline" href="#">
                 <i class="fas fa-shopping-basket"></i>
-                <span>shop now</span>
-              </a>
-              <a class="btn btn-outline" href="#">
-                <i class="fas fa-gift"></i>
-                <span>get offer</span>
+                <span>اشتري الآن</span>
               </a>
             </div>
           </div>
@@ -168,9 +164,7 @@
             <div class="product-label">
               <label class="label-text sale">{{ product.flag }}</label>
             </div>
-            <button class="product-wish wish">
-              <i class="fas fa-heart"></i>
-            </button>
+
             <a class="product-image" href="{% url 'product_detail' product.id %}">
               <img src="{{ product.image.url }}" alt="product" />
             </a>
@@ -189,8 +183,14 @@
               <a href="#">{{ product.name }}</a>
             </h6>
             <h6 class="product-price">
+              {% if product.new_price > 0 %}
+              {% if product.old_price > product.new_price %}
               <del>{{ product.old_price }}</del>
+              {% endif %}
               <span>{{ product.new_price }}</span>
+              {% else %}
+              <span>{{ product.old_price }}</span>
+              {% endif %}
             </h6>
             <button class="product-add" title="Add to Cart">
               <i class="fas fa-shopping-basket"></i>
@@ -314,9 +314,7 @@
             <div class="feature-label">
               <label class="label-text feat">عروض واصل</label>
             </div>
-            <button class="feature-wish wish">
-              <i class="fas fa-heart"></i>
-            </button>
+
             <a class="feature-image" href="product-video.html">
               <img src="{{ product.image.url }}" alt="product" />
             </a>
@@ -341,8 +339,14 @@
               <a href="product-video.html">(3 Reviews)</a>
             </div>
             <h6 class="feature-price">
+              {% if product.new_price > 0 %}
+              {% if product.old_price > product.new_price %}
               <del>{{ product.old_price }}</del>
+              {% endif %}
               <span>{{ product.new_price }}</span>
+              {% else %}
+              <span>{{ product.old_price }}</span>
+              {% endif %}
             </h6>
             <p class="feature-desc">
               {{ product.descriptions }}
