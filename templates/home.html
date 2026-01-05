@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 
 <!--=====================================
                     PRODUCT VIEW START 
@@ -7,10 +9,7 @@
 <div class="modal fade" id="product-view">
   <div class="modal-dialog">
     <div class="modal-content">
-      <button
-        class="modal-close icofont-close"
-        data-bs-dismiss="modal"
-      ></button>
+      <button class="modal-close icofont-close" data-bs-dismiss="modal"></button>
       <div class="product-view">
         <div class="row">
           <div class="col-md-6 col-lg-6">
@@ -45,10 +44,8 @@
                 <a href="product-video.html">(3 reviews)</a>
               </div>
               <h3 class="view-price">
-                <del>{{ product.basePrice }}</del>
-                <span
-                  >{{ product.discountedPrice }}<small>/per kilo</small></span
-                >
+                <del>{{ product.old_price }}</del>
+                <span>{{ product.new_price }}<small>/per kilo</small></span>
               </h3>
               <p class="view-desc">{{ product.description }}</p>
               <div class="view-list-group">
@@ -69,13 +66,7 @@
                   <button class="action-minus" title="Quantity Minus">
                     <i class="icofont-minus"></i>
                   </button>
-                  <input
-                    class="action-input"
-                    title="Quantity Number"
-                    type="text"
-                    name="quantity"
-                    value="1"
-                  />
+                  <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1" />
                   <button class="action-plus" title="Quantity Plus">
                     <i class="icofont-plus"></i>
                   </button>
@@ -98,7 +89,7 @@
         =======================================-->
 <section class="home-index-slider slider-arrow slider-dots">
   {% for banner in banners %}
-  <div class="banner-part banner-{{ forloop.counter }}">
+  <div class="banner-part banner">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-md-6 col-lg-6">
@@ -108,11 +99,7 @@
             <div class="banner-btn">
               <a class="btn btn-inline" href="#">
                 <i class="fas fa-shopping-basket"></i>
-                <span>shop now</span>
-              </a>
-              <a class="btn btn-outline" href="#">
-                <i class="fas fa-gift"></i>
-                <span>get offer</span>
+                <span>اشتري الآن</span>
               </a>
             </div>
           </div>
@@ -135,21 +122,31 @@
                     SUGGEST PART START
                     الخيارات من تحت البنرات الاعلانية 
         =======================================-->
-<section class="section suggest-part">
+<section class="section-home-categories suggest-part">
   <div class="container">
-    <ul class="suggest-slider slider-arrow">
+
+    <div class="d-flex justify-content-center flex-wrap gap-2 mt-3">
       {% for category in categories %}
-      <li>
-        <a class="suggest-card" href="#">
-          <img src="{{ category.image.url }}" alt="suggest" />
-          <h5>
-            {{ category.name}}
-            <span>{{ category.product_category.count }} عرض</span>
-          </h5>
-        </a>
-      </li>
+      {% if category.product_category.count > 0 %}
+      <div class="product-card text-center" style="width: 140px; margin: 5px;">
+        <div class="product-media">
+          <a class="product-image" href="{% url 'category_detail' category.pk %}">
+            {% if category.image %}
+            <img src="{{ category.image.url }}" alt="{{ category.name }}" />
+            {% else %}
+            <img src="{% static 'ar/images/default-product.png' %}" alt="{{ category.name }}" />
+            {% endif %}
+          </a>
+        </div>
+        <div class="product-content">
+          <h6 class="category-name">
+            <a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
+          </h6>
+        </div>
+      </div>
+      {% endif %}
       {% endfor %}
-    </ul>
+    </div>
   </div>
 </section>
 <!--=====================================
@@ -172,78 +169,7 @@
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
       {% for product in latest_products %}
       <div class="col">
-        <div class="product-card">
-          <div class="product-media">
-            <div class="product-label">
-              <label class="label-text sale">{{ product.flag }}</label>
-            </div>
-            <button class="product-wish wish">
-              <i class="fas fa-heart"></i>
-            </button>
-            <a
-              class="product-image"
-              href="{% url 'product_detail' product.id %}"
-            >
-              <img src="{{ product.image.url }}" alt="product" />
-            </a>
-            <div class="product-widget">
-              {% if product.linkVideo %}
-              <a
-                title="Product Video"
-                href="{{ product.linkVideo }}"
-                class="venobox fas fa-play"
-                data-autoplay="true"
-                data-vbtype="video"
-                data-vbwidth="640"
-                data-vbheight="360"
-              ></a>
-              {% endif %}
-              <a
-                title="Product View"
-                href="#"
-                class="fas fa-eye"
-                data-bs-toggle="modal"
-                data-bs-target="#product-view"
-              ></a>
-            </div>
-          </div>
-          <div class="product-content">
-            <div class="product-rating">
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="icofont-star"></i>
-              <a href="#">(3)</a>
-            </div>
-            <h6 class="product-name">
-              <a href="#">{{ product.name }}</a>
-            </h6>
-            <h6 class="product-price">
-              <del>{{ product.price }}</del>
-              <span>{{ product.price }}</span>
-            </h6>
-            <button class="product-add" title="Add to Cart">
-              <i class="fas fa-shopping-basket"></i>
-              <span>add</span>
-            </button>
-            <div class="product-action">
-              <button class="action-minus" title="Quantity Minus">
-                <i class="icofont-minus"></i>
-              </button>
-              <input
-                class="action-input"
-                title="Quantity Number"
-                type="text"
-                name="quantity"
-                value="1"
-              />
-              <button class="action-plus" title="Quantity Plus">
-                <i class="icofont-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+        {% include 'includes/product_card.html' with product=product %}
       </div>
       {% endfor %}
     </div>
@@ -299,31 +225,31 @@
     </div>
     <div class="brand-slider slider-arrow">
       {% for brand in brands %}
-        <div class="brand-wrap">
-          <div class="brand-media">
-            <img src="{{ brand.image.url }}" alt="brand" />
-              <div class="brand-overlay">
-                <a href="{% url 'brand_detail' brand.id %}"><i class="fas fa-link"></i></a>
-              </div>
-            </div>
-            <div class="brand-meta">
-              <h4>{{ brand.name }}</h4>
-              <p>({{ brand.product_brand.count }} عرض)</p>
-            </div>
+      <div class="brand-wrap">
+        <div class="brand-media">
+          <img src="{{ brand.image.url }}" alt="brand" />
+          <div class="brand-overlay">
+            <a href="{% url 'brand_detail' brand.id %}"><i class="fas fa-link"></i></a>
           </div>
-        {% endfor %}
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="section-btn-50">
-          <a href="{% url 'brand_list' %}" class="btn btn-outline">
-            <i class="fas fa-eye"></i>
-            <span>كل العلامات التجارية</span>
-          </a>
+        </div>
+        <div class="brand-meta">
+          <h4>{{ brand.name }}</h4>
+          <p>({{ brand.product_brand.count }} عرض)</p>
         </div>
       </div>
+      {% endfor %}
     </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="section-btn-50">
+        <a href="{% url 'brand_list' %}" class="btn btn-outline">
+          <i class="fas fa-eye"></i>
+          <span>كل العلامات التجارية</span>
+        </a>
+      </div>
+    </div>
+  </div>
   </div>
 </section>
 <!--=====================================
@@ -343,82 +269,10 @@
         </div>
       </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 row-cols-xl-2">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
       {% for product in bundle_products %}
       <div class="col">
-        <div class="feature-card">
-          <div class="feature-media">
-            <div class="feature-label">
-              <label class="label-text feat">عروض واصل</label>
-            </div>
-            <button class="feature-wish wish">
-              <i class="fas fa-heart"></i>
-            </button>
-            <a class="feature-image" href="product-video.html">
-              <img src="{{ product.image.url }}" alt="product" />
-            </a>
-            <div class="feature-widget">
-              <a
-                title="Product Compare"
-                href="compare.html"
-                class="fas fa-random"
-              ></a>
-              <a
-                title="Product Video"
-                href="https://youtu.be/9xzcVxSBbG8"
-                class="venobox fas fa-play"
-                data-autoplay="true"
-                data-vbtype="video"
-              ></a>
-              <a
-                title="Product View"
-                href="#"
-                class="fas fa-eye"
-                data-bs-toggle="modal"
-                data-bs-target="#product-view"
-              ></a>
-            </div>
-          </div>
-          <div class="feature-content">
-            <h6 class="feature-name">
-              <a href="product-video.html">{{ product.name }}</a>
-            </h6>
-            <div class="feature-rating">
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="active icofont-star"></i>
-              <i class="icofont-star"></i>
-              <a href="product-video.html">(3 Reviews)</a>
-            </div>
-            <h6 class="feature-price">
-              <del>{{ product.basePrice }}</del>
-              <span>{{ product.discountedPrice }}</span>
-            </h6>
-            <p class="feature-desc">
-              {{ product.descriptions }}
-            </p>
-            <button class="product-add" title="Add to Cart">
-              <i class="fas fa-shopping-basket"></i>
-              <span>add</span>
-            </button>
-            <div class="product-action">
-              <button class="action-minus" title="Quantity Minus">
-                <i class="icofont-minus"></i>
-              </button>
-              <input
-                class="action-input"
-                title="Quantity Number"
-                type="text"
-                name="quantity"
-                value="1"
-              />
-              <button class="action-plus" title="Quantity Plus">
-                <i class="icofont-plus"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+        {% include 'includes/product_card.html' with product=product %}
       </div>
       {% endfor %}
     </div>
@@ -443,7 +297,7 @@
                   TESTIMONIAL PART START
                   اراء العملاء
         =======================================-->
-<section class="section testimonial-part">
+<!-- <section class="section testimonial-part">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -523,7 +377,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 <!--=====================================
                    TESTIMONIAL PART END
         =======================================-->
@@ -532,7 +386,7 @@
                       BLOG PART START
                       المقالات
         =======================================-->
-<section class="section blog-part">
+<!-- <section class="section blog-part">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -686,7 +540,7 @@
       </div>
     </div>
   </div>
-</section>
+</section> -->
 <!--=====================================
                       BLOG PART END
         =======================================-->

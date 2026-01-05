@@ -10,10 +10,10 @@ urlpatterns = [
     path('brands/<slug:slug>', BrandDetail.as_view(), name='brand_detail'), 
 
     path('categories/', CategoryList.as_view(), name='category_list'), 
-    path('categories/<int:pk>', CategoryDetail.as_view(), name='category_detail'), 
+    path('categories/<slug:slug>', CategoryDetail.as_view(), name='category_detail'), 
 
     path('offers/', OfferList.as_view(), name='offer_list'), 
-    path('offers/<str:slug>', OfferDetail.as_view(), name='offer_detail'), 
+    path('offers/<int:pk>', OfferDetail.as_view(), name='offer_detail'), 
 
 
 ]

@@ -1,0 +1,207 @@
+/* Update colors and layout for the new header */
+
+:root {
+    --header-blue: #1e3a6c;
+    /* Dark blue for top bar */
+    --primary: #2e86de;
+    /* Blue for logo accent or buttons */
+    --white: #ffffff;
+    --text-dark: #333333;
+    --text-light: #777777;
+    --border-color: #e5e5e5;
+}
+
+/* Header Top */
+.header-top {
+    background-color: var(--header-blue);
+    padding: 10px 0;
+    color: var(--white);
+    font-size: 14px;
+}
+
+.header-top-welcome p {
+    color: var(--white);
+    margin: 0;
+    text-align: right;
+    /* RTL support */
+}
+
+.header-top-list {
+    display: flex;
+    justify-content: flex-end;
+    /* RTL support, aligns to left visually in LTR but right in RTL. Actually flex-end in RTL is left. Wait. row direction is reversed in RTL? No. */
+    align-items: center;
+    gap: 20px;
+}
+
+.header-top-list li a {
+    color: var(--white);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.header-top-list li a:hover {
+    color: var(--primary);
+    /* Lighter blue on hover */
+}
+
+
+/* Header Main Part */
+.header-part {
+    background-color: var(--white);
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-logo img {
+    max-height: 50px;
+}
+
+.header-form {
+    flex-grow: 1;
+    max-width: 500px;
+    margin: 0 40px;
+    position: relative;
+}
+
+.header-form input {
+    width: 100%;
+    padding: 12px 20px;
+    padding-left: 50px;
+    /* Space for icon */
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.header-form input:focus {
+    border-color: var(--primary);
+}
+
+.header-form button {
+    position: absolute;
+    left: 15px;
+    /* RTL flip might be needed, assuming LTR logic first */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--text-light);
+    cursor: pointer;
+}
+
+/* RTL adjustment for form button if dir=rtl */
+[dir="rtl"] .header-form input {
+    padding-left: 20px;
+    padding-right: 50px;
+}
+
+[dir="rtl"] .header-form button {
+    left: auto;
+    right: 15px;
+}
+
+.header-media-group {
+    display: none;
+    /* Hide mobile elements on desktop by default */
+}
+
+.header-widget-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-widget {
+    color: var(--text-dark);
+    font-size: 20px;
+    position: relative;
+    text-decoration: none;
+}
+
+.header-widget sup {
+    background-color: var(--primary);
+    color: var(--white);
+    font-size: 10px;
+    border-radius: 50%;
+    padding: 2px 6px;
+    position: absolute;
+    top: -8px;
+    right: -10px;
+}
+
+
+/* Navbar Part */
+.navbar-part {
+    background-color: var(--white);
+    padding: 15px 0;
+    /* border-bottom: 1px solid var(--border-color); Optional */
+}
+
+.navbar-content {
+    display: flex;
+    justify-content: center;
+    /* Center links as per image? Or right aligned? Image shows right aligned (RTL start) */
+}
+
+.navbar-list {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-link {
+    color: var(--text-dark);
+    font-weight: 500;
+    font-size: 16px;
+    text-decoration: none;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.navbar-link.active,
+.navbar-link:hover {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+}
+
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 991px) {
+    .header-top {
+        display: none;
+        /* Often hidden on mobile or simplified */
+    }
+
+    .header-form {
+        display: none;
+        /* Hide desktop search */
+    }
+
+    .header-widget-group {
+        display: none;
+        /* Hide desktop widgets */
+    }
+
+    .header-media-group {
+        display: flex;
+        /* Show mobile icons */
+        align-items: center;
+        gap: 15px;
+    }
+
+    .navbar-part {
+        display: none;
+        /* Use mobile menu sidebar instead */
+    }
+}
