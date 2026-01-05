@@ -14,7 +14,6 @@
 }
 
 .banner-part {
-  padding: 50px 0px 60px;
   margin-bottom: 25px;
   position: relative;
   z-index: 1;
@@ -46,6 +45,7 @@
   background: linear-gradient(to left, #a0daf3, #ffffff);
   direction: rtl;
 }
+
 .banner-3 {
   background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
   background: linear-gradient(to right, #a0daf3, #ffffff);
@@ -57,6 +57,7 @@
   background: linear-gradient(to left, #a0daf3, #ffffff);
   direction: rtl;
 }
+
 .banner-5 {
   background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
   background: linear-gradient(to right, #a0daf3, #ffffff);
@@ -68,6 +69,7 @@
   background: linear-gradient(to left, #a0daf3, #ffffff);
   direction: rtl;
 }
+
 .banner-7 {
   background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
   background: linear-gradient(to right, #a0daf3, #ffffff);
@@ -79,6 +81,7 @@
   background: linear-gradient(to left, #a0daf3, #ffffff);
   direction: rtl;
 }
+
 .banner-9 {
   background: -webkit-gradient(linear, left top, right top, from(#a0daf3), to(#ffffff));
   background: linear-gradient(to right, #a0daf3, #ffffff);
@@ -97,13 +100,14 @@
 
 .banner-content h1 {
   text-transform: capitalize;
-  margin-bottom: 22px;
+  margin-bottom: 18px;
+  font-size: 40px;
 }
 
 .banner-content p {
-  font-size: 18px;
-  line-height: 28px;
-  margin-bottom: 50px;
+  font-size: 14px;
+  line-height: 22px;
+  margin-bottom: 40px;
 }
 
 .banner-btn .btn {
@@ -111,7 +115,9 @@
 }
 
 .banner-img img {
-  width: 100%;
+  width: 80%;
+  margin: 0 auto;
+  display: block;
 }
 
 @media (max-width: 767px) {
@@ -119,9 +125,11 @@
     font-size: 38px;
     line-height: 48px;
   }
+
   .banner-img {
     display: none;
   }
+
   .banner-btn .btn {
     margin: 8px;
   }
@@ -132,6 +140,7 @@
     font-size: 32px;
     line-height: 42px;
   }
+
   .banner-btn .btn {
     padding: 14px 22px;
     margin-right: 10px;
@@ -170,7 +179,7 @@
 
 .promo-img a img:hover {
   -webkit-transform: scale(1.05);
-          transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 @media (max-width: 767px) {
@@ -192,7 +201,7 @@
 .testimonial-slider .slick-slide {
   opacity: 0.3;
   -webkit-transform: scale(0.75);
-          transform: scale(0.75);
+  transform: scale(0.75);
   transition: all linear .3s;
   -webkit-transition: all linear .3s;
   -moz-transition: all linear .3s;
@@ -203,7 +212,7 @@
 .testimonial-slider .slick-center {
   opacity: 1;
   -webkit-transform: scale(1);
-          transform: scale(1);
+  transform: scale(1);
   transition: all linear .3s;
   -webkit-transition: all linear .3s;
   -moz-transition: all linear .3s;
