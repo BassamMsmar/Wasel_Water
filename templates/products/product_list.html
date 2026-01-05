@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
 <!--=====================================
                     PRODUCT VIEW START
         =======================================-->
@@ -117,7 +119,8 @@
 <!--=====================================
                     BANNER PART START
         =======================================-->
-<section class="inner-section single-banner" style="background: url(images/single-banner.jpg) no-repeat center">
+<section class="inner-section single-banner"
+  style="background: url({% static 'ar/images/single-banner.jpg' %}) no-repeat center">
   <div class="container">
     <h2>Shop 2 Column</h2>
     <ol class="breadcrumb">
