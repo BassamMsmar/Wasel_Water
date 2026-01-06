@@ -24,7 +24,7 @@ PRODUCT_TYPES = (
 class Product(models.Model):
     name = models.CharField(_("Name"), max_length=120)
     flag = models.CharField(_("Flag"),max_length=10, choices=FLAG_TYPES)    
-    image = models.ImageField(_("Image"), upload_to='products')
+    image = models.ImageField(_("Image"), upload_to='products', default='products/default.jpg')
     old_price  = models.FloatField(_("Old Price") , default=0)
     new_price = models.FloatField(_("New Price"), default=0)
     linkVideo = models.CharField(_("Link Video"), max_length=100, null=True, blank=True)
