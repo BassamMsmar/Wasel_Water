@@ -130,7 +130,7 @@
       {% if category.product_category.count > 0 %}
       <div class="product-card text-center" style="width: 140px; margin: 5px;">
         <div class="product-media">
-          <a class="product-image" href="{% url 'category_detail' category.pk %}">
+          <a class="product-image" href="{% url 'category_detail' category.slug %}">
             {% if category.image %}
             <img src="{{ category.image.url }}" alt="{{ category.name }}" />
             {% else %}
@@ -140,7 +140,7 @@
         </div>
         <div class="product-content">
           <h6 class="category-name">
-            <a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
+            <a href="{% url 'category_detail' category.slug %}">{{ category.name }}</a>
           </h6>
         </div>
       </div>
@@ -154,20 +154,20 @@
         =======================================-->
 
 <!--=====================================
-                    RECENT PART START
-                    اول منتجات بعد الخيارات 
+                    DYNAMIC SECTIONS START
         =======================================-->
+{% for section in sections %}
 <section class="section recent-part">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
         <div class="section-heading">
-          <h2>احدث العروض</h2>
+          <h2>{{ section.title }}</h2>
         </div>
       </div>
     </div>
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-      {% for product in latest_products %}
+      {% for product in section.items %}
       <div class="col">
         {% include 'includes/product_card.html' with product=product %}
       </div>
@@ -178,15 +178,16 @@
         <div class="section-btn-25">
           <a href="{% url 'product_list' %}" class="btn btn-outline">
             <i class="fas fa-eye"></i>
-            <span>منتجات اكثر</span>
+            <span>مشاهدة المزيد</span>
           </a>
         </div>
       </div>
     </div>
   </div>
 </section>
+{% endfor %}
 <!--=====================================
-                    RECENT PART END
+                    DYNAMIC SECTIONS END
         =======================================-->
 
 <!--=====================================
@@ -229,7 +230,7 @@
         <div class="brand-media">
           <img src="{{ brand.image.url }}" alt="brand" />
           <div class="brand-overlay">
-            <a href="{% url 'brand_detail' brand.id %}"><i class="fas fa-link"></i></a>
+            <a href="{% url 'brand_detail' brand.slug %}"><i class="fas fa-link"></i></a>
           </div>
         </div>
         <div class="brand-meta">
@@ -254,42 +255,6 @@
 </section>
 <!--=====================================
                     BRAND PART END
-        =======================================-->
-
-<!--=====================================
-                    FEATURED PART START
-                    المنتجات المميزة 
-        =======================================-->
-<section class="section feature-part">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="section-heading">
-          <h2>عروض واصل</h2>
-        </div>
-      </div>
-    </div>
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-      {% for product in bundle_products %}
-      <div class="col">
-        {% include 'includes/product_card.html' with product=product %}
-      </div>
-      {% endfor %}
-    </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="section-btn-25">
-          <a href="shop-4column.html" class="btn btn-outline">
-            <i class="fas fa-eye"></i>
-            <span>show more</span>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!--=====================================
-                    FEATURE PART END
         =======================================-->
 
 

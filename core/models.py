@@ -1,6 +1,26 @@
 from django.db import models
 
-# Create your models here.
+# Create your models here.\
+
+SECTIONS = (
+    ('most_sold', 'الاكثر مبيعاً'), 
+    ('newest', 'الاحدث'), 
+    ('category', 'صنف'), 
+    ('selected', 'مختارة'), 
+)
+
+class Section(models.Model):
+    title = models.CharField(max_length=100)
+    section_type = models.CharField(max_length=20, choices=SECTIONS, default='selected')
+    products = models.ManyToManyField('products.Product', blank=True)
+    active = models.BooleanField(default=True)
+    ordering = models.IntegerField(default=0)
+
+    class Meta:
+        ordering = ['ordering']
+
+    def __str__(self):
+        return self.title
 
 class Company(models.Model):
     name = models.CharField(max_length=100)
@@ -36,3 +56,5 @@ class Banner(models.Model):
 
     def __str__(self):
         return self.title 
+
+ 

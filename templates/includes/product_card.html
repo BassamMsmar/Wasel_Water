@@ -5,12 +5,12 @@
             <label class="label-text new">{{ product.flag }}</label>
         </div>
 
-        <a class="product-image" href="{% url 'product_detail' product.id %}">
-            {% if product.image %}
-            <img src="{{ product.image.url }}" alt="{{ product.name }}" />
-            {% else %}
-            <img src="{% static 'ar/images/default-product.png' %}" alt="{{ product.name }}" />
-            {% endif %}
+        <a class="product-image" href="{% url 'product_detail' product.slug %}">
+            <div class="product-label-group">
+                <label class="product-label label-new">new</label>
+                <label class="product-label label-off">-10%</label>
+            </div>
+            <img src="{{ product.image.url }}" alt="product" />
         </a>
         <div class="product-widget">
             <a title="Product View" href="#" class="fas fa-eye" data-bs-toggle="modal"
@@ -18,8 +18,16 @@
         </div>
     </div>
     <div class="product-content">
+        <div class="product-rating">
+            <i class="active icofont-star"></i>
+            <i class="active icofont-star"></i>
+            <i class="active icofont-star"></i>
+            <i class="active icofont-star"></i>
+            <i class="icofont-star"></i>
+            <a href="#">(3)</a>
+        </div>
         <h6 class="product-name">
-            <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+            <a href="{% url 'product_detail' product.slug %}">{{ product.name }}</a>
         </h6>
         <h6 class="product-price">
             {% if product.new_price > 0 %}

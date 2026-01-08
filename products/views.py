@@ -38,7 +38,7 @@ class BrandList(ListView):
 
 class BrandDetail(ListView):
     model = Product     #context : object_list, model_list
-    template_name = 'product/brand_detail.html'
+    template_name = 'products/brand_detail.html'
 
 
     def get_queryset(self):
@@ -49,6 +49,7 @@ class BrandDetail(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["brand"] = Brand.objects.get(slug=self.kwargs['slug'])
+        return context
 
 
 class CategoryList(ListView):
@@ -59,7 +60,7 @@ class CategoryList(ListView):
 
 class CategoryDetail(ListView):
     model = Product     #context : object_list, model_list
-    template_name = 'product/category_detail.html'
+    template_name = 'products/category_detail.html'
 
     def get_queryset(self):
         category = Category.objects.get(slug=self.kwargs['slug'])
@@ -68,6 +69,7 @@ class CategoryDetail(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["category"] = Category.objects.get(slug=self.kwargs['slug'])
+        return context
 
 
 class OfferList(ListView):
