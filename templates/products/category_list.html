@@ -2,22 +2,6 @@
 {% load static %}
 
 {% block content %}
-<!--=====================================
-                    BANNER PART START
-        =======================================-->
-<section class="inner-section single-banner"
-    style="background: url({% static 'ar/images/single-banner.jpg' %}) no-repeat center">
-    <div class="container">
-        <h2>التصنيفات</h2>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">الرئيسية</a></li>
-            <li class="breadcrumb-item active" aria-current="page">التصنيفات</li>
-        </ol>
-    </div>
-</section>
-<!--=====================================
-                    BANNER PART END
-        =======================================-->
 
 <!--=====================================
                     CATEGORY LIST START
@@ -31,7 +15,7 @@
                     <div class="col">
                         <div class="product-card">
                             <div class="product-media">
-                                <a class="product-image" href="{% url 'category_detail' category.pk %}">
+                                <a class="product-image" href="{% url 'category_detail' category.slug %}">
                                     {% if category.image %}
                                     <img src="{{ category.image.url }}" alt="{{ category.name }}" />
                                     {% else %}
@@ -41,7 +25,7 @@
                             </div>
                             <div class="product-content">
                                 <h6 class="product-name">
-                                    <a href="{% url 'category_detail' category.pk %}">{{ category.name }}</a>
+                                    <a href="{% url 'category_detail' category.slug %}">{{ category.name }}</a>
                                 </h6>
                             </div>
                         </div>

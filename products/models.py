@@ -33,16 +33,18 @@ class Product(models.Model):
     descriptions = models.TextField(_("Descriptions"), max_length=40000, null=True, blank=True)
     quantity = models.IntegerField(_("Quantity"))
     brand = models.ForeignKey("Brand", verbose_name=('Brand'), related_name='product_brand', on_delete=models.SET_NULL, null=True, blank=True)
-    category = models.ForeignKey("Category", verbose_name=('Category'), related_name='product_category', on_delete=models.SET_NULL, null=True)
+    category = models.ManyToManyField("Category", verbose_name=('Category'), related_name='product_category', null=True)
     slug = models.SlugField(_("Slug"), null=True, blank=True)
     active = models.BooleanField(_("Active"), default=True)
     create_at = models.DateTimeField(_("Create at"), default=timezone.now, null=True, blank=True)
     product_type = models.CharField(_("Product Type"), max_length=10, choices=PRODUCT_TYPES, default='single')
+    sales_count = models.IntegerField(_("Sales Count"), default=0)
     tags = TaggableManager()    
 
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
         super(Product, self).save(*args, **kwargs)
 
         if self.image:
@@ -58,14 +60,32 @@ class Product(models.Model):
             super().save(update_fields=['image'])
 
 
-    # def ave_rate(self):
-    #       avg = self.review_product.aggregate(rate_ave=Avg('rate'))
-    #       return avg['rate_ave']
-    
+    @property
+    def is_bundle(self):
+        return self.product_type == 'bundle'
+
+    def bundle_total_price(self):
+        if not self.is_bundle:
+            return self.new_price
+        total = 0
+        for item in self.bundle_items.all():
+            total += item.quantity * item.price_in_bundle
+        return total
+
+    def bundle_base_price(self):
+        if not self.is_bundle:
+            return 0
+        total = 0
+        for item in self.bundle_items.all():
+            total += item.quantity * item.item.new_price
+        return total
+
+    def bundle_discount(self):
+        return self.bundle_base_price() - self.bundle_total_price()
+
     def __str__(self) -> str:
             return self.name
     
-
 
 
 class ProductImages(models.Model):
@@ -73,7 +93,7 @@ class ProductImages(models.Model):
     image = models.ImageField(_("Image"), upload_to='product_images')
 
     def __str__(self) -> str:
-                return str(self.products)
+                return str(self.product) # Fixed typo self.products -> self.product
 
 
 class Brand(models.Model):
@@ -86,7 +106,8 @@ class Brand(models.Model):
             return self.name
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
         super(Brand, self).save(*args, **kwargs)
 
 
@@ -99,7 +120,8 @@ class Category(models.Model):
             return self.name
     
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
+        if not self.slug:
+            self.slug = slugify(self.name, allow_unicode=True)
         super(Category, self).save(*args, **kwargs)
 
 
@@ -122,3 +144,21 @@ class Review(models.Model):
 
     def __str__(self) -> str:
             return f"{self.user} - {self.product}"
+
+class BundleItem(models.Model):
+    bundle = models.ForeignKey(Product, related_name='bundle_items', verbose_name=_("Bundle"), on_delete=models.CASCADE)
+    item = models.ForeignKey(Product, related_name='included_in_bundles', verbose_name=_("Item"), on_delete=models.CASCADE)
+    quantity = models.IntegerField(_("Quantity"), default=1)
+    price_in_bundle = models.FloatField(_("Price in Bundle"), default=0)
+
+    class Meta:
+        unique_together = ('bundle', 'item')
+
+    def __str__(self):
+        return f"{self.quantity} x {self.item.name} in {self.bundle.name}"
+
+    def save(self, *args, **kwargs):
+        # Auto-set price_in_bundle to original price if 0 on creation
+        if self.price_in_bundle == 0 and self.item:
+            self.price_in_bundle = self.item.new_price
+        super().save(*args, **kwargs)
