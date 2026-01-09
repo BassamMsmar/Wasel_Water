@@ -38,15 +38,53 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- سنقوم بإضافة المنتجات هنا لاحقاً -->
+                                    {% for item in cart %}
+                                    <tr>
+                                        <td class="table-serial"><h6>{{ forloop.counter }}</h6></td>
+                                        <td class="table-image"><img src="{{ item.product.image.url }}" alt="product"></td>
+                                        <td class="table-name"><h6>{{ item.product.name }}</h6></td>
+                                        <td class="table-price"><h6>{{ item.price }} ر.س</h6></td>
+                                        <td class="table-brand"><h6>{{ item.product.brand.name|default:"-" }}</h6></td>
+                                        <td class="table-quantity">
+                                            <div class="cart-action-group" style="justify-content: center;">
+                                                <div class="product-action">
+                                                    <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
+                                                    <input class="action-input" title="Quantity Number" type="text" name="quantity" value="{{ item.quantity }}" data-id="{{ item.product.id }}">
+                                                    <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="table-action">
+                                            <a class="view" href="{% url 'product_detail' item.product.slug %}" title="View Products"><i class="fas fa-eye"></i></a>
+                                            <a class="trash" href="#" title="Remove Wishlist"><i class="icofont-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
                                     <tr>
                                         <td colspan="7" class="text-center">سلة المشتريات فارغة حالياً.</td>
                                     </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
+                {% if cart|length > 0 %}
+                <div class="checkout-charge">
+                    <ul>
+                        <li>
+                            <span>المجموع الكلي</span>
+                            <span class="cart-total-price">{{ cart.get_total_price }} ر.س</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="checkout-process">
+                    <a href="checkout.html" class="btn btn-inline">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>إتمام الطلب</span>
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </div>

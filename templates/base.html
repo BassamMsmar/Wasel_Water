@@ -654,26 +654,37 @@
     <script src="{% static 'ar/js/accordion.js' %}"></script>
     <script src="{% static 'ar/js/venobox.js' %}"></script>
     <script src="{% static 'ar/js/slick.js' %}"></script>
-    <script src="{% static 'ar/js/main.js' %}?v=2"></script>
+    <script src="{% static 'ar/js/main.js' %}?v=4"></script>
     
     <script>
-    <script>
-        // Hover effect for Brand Dropdown
         document.addEventListener("DOMContentLoaded", function () {
-            // ... existing hover code ...
+            // Hover effect for Brand Dropdown
+            var dropdowns = document.querySelectorAll('.navbar-item.dropdown');
+            dropdowns.forEach(function (dropdown) {
+                dropdown.addEventListener('mouseenter', function () {
+                    var menu = this.querySelector('.dropdown-menu');
+                    var toggle = this.querySelector('.dropdown-toggle');
+                    if (menu && window.innerWidth >= 992) {
+                        menu.classList.add('show');
+                        toggle.setAttribute('aria-expanded', 'true');
+                    }
+                });
+
+                dropdown.addEventListener('mouseleave', function () {
+                    var menu = this.querySelector('.dropdown-menu');
+                    var toggle = this.querySelector('.dropdown-toggle');
+                    if (menu && window.innerWidth >= 992) {
+                        menu.classList.remove('show');
+                        toggle.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            });
             
             // AJAX Add to Cart
             const addToCartBtns = document.querySelectorAll('.product-add, .add-to-cart-btn');
             addToCartBtns.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    // Check if it's a link or button, get ID
-                    // If it has href="#", treat as button.
-                    // Ideally we add data-id to all buttons.
-                    
-                    // For now, let's assume the implementation in templates provides data-id
-                    // If not, we might need to traverse DOM or rely on href if it was a GET link (old way).
-                    // Best practice: use data-id attribute.
                     
                     const productId = this.getAttribute('data-id');
                     if (!productId) return; 
@@ -690,8 +701,15 @@
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(errData => { throw new Error(errData.error || 'Server Error'); });
+                        }
+                        return response.json();
+                    })
                     .then(data => {
+                        if(data.error) throw new Error(data.error);
+                        
                         // Update Cart Count
                         document.querySelectorAll('.cart-count').forEach(el => el.textContent = data.qty);
                         
@@ -739,11 +757,59 @@
                     .catch(error => {
                         console.error('Error:', error);
                         this.innerHTML = 'خطأ';
+                        // Alert the specific error for debugging
+                        alert('حدث خطأ: ' + error.message);
                         setTimeout(() => {
                             this.innerHTML = originalText;
                             this.style.pointerEvents = 'auto';
                         }, 2000);
                     });
+                });
+            });
+
+            // AJAX Update Quantity (Sidebar & Cart Page)
+            $(document).on('change', '.action-input', function() {
+                var input = $(this);
+                var productId = input.data('id');
+                var quantity = input.val();
+
+                if(!productId) return;
+
+                $.ajax({
+                    url: '{% url "cart:cart_update" %}',
+                    type: 'POST',
+                    data: {
+                        'product_id': productId,
+                        'quantity': quantity,
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function(data) {
+                        if(data.error) {
+                            alert(data.error);
+                            return;
+                        }
+                        // Update Header Count
+                        $('.cart-count').text(data.qty);
+                        
+                        // Update Sidebar HTML if present
+                        if ($('.cart-sidebar').length && data.cart_html) {
+                            var isSidebarActive = $('.cart-sidebar').hasClass('active');
+                            $('.cart-sidebar').html(data.cart_html);
+                            // If sidebar was active and we're on cart page, we might not want to close it or reset validation
+                            // But replacing HTML removes event handlers attached to internal elements? 
+                            // Event delegation $(document).on handles the +/- buttons, so it's fine.
+                            // Close button re-bind might be needed if not delegated.
+                        }
+                        
+                        // If on Cart Page, update totals
+                        if (window.location.pathname.includes('/cart/')) {
+                            // Update total price
+                            $('.cart-total-price').text(data.total_price + ' ر.س');
+                        }
+                    },
+                    error: function(err) {
+                        console.error('Error updating cart', err);
+                    }
                 });
             });
         });

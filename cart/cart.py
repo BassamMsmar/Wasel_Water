@@ -48,12 +48,17 @@ class Cart:
         product_ids = self.cart.keys()
         # get the product objects and add them to the cart
         products = Product.objects.filter(id__in=product_ids)
-        cart = self.cart.copy()
+        
+        # Create a local copy to avoid modifying the session
+        # We process items one by one
         for product in products:
-            cart[str(product.id)]['product'] = product
-
-        for item in cart.values():
-            item['price'] = Decimal(item['price'])
+            cart_item = self.cart[str(product.id)]
+            # Create a new dict for the template context
+            item = {
+                'product': product,
+                'quantity': cart_item['quantity'],
+                'price': Decimal(cart_item['price']),
+            }
             item['total_price'] = item['price'] * item['quantity']
             yield item
 

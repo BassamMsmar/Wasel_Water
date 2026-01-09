@@ -152,11 +152,17 @@ $('.wish').on('click', function(){
 //========================================
 //      INCREMENT PRODUCT QUANTITY
 //========================================
-$('.action-plus').on('click', function(){
-    var increamentValue = $(this).closest('.product-action').children('.action-input').get(0).value++
-    var actionMinus = $(this).closest('.product-action').children('.action-minus');
+//========================================
+//      INCREMENT PRODUCT QUANTITY
+//========================================
+$(document).on('click', '.action-plus', function(){
+    var input = $(this).closest('.product-action').children('.action-input');
+    var val = parseInt(input.val());
+    input.val(val + 1);
+    input.trigger('change'); // Trigger change for AJAX
 
-    if(increamentValue > 0) {
+    var actionMinus = $(this).closest('.product-action').children('.action-minus');
+    if(val + 1 > 0) {
         actionMinus.removeAttr('disabled');
     }
 });
@@ -165,11 +171,17 @@ $('.action-plus').on('click', function(){
 //========================================
 //      DECREMENT PRODUCT QUANTITY
 //========================================
-$('.action-minus').on('click', function(){
-    var decrementValue = $(this).closest('.product-action').children('.action-input').get(0).value--
+$(document).on('click', '.action-minus', function(){
+    var input = $(this).closest('.product-action').children('.action-input');
+    var val = parseInt(input.val());
+    
+    if(val > 1) {
+        input.val(val - 1);
+        input.trigger('change'); // Trigger change for AJAX
+    }
 
-    if(decrementValue == 2) {
-        $(this).attr('disabled', 'disabled');
+    if(val - 1 == 1) { // If it was 2 and becomes 1
+        // $(this).attr('disabled', 'disabled'); // Optional: disable minus at 1
     }
 });
 
