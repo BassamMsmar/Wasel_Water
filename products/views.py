@@ -3,10 +3,18 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.db.models import Count, Q
 from django.db.models.aggregates import Avg
 # from .tasks import send_emails
-from .models import Product, Brand, Review, ProductImages, Category, Offer
+from .models import Product, Brand, Review, ProductImages, Category, Offer, Bundle
 # Create your views here.
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+
+
+
+class BundleList(ListView):
+    model = Bundle
+    queryset = Bundle.objects.all()
+    template_name = 'products/bundle_list.html'
+    paginate_by = 20
 
 
 class ProductList(ListView):
@@ -32,8 +40,8 @@ class ProductDetail(DetailView):
 
 class BrandList(ListView):
     model = Brand    #context : object_list, model_list
-    paginate_by = 20
-    queryset = Brand.objects.all()
+    # paginate_by = 20 # User wants all brands and products on one page
+    queryset = Brand.objects.prefetch_related('product_brand').all()
  
 
 class BrandDetail(ListView):

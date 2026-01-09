@@ -205,3 +205,14 @@
         /* Use mobile menu sidebar instead */
     }
 }
+
+/* Dropdown Hover Effect */
+@media (min-width: 992px) {
+    .navbar-item.dropdown:hover .dropdown-menu {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        top: 100% !important;
+        margin-top: 0 !important;
+    }
+}

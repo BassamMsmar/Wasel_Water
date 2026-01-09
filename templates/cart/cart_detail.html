@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!--=====================================
+                    CART PART START
+        =======================================-->
+<section class="inner-section single-banner" style="background: url({% static 'ar/images/single-banner.jpg' %}) no-repeat center;">
+    <div class="container">
+        <h2>سلة المشتريات</h2>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">الرئيسية</a></li>
+            <li class="breadcrumb-item active" aria-current="page">سلة المشتريات</li>
+        </ol>
+    </div>
+</section>
+
+<section class="inner-section cart-part">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="account-card">
+                    <div class="account-title">
+                        <h4>عربة التسوق الخاصة بك</h4>
+                    </div>
+                    <div class="account-content">
+                        <div class="table-scroll">
+                            <table class="table-list">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">الرقم</th>
+                                        <th scope="col">المنتج</th>
+                                        <th scope="col">الاسم</th>
+                                        <th scope="col">السعر</th>
+                                        <th scope="col">العلامة التجارية</th>
+                                        <th scope="col">الكمية</th>
+                                        <th scope="col">الإجراء</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- سنقوم بإضافة المنتجات هنا لاحقاً -->
+                                    <tr>
+                                        <td colspan="7" class="text-center">سلة المشتريات فارغة حالياً.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--=====================================
+                    CART PART END
+        =======================================-->
+
+{% endblock %}

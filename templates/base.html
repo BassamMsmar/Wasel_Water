@@ -106,7 +106,7 @@
                 </form>
 
                 <div class="header-media-group">
-                    <a href="login.html" class="header-user"><img src="{% static 'ar/images/user.png' %}"
+                    <a href="{% url 'login' %}" class="header-user"><img src="{% static 'ar/images/user.png' %}"
                             alt="user"></a>
                     <button class="header-cart" title="Cartlist">
                         <img src="{% static 'ar/images/cart.png' %}" alt="cart">
@@ -116,13 +116,34 @@
                 </div>
 
                 <div class="header-widget-group">
-                    <a href="cart.html" class="header-widget header-cart" title="Cartlist">
+                    <a href="{% url 'cart:cart_detail' %}" class="header-widget header-cart" title="سلة المشتريات">
                         <i class="fas fa-shopping-cart"></i>
-                        <sup>0</sup>
+                        <sup class="cart-count">{{ cart|length }}</sup>
                     </a>
-                    <a href="login.html" class="header-widget" title="My Account">
+                    {% if request.user.is_authenticated %}
+                    <div class="dropdown">
+                        <a href="#" class="header-widget dropdown-toggle" data-bs-toggle="dropdown" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+                            <i class="fas fa-user"></i>
+                            <span style="font-size: 14px;">أهلا، {{ request.user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">الصفحة الشخصية</a></li>
+                            <li><a class="dropdown-item" href="#">الإعدادات</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form action="{% url 'logout' %}" method="post">
+                                    {% csrf_token %}
+                                    <button class="dropdown-item" type="submit">تسجيل الخروج</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'login' %}" class="header-widget" title="تسجيل الدخول">
                         <i class="fas fa-user"></i>
+                        <span style="font-size: 14px; margin-right:5px;">دخول</span>
                     </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -149,13 +170,21 @@
                                 <a class="navbar-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}"
                                     href="{% url 'product_list' %}">المنتجات</a>
                             </li>
-                            <li class="navbar-item">
-                                <a class="navbar-link {% if request.resolver_match.url_name == 'category_list' %}active{% endif %}"
-                                    href="{% url 'category_list' %}">التصنيفات</a>
+                            <li class="navbar-item dropdown">
+                                <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    العلامات التجارية
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="{% url 'brand_list' %}">الكل</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    {% for brand in brands %}
+                                    <li><a class="dropdown-item" href="{% url 'brand_detail' brand.slug %}">{{ brand.name }}</a></li>
+                                    {% endfor %}
+                                </ul>
                             </li>
                             <li class="navbar-item">
-                                <a class="navbar-link {% if request.resolver_match.url_name == 'offer_list' %}active{% endif %}"
-                                    href="{% url 'offer_list' %}">العروض</a>
+                                <a class="navbar-link {% if request.resolver_match.url_name == 'bundle_list' %}active{% endif %}"
+                                    href="{% url 'bundle_list' %}">الباقات</a>
                             </li>
                         </ul>
                     </div>
@@ -326,126 +355,7 @@
                   CART SIDEBAR PART START
         =======================================-->
     <aside class="cart-sidebar">
-        <div class="cart-header">
-            <div class="cart-total">
-                <i class="fas fa-shopping-basket"></i>
-                <span>total item (5)</span>
-            </div>
-            <button class="cart-close"><i class="icofont-close"></i></button>
-        </div>
-        <ul class="cart-list">
-            <li class="cart-item">
-                <div class="cart-media">
-                    <a href="#"><img src="images/product/01.jpg" alt="product"></a>
-                    <button class="cart-delete"><i class="far fa-trash-alt"></i></button>
-                </div>
-                <div class="cart-info-group">
-                    <div class="cart-info">
-                        <h6><a href="product-single.html">existing product name</a></h6>
-                        <p>Unit Price - $8.75</p>
-                    </div>
-                    <div class="cart-action-group">
-                        <div class="product-action">
-                            <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
-                            <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1">
-                            <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
-                        </div>
-                        <h6>$56.98</h6>
-                    </div>
-                </div>
-            </li>
-            <li class="cart-item">
-                <div class="cart-media">
-                    <a href="#"><img src="images/product/02.jpg" alt="product"></a>
-                    <button class="cart-delete"><i class="far fa-trash-alt"></i></button>
-                </div>
-                <div class="cart-info-group">
-                    <div class="cart-info">
-                        <h6><a href="product-single.html">existing product name</a></h6>
-                        <p>Unit Price - $8.75</p>
-                    </div>
-                    <div class="cart-action-group">
-                        <div class="product-action">
-                            <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
-                            <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1">
-                            <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
-                        </div>
-                        <h6>$56.98</h6>
-                    </div>
-                </div>
-            </li>
-            <li class="cart-item">
-                <div class="cart-media">
-                    <a href="#"><img src="images/product/03.jpg" alt="product"></a>
-                    <button class="cart-delete"><i class="far fa-trash-alt"></i></button>
-                </div>
-                <div class="cart-info-group">
-                    <div class="cart-info">
-                        <h6><a href="product-single.html">existing product name</a></h6>
-                        <p>Unit Price - $8.75</p>
-                    </div>
-                    <div class="cart-action-group">
-                        <div class="product-action">
-                            <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
-                            <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1">
-                            <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
-                        </div>
-                        <h6>$56.98</h6>
-                    </div>
-                </div>
-            </li>
-            <li class="cart-item">
-                <div class="cart-media">
-                    <a href="#"><img src="images/product/04.jpg" alt="product"></a>
-                    <button class="cart-delete"><i class="far fa-trash-alt"></i></button>
-                </div>
-                <div class="cart-info-group">
-                    <div class="cart-info">
-                        <h6><a href="product-single.html">existing product name</a></h6>
-                        <p>Unit Price - $8.75</p>
-                    </div>
-                    <div class="cart-action-group">
-                        <div class="product-action">
-                            <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
-                            <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1">
-                            <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
-                        </div>
-                        <h6>$56.98</h6>
-                    </div>
-                </div>
-            </li>
-            <li class="cart-item">
-                <div class="cart-media">
-                    <a href="#"><img src="images/product/05.jpg" alt="product"></a>
-                    <button class="cart-delete"><i class="far fa-trash-alt"></i></button>
-                </div>
-                <div class="cart-info-group">
-                    <div class="cart-info">
-                        <h6><a href="product-single.html">existing product name</a></h6>
-                        <p>Unit Price - $8.75</p>
-                    </div>
-                    <div class="cart-action-group">
-                        <div class="product-action">
-                            <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
-                            <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1">
-                            <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
-                        </div>
-                        <h6>$56.98</h6>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <div class="cart-footer">
-            <button class="coupon-btn">Do you have a coupon code?</button>
-            <form class="coupon-form">
-                <input type="text" placeholder="Enter your coupon code">
-                <button type="submit"><span>apply</span></button>
-            </form>
-            <a class="cart-checkout-btn" href="checkout.html">
-                <span class="checkout-label">Proceed to Checkout</span>
-                <span class="checkout-price">$369.78</span>
-            </a>
-        </div>
+        {% include 'cart/partials/sidebar_cart.html' %}
     </aside>
     <!--=====================================
                     CART SIDEBAR PART END
@@ -744,10 +654,100 @@
     <script src="{% static 'ar/js/accordion.js' %}"></script>
     <script src="{% static 'ar/js/venobox.js' %}"></script>
     <script src="{% static 'ar/js/slick.js' %}"></script>
-    <script src="{% static 'ar/js/main.js' %}"></script>
-    <!--=====================================
-                    JS LINK PART END
-        =======================================-->
+    <script src="{% static 'ar/js/main.js' %}?v=2"></script>
+    
+    <script>
+    <script>
+        // Hover effect for Brand Dropdown
+        document.addEventListener("DOMContentLoaded", function () {
+            // ... existing hover code ...
+            
+            // AJAX Add to Cart
+            const addToCartBtns = document.querySelectorAll('.product-add, .add-to-cart-btn');
+            addToCartBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Check if it's a link or button, get ID
+                    // If it has href="#", treat as button.
+                    // Ideally we add data-id to all buttons.
+                    
+                    // For now, let's assume the implementation in templates provides data-id
+                    // If not, we might need to traverse DOM or rely on href if it was a GET link (old way).
+                    // Best practice: use data-id attribute.
+                    
+                    const productId = this.getAttribute('data-id');
+                    if (!productId) return; 
+
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    this.style.pointerEvents = 'none';
+
+                    const formData = new FormData();
+                    formData.append('product_id', productId);
+                    formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+                    fetch('{% url "cart:cart_add" %}', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update Cart Count
+                        document.querySelectorAll('.cart-count').forEach(el => el.textContent = data.qty);
+                        
+                        // Show Success State on Button
+                        this.innerHTML = '<i class="fas fa-check"></i> تم';
+                        this.classList.add('btn-success');
+
+                        // Reset button after 2 seconds
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.style.pointerEvents = 'auto';
+                            this.classList.remove('btn-success');
+                        }, 2000);
+
+                        // Update Sidebar HTML
+                        const sidebar = document.querySelector('.cart-sidebar');
+                        if (sidebar && data.cart_html) {
+                            sidebar.innerHTML = data.cart_html;
+                            
+                            // Re-bind close event for the new content
+                            const closeBtn = sidebar.querySelector('.cart-close');
+                            if(closeBtn) {
+                                closeBtn.addEventListener('click', function() {
+                                    document.body.style.overflow = 'inherit';
+                                    sidebar.classList.remove('active');
+                                    document.querySelector('.backdrop').style.display = 'none';
+                                });
+                            }
+                            
+                            // Open Sidebar
+                            document.body.style.overflow = 'hidden';
+                            sidebar.classList.add('active');
+                            const backdrop = document.querySelector('.backdrop');
+                            if(backdrop) {
+                                backdrop.style.display = 'block';
+                                // Re-bind backdrop click to close
+                                backdrop.onclick = function() {
+                                    this.style.display = 'none';
+                                    document.body.style.overflow = 'inherit';
+                                    sidebar.classList.remove('active');
+                                };
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        this.innerHTML = 'خطأ';
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.style.pointerEvents = 'auto';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
