@@ -11,10 +11,7 @@
     <li class="cart-item">
         <div class="cart-media">
             <a href="#"><img src="{{ item.product.image.url }}" alt="product"></a>
-            <form action="#" method="post" style="display:inline;"> <!-- Delete Not Implemented Yet -->
-                 {% csrf_token %}
-                <button class="cart-delete" type="button"><i class="far fa-trash-alt"></i></button>
-            </form>
+            <button class="cart-delete cart-remove-btn" type="button" data-id="{{ item.product.id }}"><i class="far fa-trash-alt"></i></button>
         </div>
         <div class="cart-info-group">
             <div class="cart-info">
@@ -36,7 +33,7 @@
     {% endfor %}
 </ul>
 <div class="cart-footer">
-    <a class="cart-checkout-btn" href="{% url 'cart:cart_detail' %}">
+    <a class="cart-checkout-btn" href="{% url 'cart:checkout' %}">
         <span class="checkout-label">الذهاب للدفع</span>
         <span class="checkout-price">{{ cart.get_total_price }} ر.س</span>
     </a>

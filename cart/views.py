@@ -9,6 +9,14 @@ from .cart import Cart
 class CartList(TemplateView):
     template_name = 'cart/cart_detail.html'
 
+class CartCheckout(TemplateView):
+    template_name = 'cart/checkout.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['cart'] = Cart(self.request)
+        return context
+
 from django.template.loader import render_to_string
 
 @require_POST
@@ -51,6 +59,25 @@ def cart_update(request):
             'cart_html': cart_html,
             'total_price': cart.get_total_price(),
             'item_total': cart.cart[str(product_id)]['price'] * quantity # approximate, better to get from cart item
+        })
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@require_POST
+def cart_remove(request):
+    try:
+        cart = Cart(request)
+        product_id = request.POST.get('product_id')
+        product = get_object_or_404(Product, id=product_id)
+        cart.remove(product)
+
+        cart_html = render_to_string('cart/partials/sidebar_cart.html', {'cart': cart}, request=request)
+        
+        return JsonResponse({
+            'qty': len(cart), 
+            'message': 'تم حذف المنتج من السلة',
+            'cart_html': cart_html,
+            'total_price': cart.get_total_price(),
         })
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)

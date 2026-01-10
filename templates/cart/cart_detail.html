@@ -39,7 +39,7 @@
                                 </thead>
                                 <tbody>
                                     {% for item in cart %}
-                                    <tr>
+                                    <tr id="cart-row-{{ item.product.id }}">
                                         <td class="table-serial"><h6>{{ forloop.counter }}</h6></td>
                                         <td class="table-image"><img src="{{ item.product.image.url }}" alt="product"></td>
                                         <td class="table-name"><h6>{{ item.product.name }}</h6></td>
@@ -56,7 +56,7 @@
                                         </td>
                                         <td class="table-action">
                                             <a class="view" href="{% url 'product_detail' item.product.slug %}" title="View Products"><i class="fas fa-eye"></i></a>
-                                            <a class="trash" href="#" title="Remove Wishlist"><i class="icofont-trash"></i></a>
+                                            <a class="trash cart-remove-btn" href="#" title="Remove Wishlist" data-id="{{ item.product.id }}"><i class="icofont-trash"></i></a>
                                         </td>
                                     </tr>
                                     {% empty %}
@@ -79,7 +79,7 @@
                     </ul>
                 </div>
                 <div class="checkout-process">
-                    <a href="checkout.html" class="btn btn-inline">
+                    <a href="{% url 'cart:checkout' %}" class="btn btn-inline">
                         <i class="fas fa-paper-plane"></i>
                         <span>إتمام الطلب</span>
                     </a>
