@@ -749,15 +749,15 @@
                         if (sidebar && data.cart_html) {
                             sidebar.innerHTML = data.cart_html;
                             
-                            // Re-bind close event for the new content
-                            const closeBtn = sidebar.querySelector('.cart-close');
-                            if(closeBtn) {
-                                closeBtn.addEventListener('click', function() {
+                            // Re-bind close event for the new content (include standard close button AND custom continue button)
+                            const closeBtns = sidebar.querySelectorAll('.cart-close, .trigger-close-sidebar');
+                            closeBtns.forEach(btn => {
+                                btn.addEventListener('click', function() {
                                     document.body.style.overflow = 'inherit';
                                     sidebar.classList.remove('active');
                                     document.querySelector('.backdrop').style.display = 'none';
                                 });
-                            }
+                            });
                             
                             // Open Sidebar
                             document.body.style.overflow = 'hidden';
@@ -845,6 +845,10 @@
             // 2. Handle Confirm Click
             $('#confirmDeleteBtn').on('click', function() {
                 if(!productToDeleteId) return;
+                const btn = this;
+                const productId = btn.getAttribute('data-id');
+                const itemType = btn.getAttribute('data-type') || 'product'; // Default to product
+                if(!productId) return;
                 
                 // Hide Modal
                 $('#deleteConfirmModal').modal('hide');
@@ -854,16 +858,10 @@
                     type: 'POST',
                     data: {
                         'product_id': productToDeleteId,
+                        'item_type': 'product', // TODO: Need to dynamically get type from button
                         'csrfmiddlewaretoken': '{{ csrf_token }}'
                     },
                     success: function(data) {
-                        if(data.error) {
-                            alert(data.error);
-                            return;
-                        }
-                        // Update Header Count
-                        $('.cart-count').text(data.qty);
-                        
                         // Update Sidebar HTML if present
                         if ($('.cart-sidebar').length && data.cart_html) {
                             $('.cart-sidebar').html(data.cart_html);

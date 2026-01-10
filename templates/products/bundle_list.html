@@ -46,13 +46,13 @@
                                     <!-- Use new_price since bundle_total_price logic is disabled/broken in models currently -->
                                     <span>{{ product.new_price }}<small>ر.س</small></span>
                                 </h6>
-                                <button class="product-add" title="أضف إلى السلة">
+                                <button class="product-add add-to-cart-btn" title="أضف إلى السلة" data-id="{{ product.id }}" data-type="bundle">
                                     <i class="fas fa-shopping-basket"></i>
                                     <span>أضف إلى السلة</span>
                                 </button>
                                 <div class="product-action">
                                     <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
-                                    <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1">
+                                    <input class="action-input" title="Quantity Number" type="text" name="quantity" value="1" data-id="{{ product.id }}">
                                     <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 from decimal import Decimal
 from django.conf import settings
-from products.models import Product
+from products.models import Product, Bundle
 
 class Cart:
     def __init__(self, request):
@@ -14,53 +14,88 @@ class Cart:
             cart = self.session[settings.CART_SESSION_ID] = {}
         self.cart = cart
 
-    def add(self, product, quantity=1, override_quantity=False):
+    def add(self, product, quantity=1, override_quantity=False, item_type='product'):
         """
-        Add a product to the cart or update its quantity.
+        Add a product or bundle to the cart or update its quantity.
         """
-        product_id = str(product.id)
-        if product_id not in self.cart:
-            self.cart[product_id] = {'quantity': 0,
-                                     'price': str(product.new_price)}
+        item_id = str(product.id)
+        # Create a unique key combining type and ID
+        cart_key = f"{item_type}_{item_id}"
+        
+        if cart_key not in self.cart:
+            # Determine price based on object type
+            price = getattr(product, 'new_price', 0)
+            if item_type == 'bundle':
+                price = product.total_price  # Bundle property
+                
+            self.cart[cart_key] = {
+                'quantity': 0,
+                'price': str(price),
+                'item_type': item_type,
+                'id': item_id
+            }
+            
         if override_quantity:
-            self.cart[product_id]['quantity'] = quantity
+            self.cart[cart_key]['quantity'] = quantity
         else:
-            self.cart[product_id]['quantity'] += quantity
+            self.cart[cart_key]['quantity'] += quantity
         self.save()
 
     def save(self):
         # mark the session as "modified" to make sure it gets saved
         self.session.modified = True
 
-    def remove(self, product):
+    def remove(self, product_id, item_type='product'):
         """
         Remove a product from the cart.
         """
-        product_id = str(product.id)
-        if product_id in self.cart:
-            del self.cart[product_id]
+        cart_key = f"{item_type}_{str(product_id)}"
+        if cart_key in self.cart:
+            del self.cart[cart_key]
             self.save()
 
     def __iter__(self):
         """
-        Iterate over the items in the cart and get the products from the database.
+        Iterate over the items in the cart and get the products/bundles from the database.
         """
-        product_ids = self.cart.keys()
-        # get the product objects and add them to the cart
-        products = Product.objects.filter(id__in=product_ids)
+        product_ids = []
+        bundle_ids = []
         
-        # Create a local copy to avoid modifying the session
-        # We process items one by one
-        for product in products:
-            cart_item = self.cart[str(product.id)]
-            # Create a new dict for the template context
-            item = {
-                'product': product,
-                'quantity': cart_item['quantity'],
-                'price': Decimal(cart_item['price']),
-            }
-            item['total_price'] = item['price'] * item['quantity']
-            yield item
+        # Categorize IDs
+        for key, item in self.cart.items():
+            if item.get('item_type') == 'bundle':
+                bundle_ids.append(item['id'])
+            else:
+                # Default to product if no type or type is product
+                product_ids.append(item.get('id', key)) # Fallback for old keys
+
+        products = Product.objects.filter(id__in=product_ids)
+        bundles = Bundle.objects.filter(id__in=bundle_ids)
+        
+        # Helper to find object
+        def get_obj(obj_list, obj_id):
+            for obj in obj_list:
+                if str(obj.id) == str(obj_id):
+                    return obj
+            return None
+
+        cart_copy = self.cart.copy()
+        
+        for key, item in cart_copy.items():
+            item = item.copy() # IMPORTANT: Work on a copy to avoid modifying the session
+            item_type = item.get('item_type', 'product')
+            obj_id = item.get('id', key)
+            
+            if item_type == 'bundle':
+                obj = get_obj(bundles, obj_id)
+            else:
+                obj = get_obj(products, obj_id)
+                
+            if obj:
+                item['product'] = obj # naming it 'product' for template compatibility
+                item['price'] = Decimal(item['price'])
+                item['total_price'] = item['price'] * item['quantity']
+                yield item
 
     def __len__(self):
         """

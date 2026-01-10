@@ -85,6 +85,13 @@ class Product(models.Model):
     def bundle_discount(self):
         return self.bundle_base_price() - self.bundle_total_price()
 
+    @property
+    def discount_percentage(self):
+        if self.old_price > 0 and self.new_price > 0 and self.old_price > self.new_price:
+            discount = ((self.old_price - self.new_price) / self.old_price) * 100
+            return int(discount)
+        return 0
+
     def __str__(self) -> str:
             return self.name
     

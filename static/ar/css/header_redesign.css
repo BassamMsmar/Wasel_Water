@@ -216,3 +216,142 @@
         margin-top: 0 !important;
     }
 }
+
+/* =========================================
+   NOON/AMAZON INSPIRED PRODUCT CARD
+   ========================================= */
+.product-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px; /* Slightly sharper radius like Amazon/Noon */
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 12px;
+}
+
+.product-card:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    border-color: #dcdcdc;
+}
+
+/* Image Area - Clean & Spacious */
+.product-media {
+    position: relative;
+    background: #fff;
+    padding: 0; /* Removed padding to maximize image size */
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    padding: 10px; /* Slight internal padding for the image itself */
+}
+
+/* ... (Badges omitted for brevity as they didn't change logic, but keeping file structure consistency is key.
+   Actually, I can just target the changed blocks if I am careful with start/end lines, 
+   but replacing the whole blocks is safer for context.)
+*/
+
+/* Content Area */
+.product-content {
+    padding: 10px 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: right; /* RTL Standard */
+    gap: 5px; /* Control spacing between elements */
+}
+
+/* Rating - Keeping styling just in case, though user removed HTML */
+.product-rating {
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+/* ... */
+
+/* Title */
+.product-name {
+    margin-bottom: 5px; /* Reduced margin */
+    font-size: 14px;
+    font-weight: 400; 
+    color: #404553;
+    line-height: 1.4;
+    height: 40px; 
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Price Section - Adjusted Spacing and Colors */
+.product-price {
+    margin-top: 5px; /* Fixed small space instead of auto */
+    margin-bottom: 10px;
+    display: flex;
+    align-items: baseline;
+    gap: 8px; /* More gap between prices */
+    flex-wrap: wrap;
+}
+
+.product-price span {
+    color: #27ae60; /* Green for New Price */
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.product-price small {
+    font-size: 13px;
+    color: #27ae60; /* Match currency to price color */
+    font-weight: 500;
+}
+
+.product-price del {
+    color: #e74c3c; /* Red for Old Price */
+    font-size: 13px;
+    text-decoration: line-through;
+    opacity: 0.8;
+}
+
+/* Add to Cart - Pushed to bottom */
+.product-add {
+    margin-top: auto; /* Push button to bottom of card */
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid #3866df;
+    color: #3866df;
+    font-weight: 700;
+    font-size: 13px;
+    padding: 8px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.product-add:hover {
+    background-color: #3866df;
+    color: #fff;
+}
+
+.product-add i {
+    font-size: 14px;
+}
