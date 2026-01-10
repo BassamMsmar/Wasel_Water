@@ -51,6 +51,8 @@
     background-color: var(--white);
     padding: 20px 0;
     border-bottom: 1px solid var(--border-color);
+    position: relative;
+    z-index: 1000;
 }
 
 .header-content {
@@ -352,6 +354,12 @@
     color: #fff;
 }
 
-.product-add i {
-    font-size: 14px;
+
+/* FIXES FOR SIDEBAR */
+.cart-sidebar {
+    z-index: 2000 !important; /* Ensure sidebar is above everything including header */
+}
+
+.cart-sidebar .product-badges {
+    display: none !important; /* Force hide badges in sidebar */
 }

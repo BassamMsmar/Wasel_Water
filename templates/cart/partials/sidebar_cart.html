@@ -36,12 +36,12 @@
         {% endfor %}
     </ul>
     <div class="cart-footer" style="padding: 15px; box-shadow: 0px -3px 7px 0px rgba(0, 0, 0, 0.08); background: #fff;">
-        <button class="cart-checkout-btn trigger-close-sidebar my-2" style="width: 100%; display: flex; align-items: center; justify-content: center; background: #fff; color: var(--primary); border: 2px solid var(--primary);">
-            <span class="checkout-label" style="color: var(--primary); font-weight: bold;">متابعة التسوق</span>
-        </button>
-        <a class="cart-checkout-btn my-2" href="{% url 'cart:checkout' %}">
+        <a class="cart-checkout-btn my-2 mb-3" href="{% url 'cart:checkout' %}">
             <span class="checkout-label">الذهاب للدفع</span>
             <span class="checkout-price">{{ cart.get_total_price }} ر.س</span>
         </a>
+        <button class="cart-checkout-btn trigger-close-sidebar my-2" style="width: 100%; display: flex; align-items: center; justify-content: center; background: #fff; color: var(--primary); border: 2px solid var(--primary);">
+            <span class="checkout-label" style="color: var(--primary); font-weight: bold;">متابعة التسوق</span>
+        </button>
     </div>
 </div>

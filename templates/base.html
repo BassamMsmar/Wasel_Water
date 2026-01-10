@@ -731,7 +731,7 @@
                         if(data.error) throw new Error(data.error);
                         
                         // Update Cart Count
-                        document.querySelectorAll('.cart-count').forEach(el => el.textContent = data.qty);
+                        document.querySelectorAll('.cart-count').forEach(el => el.textContent = (data.cart_count !== undefined ? data.cart_count : data.qty));
                         
                         // Show Success State on Button
                         this.innerHTML = '<i class="fas fa-check"></i> تم';
