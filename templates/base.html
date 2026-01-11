@@ -34,6 +34,10 @@
     <!-- FAVICON -->
     <link rel="icon" href="{% static 'ar/images/favicon.png' %}">
 
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap" rel="stylesheet">
+    <!-- Almarai Font for Arabic -->
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap" rel="stylesheet">
     <!-- FONTS -->
     <link rel="stylesheet" href="{% static 'ar/fonts/flaticon/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'ar/fonts/icofont/icofont.min.css' %}">
@@ -129,9 +133,9 @@
                 </ul>
                 <!-- MERGED NAVBAR END -->
 
-                <form class="header-form">
-                    <input type="text" placeholder="ابحث هنا...">
-                    <button><i class="fas fa-search"></i></button>
+                <form class="header-form" action="{% url 'product_list' %}" method="GET">
+                    <input type="text" name="q" placeholder="ابحث هنا..." value="{{ request.GET.q }}">
+                    <button type="submit"><i class="fas fa-search"></i></button>
                 </form>
 
                 <div class="header-media-group">
@@ -533,10 +537,17 @@
             <span>السلة</span>
             <sup class="cart-count">{{ cart|length }}</sup>
         </button>
-        <a href="{% url 'login' %}" title="حسابي">
-            <i class="fas fa-user"></i>
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'accounts:dashboard' %}" title="حسابي">
+            <i class="fas fa-user-check"></i>
             <span>حسابي</span>
         </a>
+        {% else %}
+        <a href="{% url 'login' %}" title="تسجيل الدخول">
+            <i class="fas fa-user"></i>
+            <span>دخول</span>
+        </a>
+        {% endif %}
     </div>
     <!--=====================================
                     MOBILE-MENU PART END

@@ -263,13 +263,47 @@
     .header-top {
         display: none;
     }
+    
+    /* Sticky Header for Mobile */
+    .header-part {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1020;
+        padding: 10px 0; /* Consistent compact padding */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Shadow for depth */
+    }
+    
+    /* Body padding to prevent content hiding behind fixed header */
+    body {
+        padding-top: 70px; /* Adjust based on header height (~60-70px) */
+    }
 
     .navbar-list {
         display: none; /* Hide desktop nav on mobile */
     }
 
+    /* SHOW SEARCH FORM ON MOBILE */
     .header-form {
-        display: none;
+        display: flex; /* Show it! */
+        margin: 0 10px;
+        flex-grow: 1; /* Take up remaining space */
+        max-width: none; /* Remove desktop limit */
+        height: 40px; /* Slightly smaller for mobile */
+    }
+    
+    .header-form input {
+        padding-left: 15px; 
+        padding-right: 40px; /* Space for search icon */
+    }
+    
+    .header-form button {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+        right: 5px; /* Adjust for RTL */
+        left: auto;
     }
 
     .header-widget-group {
@@ -277,32 +311,10 @@
     }
 
     .header-media-group {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .header-media-group .header-user {
-        display: block !important;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        overflow: hidden;
-        border: 2px solid var(--primary); /* Theme color border */
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        display: none; /* Hide the old media group (User Icon/Cart) entirely */
     }
     
-    .header-media-group .header-user img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .header-media-group .header-cart {
-        display: none !important; 
-    }
-    
-    /* Ensure only logo and user show nicely */
+    /* Ensure layout handles Logo + Search */
     .header-content {
         gap: 10px;
         justify-content: space-between;
@@ -310,17 +322,17 @@
     }
     
     .header-logo img {
-        max-height: 40px; /* Smaller logo for mobile */
+        max-height: 35px; /* Compact Logo */
     }
 }
 
 /* =========================================
    NOON/AMAZON INSPIRED PRODUCT CARD
-   ========================================= */
+   =========================================*/
 .product-card {
     background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px; /* Slightly sharper radius like Amazon/Noon */
+    border: 1px solid #f0f0f0; /* Lighter border */
+    border-radius: 12px;
     overflow: hidden;
     transition: box-shadow 0.3s ease, transform 0.3s ease;
     position: relative;
@@ -331,9 +343,9 @@
 }
 
 .product-card:hover {
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    transform: translateY(-2px);
-    border-color: #dcdcdc;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); /* Softer shadow */
+    transform: translateY(-3px);
+    border-color: #e0e0e0;
 }
 
 /* Image Area - Clean & Spacious */
@@ -356,6 +368,32 @@
     justify-content: center;
     text-decoration: none;
     padding: 10px; /* Slight internal padding for the image itself */
+}
+
+/* Badge Styling Refined */
+.product-label {
+    position: absolute;
+    top: 10px;
+    left: 10px; /* LTR, will be Right for RTL usually, check direction */
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 2;
+}
+
+[dir="rtl"] .product-label {
+    left: auto;
+    right: 10px;
+}
+
+.label-text {
+    font-size: 10px; /* Smaller font */
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 3px 8px; /* Compact padding */
+    border-radius: 4px;
+    color: var(--white);
+    line-height: normal;
 }
 
 /* ... (Badges omitted for brevity as they didn't change logic, but keeping file structure consistency is key.
@@ -427,16 +465,17 @@
 }
 
 /* Add to Cart - Pushed to bottom */
+/* Add to Cart - Solid Style */
 .product-add {
-    margin-top: auto; /* Push button to bottom of card */
+    margin-top: auto; 
     width: 100%;
-    background-color: #fff;
-    border: 1px solid #3866df;
-    color: #3866df;
+    background-color: #f0f7ff; /* Light BG default */
+    border: 1px solid transparent;
+    color: var(--primary);
     font-weight: 700;
     font-size: 13px;
     padding: 8px 0;
-    border-radius: 4px;
+    border-radius: 8px; /* Softer radius */
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
@@ -446,8 +485,49 @@
 }
 
 .product-add:hover {
-    background-color: #3866df;
+    background-color: var(--primary);
     color: #fff;
+}
+
+/* MOBILE CARD OPTIMIZATIONS */
+@media (max-width: 575px) {
+    .product-card {
+        padding-bottom: 8px; /* Tighter bottom */
+    }
+    
+    .product-media {
+        aspect-ratio: 1 / 0.9; /* Slightly shorter than square to save space */
+    }
+    
+    .product-image {
+        padding: 5px;
+    }
+    
+    .product-content {
+        padding: 8px 10px; /* Reduced padding */
+        gap: 3px;
+    }
+    
+    .product-name {
+        font-size: 13px;
+        height: 36px; /* Limit height strictly */
+        margin-bottom: 2px;
+    }
+    
+    .product-price {
+        margin-top: 2px;
+        margin-bottom: 8px;
+        gap: 5px;
+    }
+    
+    .product-price span {
+        font-size: 15px;
+    }
+    
+    .product-add {
+        font-size: 12px;
+        padding: 5px 0;
+    }
 }
 
 

@@ -19,8 +19,17 @@ class BundleList(ListView):
 
 class ProductList(ListView):
     model = Product
-    queryset = Product.objects.filter(product_type='single')    
     paginate_by = 20
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(product_type='single')
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query) | 
+                Q(descriptions__icontains=query)
+            )
+        return queryset
     
 
 
