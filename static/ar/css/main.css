@@ -5361,13 +5361,38 @@ tbody tr td:last-child {
   min-height: 80px; /* Taller menu */
 }
 
-/* ... (inner item structure same) ... */
+.mobile-menu a,
+.mobile-menu button {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  flex: 1;
+  padding: 5px 0px;
+  border-radius: 8px;
+  position: relative;
+  background: transparent;
+}
+
+.mobile-menu a:hover,
+.mobile-menu button:hover {
+  background: var(--chalk);
+}
 
 .mobile-menu a i,
 .mobile-menu button i {
-  font-size: 20px; /* Larger icons */
+  font-size: 20px;
   margin-bottom: 6px;
-  color: #999; /* Lighter default color */
+  color: #999;
   transition: all 0.3s ease;
 }
 
@@ -5384,7 +5409,7 @@ tbody tr td:last-child {
 
 .mobile-menu a span,
 .mobile-menu button span {
-  font-size: 11px; /* Improved readability */
+  font-size: 11px;
   font-weight: 500;
   line-height: 1;
   color: #777;
@@ -6597,15 +6622,15 @@ tbody tr td:last-child {
   margin: 0px 5px;
 }
 
-body {
-  font-family: 'Almarai', 'Roboto', sans-serif; /* Updated Font */
-  font-weight: 400; /* Regular weight */
-  font-style: normal;
-  font-size: 14px;
-  line-height: map-get($line-heights, "base");
+.shop-filter ul li a {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  line-height: 40px;
+  border-radius: 50%;
+  text-align: center;
   color: var(--text);
-  background: var(--body);
-  padding-top: 75px; /* Spacing for sticky header */
+  background: var(--chalk);
 }
 
 .shop-filter ul li .active {
