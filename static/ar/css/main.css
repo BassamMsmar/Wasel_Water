@@ -5338,24 +5338,25 @@ tbody tr td:last-child {
   bottom: 0px;
   left: 0px;
   width: 100%;
-  z-index: 3;
-  background: var(--white);
-  border-radius: 10px 10px 0px 0px;
-  -webkit-box-shadow: 0px -5px 15px 0px rgba(0, 0, 0, 0.1);
-          box-shadow: 0px -5px 15px 0px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  background: #ffffff;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0px -2px 20px rgba(0, 0, 0, 0.08);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -ms-flex-pack: center;
+  justify-content: space-around;
   display: none;
+  padding-bottom: env(safe-area-inset-bottom, 15px);
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  min-height: 70px;
 }
 
 .mobile-menu a,
@@ -5364,29 +5365,66 @@ tbody tr td:last-child {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
   -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 80px;
-  padding: 8px 0px;
-  border-radius: 8px;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  flex: 1;
+  padding: 8px 5px;
+  border-radius: 12px;
   position: relative;
+  background: transparent;
+  border: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.mobile-menu a:hover,
+/* Special Floating Home Button */
+.mobile-menu a[href*="home"],
+.mobile-menu a[title="الرئيسية"] {
+  position: relative;
+  top: -25px;
+  background: linear-gradient(135deg, #2e86de 0%, #1a5c9e 100%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 0 8px 20px rgba(46, 134, 222, 0.4);
+  margin: 0 10px;
+  flex: 0 0 60px;
+}
+
+.mobile-menu a[href*="home"]:active,
+.mobile-menu a[title="الرئيسية"]:active {
+  transform: scale(0.95);
+}
+
+.mobile-menu a[href*="home"] i,
+.mobile-menu a[title="الرئيسية"] i {
+  color: #ffffff !important;
+  font-size: 24px !important;
+  margin-bottom: 0 !important;
+  text-shadow: none !important;
+}
+
+.mobile-menu a[href*="home"] span,
+.mobile-menu a[title="الرئيسية"] span {
+  display: none !important;
+}
+
+/* Regular Items Hover */
+.mobile-menu a:not([href*="home"]):hover,
 .mobile-menu button:hover {
-  background: var(--chalk);
+  background: rgba(46, 134, 222, 0.08);
 }
 
 .mobile-menu a:hover i,
 .mobile-menu button:hover i {
   color: var(--primary);
+  transform: translateY(-2px);
 }
 
 .mobile-menu a:hover span,
@@ -5394,39 +5432,56 @@ tbody tr td:last-child {
   color: var(--primary);
 }
 
+/* Icons */
 .mobile-menu a i,
 .mobile-menu button i {
-  font-size: 15px;
-  margin-bottom: 5px;
-  color: var(--text);
-  text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
+  font-size: 22px;
+  margin-bottom: 4px;
+  color: #6c757d;
+  transition: all 0.3s ease;
 }
 
+/* Labels */
 .mobile-menu a span,
 .mobile-menu button span {
-  font-size: 10px;
-  line-height: 12px;
-  color: var(--text);
-  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #6c757d;
+  text-transform: capitalize;
+  display: block;
+  letter-spacing: 0.3px;
 }
 
+/* Badge/Counter */
 .mobile-menu a sup,
 .mobile-menu button sup {
   position: absolute;
-  top: -5px;
-  left: 75%;
-  width: 24px;
-  height: 24px;
-  font-size: 12px;
-  line-height: 20px;
-  border-radius: 50%;
+  top: 5px;
+  right: 20%;
+  min-width: 18px;
+  height: 18px;
+  padding: 2px 5px;
+  border-radius: 10px;
+  background: #e74c3c;
+  font-size: 10px;
+  line-height: 14px;
   text-align: center;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-  color: var(--white);
-  background: var(--primary);
-  border: 2px solid var(--green-chalk);
-  text-shadow: var(--primary-tshadow);
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
+}
+
+/* Active State */
+.mobile-menu a.active:not([href*="home"]) i,
+.mobile-menu button.active i {
+  color: var(--primary);
+}
+
+.mobile-menu a.active:not([href*="home"]) span,
+.mobile-menu button.active span {
+  color: var(--primary);
+  font-weight: 700;
 }
 
 .mobile-menu a .fas fa-shopping-basket,
