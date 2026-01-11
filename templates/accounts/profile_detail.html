@@ -1,0 +1,45 @@
+{% extends 'base_account.html' %}
+
+{% block account_title %}بيانات الحساب{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">حسابي</a></li>
+<li class="breadcrumb-item active" aria-current="page">بيانات الحساب</li>
+{% endblock %}
+
+{% block account_content %}
+<div class="account-card">
+    <div class="account-title">
+        <h4>بيانات الحساب</h4>
+    </div>
+    <div class="account-content">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">الاسم الكامل</label>
+                        <input type="text" class="form-control" value="{{ request.user.first_name }} {{ request.user.last_name }}" placeholder="الاسم هنا">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">البريد الإلكتروني</label>
+                        <input type="email" class="form-control" value="{{ request.user.email }}" readonly>
+                    </div>
+                </div>
+                <!-- Add more fields as needed -->
+                <div class="col-md-12">
+                    <div class="form-group mb-3">
+                        <label class="form-label">رقم الهاتف</label>
+                        <input type="text" class="form-control" placeholder="05xxxxxxxx">
+                    </div>
+                </div>
+                
+                <div class="col-md-12 text-end">
+                    <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

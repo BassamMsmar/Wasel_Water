@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<section class="inner-section invoice-part">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="invoice-header">
+                    <div class="invoice-logo">
+                        <img src="{{ company.logo.url }}" alt="logo">
+                        <h3>فاتورة</h3>
+                    </div>
+                    <div class="invoice-details">
+                        <h6>رقم الطلب: <span>#{{ order.id }}</span></h6>
+                        <h6>تاريخ الطلب: <span>{{ order.created_at|date:"d M Y" }}</span></h6>
+                        <h6>طريقة الدفع: <span>كاش عند الاستلام</span></h6>
+                        <h6>حالة الطلب: <span>{{ order.get_status_display }}</span></h6>
+                    </div>
+                </div>
+                <div class="invoice-body">
+                    <div class="invoice-address">
+                        <h5>الشحن إلى:</h5>
+                        <p>{{ order.shipping_full_name }}</p>
+                        <p>{{ order.shipping_address }}, {{ order.shipping_city }}</p>
+                        <p>{{ order.shipping_phone }}</p>
+                    </div>
+                    <div class="invoice-address">
+                        <!-- Billing address same as shipping for now -->
+                    </div>
+                </div>
+                <div class="invoice-table">
+                    <table class="table-list">
+                        <thead>
+                            <tr>
+                                <th scope="col">المنتج</th>
+                                <th scope="col">النوع</th>
+                                <th scope="col">السعر</th>
+                                <th scope="col">الكمية</th>
+                                <th scope="col">الإجمالي</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr>
+                                <td>
+                                    <div class="table-product">
+                                        <img src="{{ item.get_image_url }}" alt="product">
+                                        <h6>{{ item.get_name }}</h6>
+                                    </div>
+                                </td>
+                                <td>عنصر</td>
+                                <td>{{ item.price }} ر.س</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.get_cost }} ر.س</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="invoice-footer">
+                   <div class="invoice-total">
+                        <ul>
+                            <li><span>الإجمالي الفرعي:</span><span>{{ order.total_price }} ر.س</span></li>
+                            <li><span>الشحن:</span><span>0.00 ر.س</span></li>
+                            <!-- Tax could be calculated if needed -->
+                            <li class="total"><span>الإجمالي الكلي:</span><span>{{ order.total_price }} ر.س</span></li>
+                        </ul>
+                   </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center mt-5">
+                <a class="btn btn-inline" href="#" onclick="window.print()">
+                    <i class="icofont-print"></i>
+                    <span>طباعة الفاتورة</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

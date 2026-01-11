@@ -43,7 +43,7 @@
 .header-top-list li a:hover {
     color: var(--primary);
     /* Lighter blue on hover */
-}
+} 
 
 
 /* Header Main Part */
@@ -379,4 +379,332 @@
 
 .cart-sidebar .product-badges {
     display: none !important; /* Force hide badges in sidebar */
+}
+
+
+/* =========================================
+   PREMIUM USER DROPDOWN (UI/UX)
+   ========================================= */
+
+/* Toggle Button Styling */
+.user-dropdown-toggle {
+    display: flex !important;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.user-dropdown-toggle:hover,
+.user-dropdown-toggle[aria-expanded="true"] {
+    background-color: #f0f7ff;
+    border-color: #e1effe;
+}
+
+.user-dropdown-toggle i {
+    font-size: 16px;
+    color: var(--primary);
+    background: #e6f0fa;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.user-dropdown-toggle span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #444;
+}
+
+/* Dropdown Menu Container */
+.user-dropdown-anim {
+    min-width: 260px;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    padding: 10px;
+    /* Margin removed to avoid Popper.js conflict */
+    animation: dropdownFadeIn 0.2s ease-out;
+    background-color: #ffffff;
+}
+
+/* RTL Adjustment for Transform Origin - Removed as we're not scaling anymore */
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        margin-top: 10px; /* Slide down slightly using margin instead of transform */
+    }
+    to {
+        opacity: 1;
+        margin-top: 0;
+    }
+}
+
+/* User Info Header in Dropdown */
+.user-info-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 12px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #f5f5f5;
+    padding-bottom: 15px;
+}
+
+.user-avatar-placeholder {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary), #1a5c9e);
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    box-shadow: 0 4px 10px rgba(46, 134, 222, 0.3);
+}
+
+.user-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-name {
+    font-weight: 700;
+    color: #333;
+    font-size: 15px;
+}
+
+.user-role {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Dropdown Items */
+.user-dropdown-anim .dropdown-item {
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s ease;
+    margin-bottom: 2px;
+    background: transparent; 
+}
+
+.user-dropdown-anim .dropdown-item i {
+    font-size: 16px;
+    color: #999;
+    width: 20px; 
+    text-align: center;
+    transition: color 0.2s;
+}
+
+.user-dropdown-anim .dropdown-item:hover {
+    background-color: #f7f9fc;
+    color: var(--primary);
+    transform: translateX(-5px); 
+}
+
+.user-dropdown-anim .dropdown-item:hover i {
+    color: var(--primary);
+}
+
+/* ACTIVE PAGE STATE */
+.user-dropdown-anim .dropdown-item.active-page {
+    background-color: #eef6ff; /* Light blue bg */
+    color: var(--primary);
+    font-weight: 700;
+}
+
+.user-dropdown-anim .dropdown-item.active-page i {
+    color: var(--primary);
+}
+
+/* Divider */
+.user-dropdown-anim .dropdown-divider {
+    margin: 8px 0;
+    border-color: #f0f0f0;
+}
+
+/* Logout Item specific */
+.user-dropdown-anim .disconnect-item {
+    color: #e74c3c;
+    width: 100%; 
+    text-align: right;
+    border: none;
+    background: none;
+}
+
+.user-dropdown-anim .disconnect-item i {
+    color: #e74c3c;
+}
+
+.user-dropdown-anim .disconnect-item:hover {
+    background-color: #fff5f5;
+    color: #d63031;
+}
+
+.user-dropdown-anim .disconnect-item:hover i {
+    color: #d63031;
+}
+
+/* Triangle at top */
+.user-dropdown-anim::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20px; 
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    transform: rotate(45deg);
+    border-top: 1px solid #f0f0f0; 
+    border-left: 1px solid #f0f0f0;
+    box-shadow: -2px -2px 5px rgba(0,0,0,0.03); 
+}
+
+[dir="rtl"] .user-dropdown-anim::before {
+    left: auto;
+    right: 20px;
+    border-left: none;
+    border-right: 1px solid #f0f0f0;
+}
+
+
+/* =========================================
+   ACCOUNT SIDEBAR MENU REDESIGN
+   ========================================= */
+
+.account-menu-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05); /* Soft premium shadow */
+    border: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+
+.account-menu-header {
+    padding: 20px;
+    border-bottom: 2px solid #f8f9fa;
+    background-color: #fff;
+}
+
+.account-menu-header h4 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+
+.account-menu-group {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Menu Item */
+.account-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+    border-left: 3px solid transparent; /* Highlight marker */
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* RTL Adjustment for marker */
+[dir="rtl"] .account-menu-item {
+    border-left: none;
+    border-right: 3px solid transparent;
+}
+
+.account-menu-item:hover {
+    background-color: #f8faff;
+    color: var(--primary);
+    padding-right: 25px; /* Subtle slide effect RTL */
+}
+
+/* LTR flip for slide effect if needed, but assuming RTL primarily based on text */
+
+.account-menu-item.active {
+    background-color: #f0f7ff;
+    color: var(--primary);
+    border-right-color: var(--primary); /* Active marker RTL */
+    font-weight: 700;
+}
+
+.account-menu-item .icon-box {
+    width: 24px;
+    margin-left: 10px;
+    text-align: center;
+    color: #999;
+    font-size: 16px;
+    transition: color 0.2s;
+}
+
+[dir="rtl"] .account-menu-item .icon-box {
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.account-menu-item:hover .icon-box,
+.account-menu-item.active .icon-box {
+    color: var(--primary);
+}
+
+.account-menu-item .text {
+    flex-grow: 1;
+}
+
+/* Section Title */
+.account-menu-section-title {
+    padding: 20px 20px 10px 20px;
+    font-size: 12px;
+    color: #888;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 5px;
+    position: relative;
+    background: #fff; /* Ensure it covers */
+}
+/* Optional divider line above section title */
+.account-menu-section-title::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: #f0f0f0;
+}
+
+/* Logout Button Specifics */
+.account-menu-item.text-danger:hover {
+    background-color: #fff5f5;
+    color: #d63031 !important;
+}
+
+.account-menu-item.text-danger:hover .icon-box {
+    color: #d63031 !important;
+}
+
+.account-menu-item.text-danger .icon-box {
+    color: #e74c3c;
 }

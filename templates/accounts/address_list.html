@@ -1,0 +1,40 @@
+{% extends 'base_account.html' %}
+
+{% block account_title %}إدارة العناوين{% endblock %}
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'accounts:dashboard' %}">حسابي</a></li>
+<li class="breadcrumb-item active" aria-current="page">إدارة العناوين</li>
+{% endblock %}
+
+{% block account_content %}
+<div class="account-card">
+    <div class="account-title">
+        <h4>العناوين المحفوظة</h4>
+        <button class="btn btn-sm btn-primary">إضافة عنوان جديد</button>
+    </div>
+    <div class="account-content">
+        <div class="row">
+            <!-- Example Address Card -->
+            <div class="col-md-6">
+                <div class="card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">المنزل <span class="badge bg-success ms-2">الافتراضي</span></h5>
+                        <p class="card-text text-muted">الرياض، حي الملقا، شارع الملك فهد<br>فيلا 12</p>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a href="#" class="btn btn-sm btn-outline-secondary">تعديل</a>
+                            <a href="#" class="btn btn-sm btn-outline-danger">حذف</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <!-- Empty State if no addresses -->
+            <!-- 
+            <div class="col-12 text-center py-5">
+                <i class="fas fa-map-marked-alt fa-3x text-muted mb-3"></i>
+                <h5>لا توجد عناوين محفوظة</h5>
+            </div> 
+            -->
+        </div>
+    </div>
+</div>
+{% endblock %}

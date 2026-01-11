@@ -122,18 +122,46 @@
                     </a>
                     {% if request.user.is_authenticated %}
                     <div class="dropdown">
-                        <a href="#" class="header-widget dropdown-toggle" data-bs-toggle="dropdown" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+                        <a href="#" class="header-widget dropdown-toggle user-dropdown-toggle" data-bs-toggle="dropdown" data-bs-offset="0,15">
                             <i class="fas fa-user"></i>
-                            <span style="font-size: 14px;">أهلا، {{ request.user.username }}</span>
+                            <span>أهلا، {{ request.user.username }}</span>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">الصفحة الشخصية</a></li>
-                            <li><a class="dropdown-item" href="#">الإعدادات</a></li>
+                        <ul class="dropdown-menu user-dropdown-anim">
+                            <li class="user-info-header">
+                                <div class="user-avatar-placeholder">
+                                    {{ request.user.username|slice:":1"|upper }}
+                                </div>
+                                <div class="user-details">
+                                    <span class="user-name">{{ request.user.username }}</span>
+                                    <span class="user-role">عميل مميز</span>
+                                </div>
+                            </li>
                             <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item {% if request.resolver_match.view_name == 'accounts:dashboard' %}active-page{% endif %}" href="{% url 'accounts:dashboard' %}">
+                                    <i class="fas fa-tachometer-alt"></i> ملخص الحساب
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {% if request.resolver_match.view_name == 'orders:list' %}active-page{% endif %}" href="{% url 'orders:list' %}">
+                                    <i class="fas fa-shopping-basket"></i> طلباتي
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {% if request.resolver_match.view_name == 'orders:pending_list' %}active-page{% endif %}" href="{% url 'orders:pending_list' %}">
+                                    <i class="fas fa-clock"></i> بانتظار الدفع
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item {% if request.resolver_match.view_name == 'accounts:settings' %}active-page{% endif %}" href="{% url 'accounts:settings' %}">
+                                    <i class="fas fa-cog"></i> الإعدادات
+                                </a>
+                            </li>
                             <li>
                                 <form action="{% url 'logout' %}" method="post">
                                     {% csrf_token %}
-                                    <button class="dropdown-item" type="submit">تسجيل الخروج</button>
+                                    <button class="dropdown-item disconnect-item" type="submit"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</button>
                                 </form>
                             </li>
                         </ul>
