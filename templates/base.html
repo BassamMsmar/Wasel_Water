@@ -520,10 +520,6 @@
                     MOBILE-MENU PART START
         =======================================-->
     <div class="mobile-menu">
-        <a href="{% url 'home' %}" title="الرئيسية">
-            <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
-        </a>
         <a href="{% url 'product_list' %}" title="المنتجات">
             <i class="fas fa-cube"></i>
             <span>المنتجات</span>
@@ -531,6 +527,10 @@
         <a href="{% url 'brand_list' %}" title="العلامات التجارية">
             <i class="fas fa-star"></i> <!-- or fa-layer-group -->
             <span>الماركات</span>
+        </a>
+        <a href="{% url 'home' %}" title="الرئيسية">
+            <i class="fas fa-home"></i>
+            <span>الرئيسية</span>
         </a>
         <button class="cart-btn" title="السلة">
             <i class="fas fa-shopping-basket"></i>

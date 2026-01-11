@@ -5338,27 +5338,24 @@ tbody tr td:last-child {
   bottom: 0px;
   left: 0px;
   width: 100%;
-  z-index: 99999;
-  background: #ffffff;
-  border-top: 1px solid #f0f0f0;
-  border-radius: 16px 16px 0px 0px;
-  box-shadow: 0px -5px 25px rgba(0, 0, 0, 0.05); /* Softer shadow */
+  z-index: 3;
+  background: var(--white);
+  border-radius: 10px 10px 0px 0px;
+  -webkit-box-shadow: 0px -5px 15px 0px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px -5px 15px 0px rgba(0, 0, 0, 0.1);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: space-around;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   display: none;
-  /* Safe Area fix */
-  padding-bottom: env(safe-area-inset-bottom, 20px);
-  padding-top: 12px;
-  padding-left: 10px;
-  padding-right: 10px;
-  min-height: 80px; /* Taller menu */
 }
 
 .mobile-menu a,
@@ -5367,20 +5364,19 @@ tbody tr td:last-child {
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
   -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  flex: 1;
-  padding: 5px 0px;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 80px;
+  padding: 8px 0px;
   border-radius: 8px;
   position: relative;
-  background: transparent;
 }
 
 .mobile-menu a:hover,
@@ -5388,37 +5384,30 @@ tbody tr td:last-child {
   background: var(--chalk);
 }
 
-.mobile-menu a i,
-.mobile-menu button i {
-  font-size: 20px;
-  margin-bottom: 6px;
-  color: #999;
-  transition: all 0.3s ease;
-}
-
 .mobile-menu a:hover i,
 .mobile-menu button:hover i {
   color: var(--primary);
-  transform: translateY(-2px);
-}
-
-.mobile-menu a.active i,
-.mobile-menu button.active i {
-  color: var(--primary);
-}
-
-.mobile-menu a span,
-.mobile-menu button span {
-  font-size: 11px;
-  font-weight: 500;
-  line-height: 1;
-  color: #777;
-  text-transform: capitalize;
 }
 
 .mobile-menu a:hover span,
 .mobile-menu button:hover span {
   color: var(--primary);
+}
+
+.mobile-menu a i,
+.mobile-menu button i {
+  font-size: 15px;
+  margin-bottom: 5px;
+  color: var(--text);
+  text-shadow: 2px 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-menu a span,
+.mobile-menu button span {
+  font-size: 10px;
+  line-height: 12px;
+  color: var(--text);
+  text-transform: uppercase;
 }
 
 .mobile-menu a sup,
@@ -5433,7 +5422,7 @@ tbody tr td:last-child {
   border-radius: 50%;
   text-align: center;
   -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
+          transform: translateX(-50%);
   color: var(--white);
   background: var(--primary);
   border: 2px solid var(--green-chalk);
