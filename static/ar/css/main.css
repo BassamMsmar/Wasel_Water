@@ -5395,6 +5395,12 @@ tbody tr td:last-child {
   margin: 0 5px;
 }
 
+/* Keep home button blue even when active */
+.mobile-menu a[href*="home"].active,
+.mobile-menu a[title="الرئيسية"].active {
+  background: linear-gradient(135deg, #2e86de 0%, #1a5c9e 100%) !important;
+}
+
 .mobile-menu a[href*="home"]:active,
 .mobile-menu a[title="الرئيسية"]:active {
   transform: scale(0.95);

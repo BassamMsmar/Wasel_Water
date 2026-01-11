@@ -727,6 +727,25 @@
                 });
             });
             
+            // Initialize Cart Close Buttons (including Continue Shopping)
+            const initCartCloseButtons = () => {
+                const sidebar = document.querySelector('.cart-sidebar');
+                if (sidebar) {
+                    const closeBtns = sidebar.querySelectorAll('.cart-close, .trigger-close-sidebar');
+                    closeBtns.forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            document.body.style.overflow = 'inherit';
+                            sidebar.classList.remove('active');
+                            const backdrop = document.querySelector('.backdrop');
+                            if (backdrop) backdrop.style.display = 'none';
+                        });
+                    });
+                }
+            };
+            
+            // Call on page load
+            initCartCloseButtons();
+            
             // AJAX Add to Cart
             const addToCartBtns = document.querySelectorAll('.product-add, .add-to-cart-btn');
             addToCartBtns.forEach(btn => {
