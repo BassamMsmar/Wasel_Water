@@ -5353,10 +5353,11 @@ tbody tr td:last-child {
   justify-content: space-around;
   display: none;
   padding-bottom: env(safe-area-inset-bottom, 15px);
-  padding-top: 10px;
+  padding-top: 15px;
   padding-left: 5px;
   padding-right: 5px;
-  min-height: 70px;
+  min-height: 75px;
+  border-radius: 20px 20px 0 0;
 }
 
 .mobile-menu a,
@@ -5383,36 +5384,36 @@ tbody tr td:last-child {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Special Floating Home Button */
+/* Special Home Button - Larger but inline */
 .mobile-menu a[href*="home"],
 .mobile-menu a[title="الرئيسية"] {
-  position: relative;
-  transform: translateY(-25px); /* Use transform instead of top */
   background: linear-gradient(135deg, #2e86de 0%, #1a5c9e 100%);
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  box-shadow: 0 8px 20px rgba(46, 134, 222, 0.4);
-  margin: 0 10px;
-  flex: 0 0 60px;
+  border-radius: 16px;
+  padding: 12px 18px;
+  box-shadow: 0 4px 12px rgba(46, 134, 222, 0.3);
+  flex: 1.2;
+  margin: 0 5px;
 }
 
 .mobile-menu a[href*="home"]:active,
 .mobile-menu a[title="الرئيسية"]:active {
-  transform: translateY(-25px) scale(0.95); /* Keep position, only scale */
+  transform: scale(0.95);
 }
 
 .mobile-menu a[href*="home"] i,
 .mobile-menu a[title="الرئيسية"] i {
   color: #ffffff !important;
   font-size: 24px !important;
-  margin-bottom: 0 !important;
+  margin-bottom: 4px !important;
   text-shadow: none !important;
 }
 
 .mobile-menu a[href*="home"] span,
 .mobile-menu a[title="الرئيسية"] span {
-  display: none !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  font-size: 11px !important;
+  display: block !important;
 }
 
 /* Regular Items Hover */
@@ -5472,16 +5473,82 @@ tbody tr td:last-child {
   box-shadow: 0 2px 8px rgba(231, 76, 60, 0.4);
 }
 
-/* Active State */
+/* Active State - Highlight current page */
 .mobile-menu a.active:not([href*="home"]) i,
 .mobile-menu button.active i {
   color: var(--primary);
+  transform: scale(1.1);
 }
 
 .mobile-menu a.active:not([href*="home"]) span,
 .mobile-menu button.active span {
   color: var(--primary);
   font-weight: 700;
+}
+
+.mobile-menu a.active:not([href*="home"]) {
+  background: rgba(46, 134, 222, 0.1);
+}
+
+/* Global Mobile Padding for Bottom Menu */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 100px !important;
+  }
+  
+  /* Ensure content wrapper has space */
+  .inner-section,
+  .profile-part,
+  .account-content {
+    padding-bottom: 20px;
+  }
+  
+  /* Fix for cart buttons and any fixed bottom buttons */
+  .fixed-btn,
+  .cart-fixed-btn,
+  .checkout-btn,
+  [class*="fixed"][class*="bottom"],
+  .btn-group-fixed {
+    bottom: 90px !important;
+    z-index: 9998 !important;
+  }
+  
+  /* Cart Sidebar - Above Bottom Menu */
+  .cart-sidebar,
+  .sidebar-cart,
+  aside[class*="cart"],
+  [class*="cart-aside"],
+  .offcanvas,
+  [class*="sidebar"] {
+    z-index: 10000 !important;
+    bottom: 0 !important;
+  }
+  
+  /* Cart Footer - Space for mobile menu */
+  .cart-footer {
+    padding-bottom: 120px !important;
+    position: relative;
+    z-index: 10001;
+  }
+  
+  /* Cart List - Proper scrolling */
+  .cart-list {
+    max-height: calc(100vh - 300px) !important;
+    overflow-y: auto !important;
+    padding-bottom: 20px !important;
+  }
+  
+  /* Cart Checkout Buttons */
+  .cart-checkout-btn {
+    margin-bottom: 10px !important;
+  }
+  
+  /* Cart overlay/backdrop */
+  .modal-backdrop,
+  .offcanvas-backdrop,
+  [class*="overlay"] {
+    z-index: 9999 !important;
+  }
 }
 
 .mobile-menu a .fas fa-shopping-basket,

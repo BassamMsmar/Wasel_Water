@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'ar/css/dashboard_mobile.css' %}">
+{% endblock %}
+
 {% block content %}
 <section class="inner-section profile-part" style="margin-top: 50px;">
     <div class="container">

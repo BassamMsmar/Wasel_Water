@@ -285,16 +285,23 @@
     margin: 0px 10px 25px;
   }
   
-  /* Fix for floating bottom menu */
-  body {
-    padding-bottom: 0 !important;
-    overflow-x: hidden;
+  /* Fix for floating bottom menu - Comprehensive */
+  main,
+  .wrapper,
+  .inner-section,
+  footer {
+    margin-bottom: 100px !important;
   }
   
-  /* Add space at bottom of page content */
-  .section:last-of-type,
-  .blog-slider,
-  .brand-slider {
-    margin-bottom: 100px !important;
+  /* Ensure last elements have space */
+  .section,
+  .product-part,
+  .blog-part,
+  .brand-part {
+    margin-bottom: 30px !important;
+  }
+  
+  body {
+    overflow-x: hidden;
   }
 }

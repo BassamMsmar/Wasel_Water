@@ -5353,10 +5353,25 @@ tbody tr td:last-child {
   justify-content: space-around;
   display: none;
   padding-bottom: env(safe-area-inset-bottom, 15px);
-  padding-top: 10px;
+  padding-top: 15px;
   padding-left: 5px;
   padding-right: 5px;
   min-height: 70px;
+  border-radius: 20px 20px 0 0;
+}
+
+/* Create notch effect using pseudo-element */
+.mobile-menu::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 30px;
+  background: #ffffff;
+  border-radius: 50% 50% 0 0;
+  box-shadow: 0px -2px 15px rgba(0, 0, 0, 0.05);
 }
 
 .mobile-menu a,
@@ -5383,29 +5398,32 @@ tbody tr td:last-child {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Special Floating Home Button */
+/* Special Floating Home Button - Positioned in notch */
 .mobile-menu a[href*="home"],
 .mobile-menu a[title="الرئيسية"] {
-  position: relative;
-  transform: translateY(-25px); /* Use transform instead of top */
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
   background: linear-gradient(135deg, #2e86de 0%, #1a5c9e 100%);
-  width: 60px;
-  height: 60px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   box-shadow: 0 8px 20px rgba(46, 134, 222, 0.4);
-  margin: 0 10px;
-  flex: 0 0 60px;
+  margin: 0;
+  flex: 0 0 65px;
+  z-index: 10;
 }
 
 .mobile-menu a[href*="home"]:active,
 .mobile-menu a[title="الرئيسية"]:active {
-  transform: translateY(-25px) scale(0.95); /* Keep position, only scale */
+  transform: translateX(-50%) scale(0.95);
 }
 
 .mobile-menu a[href*="home"] i,
 .mobile-menu a[title="الرئيسية"] i {
   color: #ffffff !important;
-  font-size: 24px !important;
+  font-size: 26px !important;
   margin-bottom: 0 !important;
   text-shadow: none !important;
 }
@@ -5482,6 +5500,30 @@ tbody tr td:last-child {
 .mobile-menu button.active span {
   color: var(--primary);
   font-weight: 700;
+}
+
+/* Global Mobile Padding for Bottom Menu */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 100px !important;
+  }
+  
+  /* Ensure content wrapper has space */
+  .inner-section,
+  .profile-part,
+  .account-content {
+    padding-bottom: 20px;
+  }
+  
+  /* Fix for cart buttons and any fixed bottom buttons */
+  .fixed-btn,
+  .cart-fixed-btn,
+  .checkout-btn,
+  [class*="fixed"][class*="bottom"],
+  .btn-group-fixed {
+    bottom: 90px !important;
+    z-index: 9998 !important;
+  }
 }
 
 .mobile-menu a .fas fa-shopping-basket,
