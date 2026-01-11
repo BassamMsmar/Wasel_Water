@@ -5338,11 +5338,12 @@ tbody tr td:last-child {
   bottom: 0px;
   left: 0px;
   width: 100%;
-  z-index: 3;
-  background: var(--white);
-  border-radius: 10px 10px 0px 0px;
-  -webkit-box-shadow: 0px -5px 15px 0px rgba(0, 0, 0, 0.1);
-  box-shadow: 0px -5px 15px 0px rgba(0, 0, 0, 0.1);
+  z-index: 99999; /* Ensure top most */
+  background: #ffffff; /* Explicit white */
+  border-top: 1px solid var(--border);
+  border-radius: 15px 15px 0px 0px;
+  -webkit-box-shadow: 0px -4px 20px 0px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px -4px 20px 0px rgba(0, 0, 0, 0.1);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5351,11 +5352,15 @@ tbody tr td:last-child {
   align-items: center;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+  justify-content: space-around;
   display: none;
+  /* Safe Area fix */
+  padding-bottom: env(safe-area-inset-bottom, 20px);
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  height: auto;
+  min-height: 75px; 
 }
 
 .mobile-menu a,
@@ -5373,10 +5378,11 @@ tbody tr td:last-child {
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
   flex-direction: column;
-  width: 80px;
-  padding: 8px 0px;
+  flex: 1;
+  padding: 5px 0px;
   border-radius: 8px;
   position: relative;
+  background: transparent; /* formatting fix */
 }
 
 .mobile-menu a:hover,

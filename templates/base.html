@@ -516,28 +516,26 @@
                     MOBILE-MENU PART START
         =======================================-->
     <div class="mobile-menu">
-        <a href="index.html" title="Home Page">
+        <a href="{% url 'home' %}" title="الرئيسية">
             <i class="fas fa-home"></i>
-            <span>Home</span>
+            <span>الرئيسية</span>
         </a>
-        <button class="cate-btn" title="Category List">
-            <i class="fas fa-list"></i>
-            <span>category</span>
-        </button>
-        <button class="cart-btn" title="Cartlist">
+        <a href="{% url 'product_list' %}" title="المنتجات">
+            <i class="fas fa-cube"></i>
+            <span>المنتجات</span>
+        </a>
+        <a href="{% url 'brand_list' %}" title="العلامات التجارية">
+            <i class="fas fa-star"></i> <!-- or fa-layer-group -->
+            <span>الماركات</span>
+        </a>
+        <button class="cart-btn" title="السلة">
             <i class="fas fa-shopping-basket"></i>
-            <span>cartlist</span>
-            <sup>9+</sup>
+            <span>السلة</span>
+            <sup class="cart-count">{{ cart|length }}</sup>
         </button>
-        <a href="wishlist.html" title="Wishlist">
-            <i class="fas fa-heart"></i>
-            <span>wishlist</span>
-            <sup>0</sup>
-        </a>
-        <a href="compare.html" title="Compare List">
-            <i class="fas fa-random"></i>
-            <span>compare</span>
-            <sup>0</sup>
+        <a href="{% url 'login' %}" title="حسابي">
+            <i class="fas fa-user"></i>
+            <span>حسابي</span>
         </a>
     </div>
     <!--=====================================
