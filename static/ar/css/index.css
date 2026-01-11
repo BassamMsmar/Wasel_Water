@@ -284,4 +284,24 @@
   .blog-slider .blog-card {
     margin: 0px 10px 25px;
   }
+  
+  /* Fix for floating bottom menu - Comprehensive */
+  main,
+  .wrapper,
+  .inner-section,
+  footer {
+    margin-bottom: 100px !important;
+  }
+  
+  /* Ensure last elements have space */
+  .section,
+  .product-part,
+  .blog-part,
+  .brand-part {
+    margin-bottom: 30px !important;
+  }
+  
+  body {
+    overflow-x: hidden;
+  }
 }

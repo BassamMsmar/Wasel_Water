@@ -284,4 +284,17 @@
   .blog-slider .blog-card {
     margin: 0px 10px 25px;
   }
+  
+  /* Fix for floating bottom menu */
+  body {
+    padding-bottom: 0 !important;
+    overflow-x: hidden;
+  }
+  
+  /* Add space at bottom of page content */
+  .section:last-of-type,
+  .blog-slider,
+  .brand-slider {
+    margin-bottom: 100px !important;
+  }
 }

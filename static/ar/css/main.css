@@ -5387,7 +5387,7 @@ tbody tr td:last-child {
 .mobile-menu a[href*="home"],
 .mobile-menu a[title="الرئيسية"] {
   position: relative;
-  top: -25px;
+  transform: translateY(-25px); /* Use transform instead of top */
   background: linear-gradient(135deg, #2e86de 0%, #1a5c9e 100%);
   width: 60px;
   height: 60px;
@@ -5399,7 +5399,7 @@ tbody tr td:last-child {
 
 .mobile-menu a[href*="home"]:active,
 .mobile-menu a[title="الرئيسية"]:active {
-  transform: scale(0.95);
+  transform: translateY(-25px) scale(0.95); /* Keep position, only scale */
 }
 
 .mobile-menu a[href*="home"] i,
