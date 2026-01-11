@@ -49,20 +49,20 @@
 /* Header Main Part */
 .header-part {
     background-color: var(--white);
-    padding: 20px 0;
+    padding: 15px 0; /* Reduced padding for compact look */
     border-bottom: 1px solid var(--border-color);
     position: relative;
-    z-index: 9999 !important; /* Force Top explicitly */
+    z-index: 1020 !important; 
 }
 
-/* Ensure sticky header (added by JS usually) stays on top */
+/* Ensure sticky header stays on top */
 .header-part.active {
     position: fixed;
     top: 0;
     width: 100%;
     box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.05);
     animation: header_anim 0.3s linear;
-    z-index: 9999 !important;
+    z-index: 1020 !important;
 }
 
 @keyframes header_anim {
@@ -74,105 +74,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px; /* Consistent gap between Logo, Nav, Search, Actions */
 }
 
 .header-logo img {
-    max-height: 50px;
+    max-height: 45px; /* Slightly smaller logo for compact header */
 }
 
-.header-form {
-    flex-grow: 1;
-    max-width: 500px;
-    margin: 0 40px;
-    position: relative;
-}
-
-.header-form input {
-    width: 100%;
-    padding: 12px 20px;
-    padding-left: 50px;
-    /* Space for icon */
-    border: 1px solid var(--border-color);
-    border-radius: 30px;
-    outline: none;
-    transition: border-color 0.3s;
-}
-
-.header-form input:focus {
-    border-color: var(--primary);
-}
-
-.header-form button {
-    position: absolute;
-    left: 15px;
-    /* RTL flip might be needed, assuming LTR logic first */
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: var(--text-light);
-    cursor: pointer;
-}
-
-/* RTL adjustment for form button if dir=rtl */
-[dir="rtl"] .header-form input {
-    padding-left: 20px;
-    padding-right: 50px;
-}
-
-[dir="rtl"] .header-form button {
-    left: auto;
-    right: 15px;
-}
-
-.header-media-group {
-    display: none;
-    /* Hide mobile elements on desktop by default */
-}
-
-.header-widget-group {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.header-widget {
-    color: var(--text-dark);
-    font-size: 20px;
-    position: relative;
-    text-decoration: none;
-}
-
-.header-widget sup {
-    background-color: var(--primary);
-    color: var(--white);
-    font-size: 10px;
-    border-radius: 50%;
-    padding: 2px 6px;
-    position: absolute;
-    top: -8px;
-    right: -10px;
-}
-
-
-/* Navbar Part */
-.navbar-part {
-    background-color: var(--white);
-    padding: 15px 0;
-    /* border-bottom: 1px solid var(--border-color); Optional */
-    position: relative;
-    z-index: 9998; /* Just below header part but high */
-}
-
-.navbar-content {
-    display: flex;
-    justify-content: center;
-    /* Center links as per image? Or right aligned? Image shows right aligned (RTL start) */
-}
-
+/* Merged Navbar List */
 .navbar-list {
     display: flex;
-    gap: 30px;
+    gap: 8px; /* Reduced gap significantly */
     list-style: none;
     margin: 0;
     padding: 0;
@@ -180,12 +92,12 @@
 
 .navbar-link {
     color: var(--text-dark);
-    font-weight: 500;
-    font-size: 16px;
+    font-weight: 600;
+    font-size: 15px; 
     text-decoration: none;
-    padding-bottom: 5px;
-    border-bottom: 2px solid transparent;
+    padding: 10px 8px; /* Adjusted padding */
     transition: all 0.3s;
+    border-bottom: 3px solid transparent; 
 }
 
 .navbar-link.active,
@@ -194,45 +106,203 @@
     border-bottom-color: var(--primary);
 }
 
+/* SEARCH BOX REDESIGN */
+.header-form {
+    flex-grow: 1; 
+    max-width: 450px; 
+    margin: 0 20px;
+    position: relative;
+    
+    /* Container Styling */
+    background-color: #f8f9fa; 
+    border: 1px solid #e1e1e1;
+    border-radius: 50px;
+    height: 44px; /* Fixed height for consistency */
+    display: flex;
+    align-items: center;
+    overflow: hidden; /* Ensures fill stays inside */
+    transition: all 0.3s ease;
+}
+
+.header-form:focus-within {
+    border-color: var(--primary);
+    background-color: #fff;
+    box-shadow: 0 0 0 3px rgba(46, 134, 222, 0.1); /* Soft glow around container */
+}
+
+.header-form input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent; /* Transparent so container bg shows */
+    padding: 0 20px;
+    padding-left: 50px; /* Space for icon LTR */
+    outline: none;
+    font-size: 14px;
+    color: #444;
+}
+
+.header-form button {
+    position: absolute;
+    left: 5px; /* LTR */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--primary);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.header-form button:hover {
+    background-color: rgba(46, 134, 222, 0.1);
+}
+
+/* RTL adjustment for form */
+[dir="rtl"] .header-form input {
+    padding-left: 20px;
+    padding-right: 50px; /* Space for icon RTL */
+}
+
+[dir="rtl"] .header-form button {
+    left: auto;
+    right: 5px;
+}
+
+.header-media-group {
+    display: none;
+}
+
+.header-widget-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Navbar Dropdown Adjustment for Merged Header */
+.navbar-item.dropdown .dropdown-active-marker {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .navbar-item.dropdown {
+        position: relative;
+    }
+    
+    .navbar-item.dropdown .dropdown-menu {
+        display: block; /* We control visibility via opacity for animation */
+        visibility: hidden;
+        opacity: 0;
+        top: 140%; /* Start slightly lower for slide-up effect */
+        left: auto;
+        right: 0; /* Align right for RTL naturally */
+        min-width: 100px; /* Reduced width */
+        padding: 10px;
+        margin-top: 0;
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+        background-color: #fff;
+        transition: all 0.3s ease;
+        text-align: right; /* Force Arabic Alignment */
+    }
+
+    /* Show on hover */
+    .navbar-item.dropdown:hover .dropdown-menu {
+        visibility: visible;
+        opacity: 1;
+        top: 100%;
+    }
+
+    /* Dropdown Items Styling */
+    .navbar-item .dropdown-item {
+        padding: 10px 15px;
+        font-size: 14px;
+        color: #555;
+        border-radius: 8px;
+        transition: all 0.2s;
+        font-weight: 500;
+    }
+
+    .navbar-item .dropdown-item:hover {
+        background-color: #f0f7ff; /* Light primary bg */
+        color: var(--primary);
+        padding-right: 20px; /* Slight slide effect */
+    }
+    
+    .navbar-item .dropdown-divider {
+        margin: 5px 0;
+        border-color: #f0f0f0;
+    }
+
+    /* Little triangle at top */
+    .navbar-item.dropdown .dropdown-menu::before {
+        content: '';
+        position: absolute;
+        top: -6px;
+        right: 20px; /* Position relative to right */
+        width: 12px;
+        height: 12px;
+        background: #fff;
+        transform: rotate(45deg);
+        border-top: 1px solid #f0f0f0; 
+        border-left: 1px solid #f0f0f0; 
+    }
+}
+
 
 /* Mobile Responsive Adjustments */
 @media (max-width: 991px) {
     .header-top {
         display: none;
-        /* Often hidden on mobile or simplified */
+    }
+
+    .navbar-list {
+        display: none; /* Hide desktop nav on mobile */
     }
 
     .header-form {
         display: none;
-        /* Hide desktop search */
     }
 
     .header-widget-group {
         display: none;
-        /* Hide desktop widgets */
     }
 
     .header-media-group {
         display: flex;
-        /* Show mobile icons */
         align-items: center;
-        gap: 15px;
+        width: 100%;
+        justify-content: space-between;
     }
 
-    .navbar-part {
-        display: none;
-        /* Use mobile menu sidebar instead */
-    }
-}
-
-/* Dropdown Hover Effect */
-@media (min-width: 992px) {
-    .navbar-item.dropdown:hover .dropdown-menu {
+    .header-media-group .header-user {
         display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        top: 100% !important;
-        margin-top: 0 !important;
+        width: 40px;
+        height: 40px;
+    }
+    
+    /* Hide the broken cart in the top header on mobile since we have bottom nav */
+    .header-media-group .header-cart {
+        display: none !important; 
+    }
+    
+    /* Ensure only logo and user show nicely */
+    .header-content {
+        gap: 10px;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .header-logo img {
+        max-height: 40px; /* Smaller logo for mobile */
     }
 }
 
@@ -315,6 +385,7 @@
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 

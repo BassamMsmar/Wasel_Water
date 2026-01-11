@@ -2,23 +2,6 @@
 {% load static %}
 
 {% block content %}
-<!--=====================================
-                    BANNER PART START
-=======================================-->
-<section class="inner-section single-banner"
-    style="background: url({% static 'ar/images/single-banner.jpg' %}) no-repeat center">
-    <div class="container">
-        <h2>{{ product.name }}</h2>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{% url 'home' %}">الرئيسية</a></li>
-            <li class="breadcrumb-item"><a href="{% url 'product_list' %}">المنتجات</a></li>
-            <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
-        </ol>
-    </div>
-</section>
-<!--=====================================
-                    BANNER PART END
-=======================================-->
 
 <!--=====================================
                     PRODUCT DETAILS PART START

@@ -146,7 +146,18 @@
         </a>
         <div class="product-widget">
             <a title="Product View" href="#" class="fas fa-eye" data-bs-toggle="modal"
-                data-bs-target="#product-view"></a>
+                data-bs-target="#product-view"
+                data-id="{{ product.id }}"
+                data-name="{{ product.name }}"
+                data-price="{{ product.new_price }}"
+                data-old-price="{{ product.old_price }}"
+                data-image="{{ product.image.url }}"
+                data-desc="{{ product.description|default:'وصف المنتج غير متوفر حالياً' }}"
+                data-sku="{{ product.sku|default:'-' }}"
+                data-brand="{{ product.brand.name|default:'-' }}"
+                data-flag="{{ product.flag|default:'' }}"
+                data-discount="{{ product.discount_percentage|default:0 }}"
+            ></a>
         </div>
     </div>
     <div class="product-content">

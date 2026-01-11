@@ -100,6 +100,35 @@
                     <img src="{{ company_logo }}" alt="logo">
                 </a>
 
+                <!-- MERGED NAVBAR START -->
+                <ul class="navbar-list">
+                    <li class="navbar-item">
+                        <a class="navbar-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                            href="{% url 'home' %}">الرئيسية</a>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="navbar-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}"
+                            href="{% url 'product_list' %}">المنتجات</a>
+                    </li>
+                    <li class="navbar-item dropdown">
+                        <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            العلامات التجارية
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="{% url 'brand_list' %}">الكل</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            {% for brand in brands %}
+                            <li><a class="dropdown-item" href="{% url 'brand_detail' brand.slug %}">{{ brand.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    <li class="navbar-item">
+                        <a class="navbar-link {% if request.resolver_match.url_name == 'bundle_list' %}active{% endif %}"
+                            href="{% url 'bundle_list' %}">الباقات</a>
+                    </li>
+                </ul>
+                <!-- MERGED NAVBAR END -->
+
                 <form class="header-form">
                     <input type="text" placeholder="ابحث هنا...">
                     <button><i class="fas fa-search"></i></button>
@@ -115,6 +144,7 @@
                     </button>
                 </div>
 
+                <!-- ACTIONS WIDGETS -->
                 <div class="header-widget-group">
                     <a href="{% url 'cart:cart_detail' %}" class="header-widget header-cart" title="سلة المشتريات">
                         <i class="fas fa-shopping-cart"></i>
@@ -181,48 +211,6 @@
         =======================================-->
 
 
-    <!--=====================================
-                    NAVBAR PART START
-        =======================================-->
-    <nav class="navbar-part">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="navbar-content">
-                        <ul class="navbar-list">
-                            <li class="navbar-item">
-                                <a class="navbar-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
-                                    href="{% url 'home' %}">الرئيسية</a>
-                            </li>
-                            <li class="navbar-item">
-                                <a class="navbar-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}"
-                                    href="{% url 'product_list' %}">المنتجات</a>
-                            </li>
-                            <li class="navbar-item dropdown">
-                                <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    العلامات التجارية
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{% url 'brand_list' %}">الكل</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                    {% for brand in brands %}
-                                    <li><a class="dropdown-item" href="{% url 'brand_detail' brand.slug %}">{{ brand.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            <li class="navbar-item">
-                                <a class="navbar-link {% if request.resolver_match.url_name == 'bundle_list' %}active{% endif %}"
-                                    href="{% url 'bundle_list' %}">الباقات</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!--=====================================
-                    NAVBAR PART END
-        =======================================-->
 
 
     <!--=====================================
@@ -667,6 +655,8 @@
     <!--=====================================
                     JS LINK PART START
         =======================================-->
+    {% include 'includes/product_view_modal.html' %}
+
     <!-- DELETE CONFIRMATION MODAL -->
     <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">

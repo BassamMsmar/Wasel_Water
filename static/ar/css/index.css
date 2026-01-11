@@ -72,8 +72,14 @@
 
 @media (max-width: 767px) {
   .banner-content h1 {
-    font-size: 38px;
-    line-height: 48px;
+    font-size: 28px; /* Reduced from 38px to fit */
+    line-height: 1.4;
+    word-break: break-word; /* Prevent overflow */
+  }
+
+  .banner-content p {
+    font-size: 14px;
+    margin-bottom: 20px;
   }
 
   .banner-img {
@@ -81,8 +87,16 @@
   }
 
   .banner-btn .btn {
-    margin: 8px;
+    margin: 8px 0;
   }
+}
+
+/* Base Alignment Fix */
+.section-heading {
+    text-align: right !important; /* Force RTL align */
+}
+.section-heading h2 {
+    text-align: right !important;
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
