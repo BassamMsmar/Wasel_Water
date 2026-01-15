@@ -12,9 +12,10 @@
         <li class="cart-item">
             <div class="cart-media">
                 <a href="#">
-                <img src="{{ item.product.image.url }}" alt="product">
-            </a>
-                <button class="cart-delete cart-remove-btn" type="button" data-id="{{ item.product.id }}"><i class="far fa-trash-alt"></i></button>
+                    <img src="{{ item.product.image.url }}" alt="product">
+                </a>
+                <button class="cart-delete cart-remove-btn" type="button" data-id="{{ item.product.id }}"><i
+                        class="far fa-trash-alt"></i></button>
             </div>
             <div class="cart-info-group">
                 <div class="cart-info">
@@ -24,7 +25,9 @@
                 <div class="cart-action-group">
                     <div class="product-action">
                         <button class="action-minus" title="Quantity Minus"><i class="icofont-minus"></i></button>
-                        <input class="action-input" title="Quantity Number" type="text" name="quantity" value="{{ item.quantity }}" data-id="{{ item.product.id }}">
+                        <input class="action-input" title="Quantity Number" type="text" name="quantity"
+                            value="{{ item.quantity }}" data-id="{{ item.product.id }}"
+                            data-type="{{ item.item_type|default:'product' }}">
                         <button class="action-plus" title="Quantity Plus"><i class="icofont-plus"></i></button>
                     </div>
                     <h6>{{ item.total_price }} ر.س</h6>
@@ -40,7 +43,8 @@
             <span class="checkout-label">الذهاب للدفع</span>
             <span class="checkout-price">{{ cart.get_total_price }} ر.س</span>
         </a>
-        <button class="cart-checkout-btn trigger-close-sidebar my-2" style="width: 100%; display: flex; align-items: center; justify-content: center; background: #fff; color: var(--primary); border: 2px solid var(--primary);">
+        <button class="cart-checkout-btn trigger-close-sidebar my-2"
+            style="width: 100%; display: flex; align-items: center; justify-content: center; background: #fff; color: var(--primary); border: 2px solid var(--primary);">
             <span class="checkout-label" style="color: var(--primary); font-weight: bold;">متابعة التسوق</span>
         </button>
     </div>

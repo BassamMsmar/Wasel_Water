@@ -136,12 +136,15 @@ def cart_update(request):
 
         cart_html = render_to_string('cart/partials/sidebar_cart.html', {'cart': cart}, request=request)
         
+        cart_key = f"{item_type}_{product_id}"
+        item_total = cart.cart[cart_key]['price'] * quantity if cart_key in cart.cart else 0
+
         return JsonResponse({
             'qty': len(cart), 
             'message': 'تم تحديث السلة',
             'cart_html': cart_html,
             'total_price': cart.get_total_price(),
-            'item_total': cart.cart[str(product_id)]['price'] * quantity # approximate, better to get from cart item
+            'item_total': item_total
         })
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)

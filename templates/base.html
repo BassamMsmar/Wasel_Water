@@ -725,10 +725,11 @@
     <script src="{% static 'ar/js/accordion.js' %}"></script>
     <script src="{% static 'ar/js/venobox.js' %}"></script>
     <script src="{% static 'ar/js/slick.js' %}"></script>
-    <script src="{% static 'ar/js/main.js' %}?v=5"></script>
+    <script src="{% static 'ar/js/main.js' %}?v=6"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // ... (keep existing dropdown logic) ...
             // Hover effect for Brand Dropdown
             var dropdowns = document.querySelectorAll('.navbar-item.dropdown');
             dropdowns.forEach(function (dropdown) {
@@ -751,13 +752,17 @@
                 });
             });
 
-            // Initialize Cart Close Buttons (including Continue Shopping)
+            // Initialize Cart Close Buttons
             const initCartCloseButtons = () => {
                 const sidebar = document.querySelector('.cart-sidebar');
                 if (sidebar) {
                     const closeBtns = sidebar.querySelectorAll('.cart-close, .trigger-close-sidebar');
                     closeBtns.forEach(btn => {
-                        btn.addEventListener('click', function () {
+                        // Remove old listener to avoid duplicates if re-binding
+                        var newBtn = btn.cloneNode(true);
+                        btn.parentNode.replaceChild(newBtn, btn);
+
+                        newBtn.addEventListener('click', function () {
                             document.body.style.overflow = 'inherit';
                             sidebar.classList.remove('active');
                             const backdrop = document.querySelector('.backdrop');
@@ -818,16 +823,7 @@
                             const sidebar = document.querySelector('.cart-sidebar');
                             if (sidebar && data.cart_html) {
                                 sidebar.innerHTML = data.cart_html;
-
-                                // Re-bind close event for the new content (include standard close button AND custom continue button)
-                                const closeBtns = sidebar.querySelectorAll('.cart-close, .trigger-close-sidebar');
-                                closeBtns.forEach(btn => {
-                                    btn.addEventListener('click', function () {
-                                        document.body.style.overflow = 'inherit';
-                                        sidebar.classList.remove('active');
-                                        document.querySelector('.backdrop').style.display = 'none';
-                                    });
-                                });
+                                initCartCloseButtons(); // Re-bind close buttons
 
                                 // Open Sidebar
                                 document.body.style.overflow = 'hidden';
@@ -835,7 +831,6 @@
                                 const backdrop = document.querySelector('.backdrop');
                                 if (backdrop) {
                                     backdrop.style.display = 'block';
-                                    // Re-bind backdrop click to close
                                     backdrop.onclick = function () {
                                         this.style.display = 'none';
                                         document.body.style.overflow = 'inherit';
@@ -847,7 +842,6 @@
                         .catch(error => {
                             console.error('Error:', error);
                             this.innerHTML = 'خطأ';
-                            // Alert the specific error for debugging
                             alert('حدث خطأ: ' + error.message);
                             setTimeout(() => {
                                 this.innerHTML = originalText;
@@ -857,13 +851,14 @@
                 });
             });
 
-            // AJAX Update Quantity (Sidebar & Cart Page)
-            $(document).on('change', '.action-input', function () {
-                var input = $(this);
-                var productId = input.data('id');
-                var quantity = input.val();
+            // AJAX Update Quantity Function (Global)
+            window.updateCartQuantity = function (productId, quantity, itemType, inputElement) {
+                if (!productId) {
+                    console.error("Missing Product ID");
+                    return;
+                }
 
-                if (!productId) return;
+                if (inputElement) inputElement.prop('disabled', true);
 
                 $.ajax({
                     url: '{% url "cart:cart_update" %}',
@@ -871,9 +866,12 @@
                     data: {
                         'product_id': productId,
                         'quantity': quantity,
+                        'item_type': itemType || 'product',
                         'csrfmiddlewaretoken': '{{ csrf_token }}'
                     },
                     success: function (data) {
+                        if (inputElement) inputElement.prop('disabled', false);
+
                         if (data.error) {
                             alert(data.error);
                             return;
@@ -883,21 +881,31 @@
 
                         // Update Sidebar HTML if present
                         if ($('.cart-sidebar').length && data.cart_html) {
-                            var isSidebarActive = $('.cart-sidebar').hasClass('active');
                             $('.cart-sidebar').html(data.cart_html);
-                            // If sidebar was active and we're on cart page, we might not want to close it or reset validation
-                            // But replacing HTML removes event handlers attached to internal elements? 
-                            // Event delegation $(document).on handles the +/- buttons, so it's fine.
-                            // Close button re-bind might be needed if not delegated.
+                            // Re-bind close buttons
+                            initCartCloseButtons();
                         }
 
                         // If on Cart Page, update totals
                         if (window.location.pathname.includes('/cart/')) {
-                            // Update total price
                             $('.cart-total-price').text(data.total_price + ' ر.س');
                         }
+                    },
+                    error: function (err) {
+                        if (inputElement) inputElement.prop('disabled', false);
+                        console.error("Update Cart Error:", err);
+                        alert("حدث خطأ في التحديث، يرجى المحاولة مرة أخرى.");
                     }
                 });
+            };
+
+            // Event Listener fallback for direct input changes (e.g. typing)
+            $(document).on('change', '.action-input', function () {
+                var input = $(this);
+                var productId = input.data('id');
+                var itemType = input.data('type');
+                var quantity = input.val();
+                window.updateCartQuantity(productId, quantity, itemType, input);
             });
 
             // AJAX Remove Item Logic
