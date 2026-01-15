@@ -4,31 +4,119 @@
 {% block content %}
 
 
+
+<style>
+    @media print {
+
+        /* Hide everything by default */
+        body * {
+            visibility: hidden;
+        }
+
+        /* Hide layout elements explicitly to be safe */
+        header,
+        footer,
+        .header-top,
+        .header-part,
+        .mobile-menu,
+        .category-sidebar,
+        .cart-sidebar,
+        .nav-sidebar,
+        .backdrop,
+        .backtop,
+        .btn,
+        .breadcrumb {
+            display: none !important;
+        }
+
+        /* Show only the invoice section and its children */
+        .invoice-part,
+        .invoice-part * {
+            visibility: visible;
+        }
+
+        /* Position the invoice at the top left */
+        .invoice-part {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            background: white;
+        }
+
+        /* Adjust container widths for print */
+        .container {
+            width: 100% !important;
+            max-width: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        .row {
+            margin: 0 !important;
+        }
+
+        .col-lg-12 {
+            padding: 0 !important;
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        /* Ensure texts are black for printing */
+        h3,
+        h5,
+        h6,
+        p,
+        span,
+        td,
+        th {
+            color: #000 !important;
+        }
+
+        /* Borders for table clarity */
+        table {
+            border: 1px solid #000 !important;
+        }
+
+        th,
+        td {
+            border: 1px solid #000 !important;
+        }
+    }
+</style>
+
 <section class="inner-section invoice-part">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="invoice-header">
                     <div class="invoice-logo">
-                        <img src="{{ company.logo.url }}" alt="logo">
-                        <h3>فاتورة</h3>
+                        {% if company.logo %}
+                        <img src="{{ company.logo.url }}" alt="logo" style="max-height: 80px;">
+                        {% else %}
+                        <h3>{{ company.name|default:"واصِل للمياه" }}</h3>
+                        {% endif %}
+                        <h3 style="margin-top: 10px; border-bottom: 2px solid #ddd; padding-bottom: 10px;">فاتورة ضريبية
+                        </h3>
                     </div>
-                    <div class="invoice-details">
-                        <h6>رقم الطلب: <span>#{{ order.id }}</span></h6>
-                        <h6>تاريخ الطلب: <span>{{ order.created_at|date:"d M Y" }}</span></h6>
-                        <h6>طريقة الدفع: <span>كاش عند الاستلام</span></h6>
-                        <h6>حالة الطلب: <span>{{ order.get_status_display }}</span></h6>
+                    <div class="invoice-details" style="text-align: left;">
+                        <h6>رقم الفاتورة: <span style="font-weight: bold;">#{{ order.id }}</span></h6>
+                        <h6>التاريخ: <span>{{ order.created_at|date:"Y-m-d" }}</span></h6>
+                        <h6>الوقت: <span>{{ order.created_at|date:"H:i" }}</span></h6>
+                        <h6>حالة الدفع: <span class="badge bg-success" style="color: white;">{{ order.get_status_display
+                                }}</span></h6>
                     </div>
                 </div>
-                <div class="invoice-body">
+                <div class="invoice-body"
+                    style="border: 1px solid #eee; padding: 20px; border-radius: 5px; margin-bottom: 20px;">
                     <div class="invoice-address">
-                        <h5>الشحن إلى:</h5>
-                        <p>{{ order.shipping_full_name }}</p>
-                        <p>{{ order.shipping_address }}, {{ order.shipping_city }}</p>
-                        <p>{{ order.shipping_phone }}</p>
-                    </div>
-                    <div class="invoice-address">
-                        <!-- Billing address same as shipping for now -->
+                        <h5 style="border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">بيانات
+                            العميل</h5>
+                        <p><strong>الاسم:</strong> {{ order.shipping_full_name }}</p>
+                        <p><strong>العنوان:</strong> {{ order.shipping_city }} - {{ order.shipping_address }}</p>
+                        <p><strong>الجوال:</strong> {{ order.shipping_phone }}</p>
                     </div>
                 </div>
                 <div class="invoice-table">
@@ -45,11 +133,8 @@
                         <tbody>
                             {% for item in order.items.all %}
                             <tr>
-                                <td>
-                                    <div class="table-product">
-                                        <img src="{{ item.get_image_url }}" alt="product">
-                                        <h6>{{ item.get_name }}</h6>
-                                    </div>
+                                <td style="text-align: right;">
+                                    <h6 style="margin: 0; font-weight: bold;">{{ item.get_name }}</h6>
                                 </td>
                                 <td>عنصر</td>
                                 <td>{{ item.price }} ر.س</td>
@@ -61,14 +146,14 @@
                     </table>
                 </div>
                 <div class="invoice-footer">
-                   <div class="invoice-total">
+                    <div class="invoice-total">
                         <ul>
                             <li><span>الإجمالي الفرعي:</span><span>{{ order.total_price }} ر.س</span></li>
                             <li><span>الشحن:</span><span>0.00 ر.س</span></li>
                             <!-- Tax could be calculated if needed -->
                             <li class="total"><span>الإجمالي الكلي:</span><span>{{ order.total_price }} ر.س</span></li>
                         </ul>
-                   </div>
+                    </div>
                 </div>
             </div>
         </div>
