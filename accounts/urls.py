@@ -1,5 +1,8 @@
 from django.urls import path
-from .views import DashboardView, SettingsView, AddressListView, ProfileView, PaymentMethodsView
+from .views import (
+    DashboardView, SettingsView, AddressListView, ProfileView, PaymentMethodsView,
+    AddressCreateView, AddressUpdateView, AddressDeleteView
+)
 
 app_name = 'accounts'
 
@@ -8,5 +11,8 @@ urlpatterns = [
     path('profile/', ProfileView.as_view(), name='profile_detail'),
     path('settings/', SettingsView.as_view(), name='settings'),
     path('addresses/', AddressListView.as_view(), name='address_list'),
+    path('addresses/add/', AddressCreateView.as_view(), name='address_create'),
+    path('addresses/<int:pk>/edit/', AddressUpdateView.as_view(), name='address_update'),
+    path('addresses/<int:pk>/delete/', AddressDeleteView.as_view(), name='address_delete'),
     path('payment-methods/', PaymentMethodsView.as_view(), name='payment_methods'),
 ]

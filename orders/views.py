@@ -1,5 +1,7 @@
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 from .models import Order
 
 class OrderListView(LoginRequiredMixin, ListView):
@@ -30,3 +32,25 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 
     def get_queryset(self):
          return Order.objects.filter(user=self.request.user)
+
+class PaymentSelectionView(LoginRequiredMixin, DetailView):
+    model = Order
+    template_name = 'orders/payment_selection.html'
+    context_object_name = 'order'
+
+    def get_queryset(self):
+         return Order.objects.filter(user=self.request.user, status='pending')
+
+class CompletePaymentView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        order = get_object_or_404(Order, pk=pk, user=request.user, status='pending')
+        payment_method = request.POST.get('payment_method')
+        
+        if payment_method == 'cod':
+            # Here we might update status to 'processing' or keep 'pending' but mark as confirmed method
+            # For now, let's just show success and go to detail
+            messages.success(request, 'تم اختيار طريقة الدفع بنجاح. سنقوم بتجهيز طلبك.')
+            return redirect('orders:detail', pk=order.pk)
+        
+        messages.error(request, 'طريقة الدفع غير صحيحة')
+        return redirect('orders:payment_selection', pk=order.pk)

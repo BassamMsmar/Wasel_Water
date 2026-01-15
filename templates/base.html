@@ -115,14 +115,18 @@
                             href="{% url 'product_list' %}">المنتجات</a>
                     </li>
                     <li class="navbar-item dropdown">
-                        <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="navbar-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
                             العلامات التجارية
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{% url 'brand_list' %}">الكل</a></li>
-                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             {% for brand in brands %}
-                            <li><a class="dropdown-item" href="{% url 'brand_detail' brand.slug %}">{{ brand.name }}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'brand_detail' brand.slug %}">{{ brand.name }}</a>
+                            </li>
                             {% endfor %}
                         </ul>
                     </li>
@@ -142,9 +146,9 @@
                     <a href="{% url 'login' %}" class="header-user"><img src="{% static 'ar/images/user.png' %}"
                             alt="user"></a>
                     <button class="header-cart" title="Cartlist">
-                        <img src="{% static 'ar/images/cart.png' %}" alt="cart">
+                        <i class="fas fa-shopping-basket" style="font-size: 25px; color: #555;"></i>
                         <!-- Assuming cart icon exists or using font icon -->
-                        <sup>9+</sup>
+                        <sup>{{ cart|length }}</sup>
                     </button>
                 </div>
 
@@ -156,7 +160,8 @@
                     </a>
                     {% if request.user.is_authenticated %}
                     <div class="dropdown">
-                        <a href="#" class="header-widget dropdown-toggle user-dropdown-toggle" data-bs-toggle="dropdown" data-bs-offset="0,15">
+                        <a href="#" class="header-widget dropdown-toggle user-dropdown-toggle" data-bs-toggle="dropdown"
+                            data-bs-offset="0,15">
                             <i class="fas fa-user"></i>
                             <span>أهلا، {{ request.user.username }}</span>
                         </a>
@@ -170,32 +175,41 @@
                                     <span class="user-role">عميل مميز</span>
                                 </div>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item {% if request.resolver_match.view_name == 'accounts:dashboard' %}active-page{% endif %}" href="{% url 'accounts:dashboard' %}">
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item {% if request.resolver_match.view_name == 'accounts:dashboard' %}active-page{% endif %}"
+                                    href="{% url 'accounts:dashboard' %}">
                                     <i class="fas fa-tachometer-alt"></i> ملخص الحساب
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item {% if request.resolver_match.view_name == 'orders:list' %}active-page{% endif %}" href="{% url 'orders:list' %}">
+                                <a class="dropdown-item {% if request.resolver_match.view_name == 'orders:list' %}active-page{% endif %}"
+                                    href="{% url 'orders:list' %}">
                                     <i class="fas fa-shopping-basket"></i> طلباتي
                                 </a>
                             </li>
                             <li>
-                                <a class="dropdown-item {% if request.resolver_match.view_name == 'orders:pending_list' %}active-page{% endif %}" href="{% url 'orders:pending_list' %}">
+                                <a class="dropdown-item {% if request.resolver_match.view_name == 'orders:pending_list' %}active-page{% endif %}"
+                                    href="{% url 'orders:pending_list' %}">
                                     <i class="fas fa-clock"></i> بانتظار الدفع
                                 </a>
                             </li>
-                            <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item {% if request.resolver_match.view_name == 'accounts:settings' %}active-page{% endif %}" href="{% url 'accounts:settings' %}">
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item {% if request.resolver_match.view_name == 'accounts:settings' %}active-page{% endif %}"
+                                    href="{% url 'accounts:settings' %}">
                                     <i class="fas fa-cog"></i> الإعدادات
                                 </a>
                             </li>
                             <li>
                                 <form action="{% url 'logout' %}" method="post">
                                     {% csrf_token %}
-                                    <button class="dropdown-item disconnect-item" type="submit"><i class="fas fa-sign-out-alt"></i> تسجيل خروج</button>
+                                    <button class="dropdown-item disconnect-item" type="submit"><i
+                                            class="fas fa-sign-out-alt"></i> تسجيل خروج</button>
                                 </form>
                             </li>
                         </ul>
@@ -387,7 +401,7 @@
         =======================================-->
     <aside class="nav-sidebar">
         <div class="nav-header">
-            <a href="#"><img src="images/logo.png" alt="logo"></a>
+            <a href="#"><img src="{% static 'ar/images/logo.png' %}" alt="logo"></a>
             <button class="nav-close"><i class="icofont-close"></i></button>
         </div>
         <div class="nav-content">
@@ -520,11 +534,13 @@
                     MOBILE-MENU PART START
         =======================================-->
     <div class="mobile-menu">
-        <a href="{% url 'product_list' %}" title="المنتجات" class="{% if request.resolver_match.url_name == 'product_list' %}active{% endif %}">
+        <a href="{% url 'product_list' %}" title="المنتجات"
+            class="{% if request.resolver_match.url_name == 'product_list' %}active{% endif %}">
             <i class="fas fa-cube"></i>
             <span>المنتجات</span>
         </a>
-        <a href="{% url 'brand_list' %}" title="العلامات التجارية" class="{% if 'brand' in request.path %}active{% endif %}">
+        <a href="{% url 'brand_list' %}" title="العلامات التجارية"
+            class="{% if 'brand' in request.path %}active{% endif %}">
             <i class="fas fa-star"></i>
             <span>الماركات</span>
         </a>
@@ -538,7 +554,8 @@
             <sup class="cart-count">{{ cart|length }}</sup>
         </button>
         {% if request.user.is_authenticated %}
-        <a href="{% url 'accounts:dashboard' %}" title="حسابي" class="{% if 'accounts' in request.path %}active{% endif %}">
+        <a href="{% url 'accounts:dashboard' %}" title="حسابي"
+            class="{% if 'accounts' in request.path %}active{% endif %}">
             <i class="fas fa-user-check"></i>
             <span>حسابي</span>
         </a>
@@ -667,19 +684,26 @@
     {% include 'includes/product_view_modal.html' %}
 
     <!-- DELETE CONFIRMATION MODAL -->
-    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-labelledby="deleteConfirmModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content" style="background-color: #ffffff; border-radius: 20px; border: 0; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
+            <div class="modal-content"
+                style="background-color: #ffffff; border-radius: 20px; border: 0; box-shadow: 0 10px 40px rgba(0,0,0,0.2);">
                 <div class="modal-body text-center p-4">
-                    <div class="mb-3" style="width: 70px; height: 70px; background: #fff5f5; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
+                    <div class="mb-3"
+                        style="width: 70px; height: 70px; background: #fff5f5; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;">
                         <i class="icofont-trash" style="font-size: 32px; color: #ff3838;"></i>
                     </div>
                     <h5 class="mb-2" style="font-weight: 800; color: #000;">حذف المنتج؟</h5>
-                    <p class="mb-4" style="color: #444; font-size: 15px; line-height: 1.6; font-weight: 500;">سيتم إزالة هذا المنتج نهائياً من سلة مشترياتك.</p>
-                    
+                    <p class="mb-4" style="color: #444; font-size: 15px; line-height: 1.6; font-weight: 500;">سيتم إزالة
+                        هذا المنتج نهائياً من سلة مشترياتك.</p>
+
                     <div class="d-flex gap-2 justify-content-center" style="gap: 10px;">
-                        <button type="button" class="btn btn-light flex-grow-1" data-bs-dismiss="modal" style="border-radius: 12px; font-weight: 600; color: #555; background: #f5f5f5; border: 1px solid #eee;">إلغاء</button>
-                        <button type="button" class="btn flex-grow-1" id="confirmDeleteBtn" style="border-radius: 12px; font-weight: 600; background: #ff3838; color: #fff; box-shadow: 0 4px 15px rgba(255, 56, 56, 0.25); border: none;">نعم، احذف</button>
+                        <button type="button" class="btn btn-light flex-grow-1" data-bs-dismiss="modal"
+                            style="border-radius: 12px; font-weight: 600; color: #555; background: #f5f5f5; border: 1px solid #eee;">إلغاء</button>
+                        <button type="button" class="btn flex-grow-1" id="confirmDeleteBtn"
+                            style="border-radius: 12px; font-weight: 600; background: #ff3838; color: #fff; box-shadow: 0 4px 15px rgba(255, 56, 56, 0.25); border: none;">نعم،
+                            احذف</button>
                     </div>
                 </div>
             </div>
@@ -702,7 +726,7 @@
     <script src="{% static 'ar/js/venobox.js' %}"></script>
     <script src="{% static 'ar/js/slick.js' %}"></script>
     <script src="{% static 'ar/js/main.js' %}?v=5"></script>
-    
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Hover effect for Brand Dropdown
@@ -726,14 +750,14 @@
                     }
                 });
             });
-            
+
             // Initialize Cart Close Buttons (including Continue Shopping)
             const initCartCloseButtons = () => {
                 const sidebar = document.querySelector('.cart-sidebar');
                 if (sidebar) {
                     const closeBtns = sidebar.querySelectorAll('.cart-close, .trigger-close-sidebar');
                     closeBtns.forEach(btn => {
-                        btn.addEventListener('click', function() {
+                        btn.addEventListener('click', function () {
                             document.body.style.overflow = 'inherit';
                             sidebar.classList.remove('active');
                             const backdrop = document.querySelector('.backdrop');
@@ -742,18 +766,18 @@
                     });
                 }
             };
-            
+
             // Call on page load
             initCartCloseButtons();
-            
+
             // AJAX Add to Cart
             const addToCartBtns = document.querySelectorAll('.product-add, .add-to-cart-btn');
             addToCartBtns.forEach(btn => {
-                btn.addEventListener('click', function(e) {
+                btn.addEventListener('click', function (e) {
                     e.preventDefault();
-                    
+
                     const productId = this.getAttribute('data-id');
-                    if (!productId) return; 
+                    if (!productId) return;
 
                     const originalText = this.innerHTML;
                     this.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
@@ -767,79 +791,79 @@
                         method: 'POST',
                         body: formData
                     })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.json().then(errData => { throw new Error(errData.error || 'Server Error'); });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if(data.error) throw new Error(data.error);
-                        
-                        // Update Cart Count
-                        document.querySelectorAll('.cart-count').forEach(el => el.textContent = (data.cart_count !== undefined ? data.cart_count : data.qty));
-                        
-                        // Show Success State on Button
-                        this.innerHTML = '<i class="fas fa-check"></i> تم';
-                        this.classList.add('btn-success');
-
-                        // Reset button after 2 seconds
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                            this.style.pointerEvents = 'auto';
-                            this.classList.remove('btn-success');
-                        }, 2000);
-
-                        // Update Sidebar HTML
-                        const sidebar = document.querySelector('.cart-sidebar');
-                        if (sidebar && data.cart_html) {
-                            sidebar.innerHTML = data.cart_html;
-                            
-                            // Re-bind close event for the new content (include standard close button AND custom continue button)
-                            const closeBtns = sidebar.querySelectorAll('.cart-close, .trigger-close-sidebar');
-                            closeBtns.forEach(btn => {
-                                btn.addEventListener('click', function() {
-                                    document.body.style.overflow = 'inherit';
-                                    sidebar.classList.remove('active');
-                                    document.querySelector('.backdrop').style.display = 'none';
-                                });
-                            });
-                            
-                            // Open Sidebar
-                            document.body.style.overflow = 'hidden';
-                            sidebar.classList.add('active');
-                            const backdrop = document.querySelector('.backdrop');
-                            if(backdrop) {
-                                backdrop.style.display = 'block';
-                                // Re-bind backdrop click to close
-                                backdrop.onclick = function() {
-                                    this.style.display = 'none';
-                                    document.body.style.overflow = 'inherit';
-                                    sidebar.classList.remove('active');
-                                };
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(errData => { throw new Error(errData.error || 'Server Error'); });
                             }
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        this.innerHTML = 'خطأ';
-                        // Alert the specific error for debugging
-                        alert('حدث خطأ: ' + error.message);
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                            this.style.pointerEvents = 'auto';
-                        }, 2000);
-                    });
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.error) throw new Error(data.error);
+
+                            // Update Cart Count
+                            document.querySelectorAll('.cart-count').forEach(el => el.textContent = (data.cart_count !== undefined ? data.cart_count : data.qty));
+
+                            // Show Success State on Button
+                            this.innerHTML = '<i class="fas fa-check"></i> تم';
+                            this.classList.add('btn-success');
+
+                            // Reset button after 2 seconds
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                                this.style.pointerEvents = 'auto';
+                                this.classList.remove('btn-success');
+                            }, 2000);
+
+                            // Update Sidebar HTML
+                            const sidebar = document.querySelector('.cart-sidebar');
+                            if (sidebar && data.cart_html) {
+                                sidebar.innerHTML = data.cart_html;
+
+                                // Re-bind close event for the new content (include standard close button AND custom continue button)
+                                const closeBtns = sidebar.querySelectorAll('.cart-close, .trigger-close-sidebar');
+                                closeBtns.forEach(btn => {
+                                    btn.addEventListener('click', function () {
+                                        document.body.style.overflow = 'inherit';
+                                        sidebar.classList.remove('active');
+                                        document.querySelector('.backdrop').style.display = 'none';
+                                    });
+                                });
+
+                                // Open Sidebar
+                                document.body.style.overflow = 'hidden';
+                                sidebar.classList.add('active');
+                                const backdrop = document.querySelector('.backdrop');
+                                if (backdrop) {
+                                    backdrop.style.display = 'block';
+                                    // Re-bind backdrop click to close
+                                    backdrop.onclick = function () {
+                                        this.style.display = 'none';
+                                        document.body.style.overflow = 'inherit';
+                                        sidebar.classList.remove('active');
+                                    };
+                                }
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            this.innerHTML = 'خطأ';
+                            // Alert the specific error for debugging
+                            alert('حدث خطأ: ' + error.message);
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                                this.style.pointerEvents = 'auto';
+                            }, 2000);
+                        });
                 });
             });
 
             // AJAX Update Quantity (Sidebar & Cart Page)
-            $(document).on('change', '.action-input', function() {
+            $(document).on('change', '.action-input', function () {
                 var input = $(this);
                 var productId = input.data('id');
                 var quantity = input.val();
 
-                if(!productId) return;
+                if (!productId) return;
 
                 $.ajax({
                     url: '{% url "cart:cart_update" %}',
@@ -849,14 +873,14 @@
                         'quantity': quantity,
                         'csrfmiddlewaretoken': '{{ csrf_token }}'
                     },
-                    success: function(data) {
-                        if(data.error) {
+                    success: function (data) {
+                        if (data.error) {
                             alert(data.error);
                             return;
                         }
                         // Update Header Count
                         $('.cart-count').text(data.qty);
-                        
+
                         // Update Sidebar HTML if present
                         if ($('.cart-sidebar').length && data.cart_html) {
                             var isSidebarActive = $('.cart-sidebar').hasClass('active');
@@ -866,7 +890,7 @@
                             // Event delegation $(document).on handles the +/- buttons, so it's fine.
                             // Close button re-bind might be needed if not delegated.
                         }
-                        
+
                         // If on Cart Page, update totals
                         if (window.location.pathname.includes('/cart/')) {
                             // Update total price
@@ -880,22 +904,22 @@
             let productToDeleteId = null;
 
             // 1. Trigger Modal
-            $(document).on('click', '.cart-remove-btn', function(e) {
+            $(document).on('click', '.cart-remove-btn', function (e) {
                 e.preventDefault();
                 productToDeleteId = $(this).data('id');
-                if(!productToDeleteId) return;
-                
+                if (!productToDeleteId) return;
+
                 $('#deleteConfirmModal').modal('show');
             });
 
             // 2. Handle Confirm Click
-            $('#confirmDeleteBtn').on('click', function() {
-                if(!productToDeleteId) return;
+            $('#confirmDeleteBtn').on('click', function () {
+                if (!productToDeleteId) return;
                 const btn = this;
                 const productId = btn.getAttribute('data-id');
                 const itemType = btn.getAttribute('data-type') || 'product'; // Default to product
-                if(!productId) return;
-                
+                if (!productId) return;
+
                 // Hide Modal
                 $('#deleteConfirmModal').modal('hide');
 
@@ -907,32 +931,32 @@
                         'item_type': 'product', // TODO: Need to dynamically get type from button
                         'csrfmiddlewaretoken': '{{ csrf_token }}'
                     },
-                    success: function(data) {
+                    success: function (data) {
                         // Update Sidebar HTML if present
                         if ($('.cart-sidebar').length && data.cart_html) {
                             $('.cart-sidebar').html(data.cart_html);
                         }
-                        
+
                         // If on Cart Page
-                         if (window.location.pathname.includes('/cart/')) {
+                        if (window.location.pathname.includes('/cart/')) {
                             // Helper to animate removal
                             const row = $('#cart-row-' + productToDeleteId);
-                            if(row.length) {
-                                row.fadeOut(300, function() { 
-                                    $(this).remove(); 
+                            if (row.length) {
+                                row.fadeOut(300, function () {
+                                    $(this).remove();
                                     // Check if empty
-                                    if($('.table-list tbody tr').length === 0) {
+                                    if ($('.table-list tbody tr').length === 0) {
                                         $('.table-list tbody').html('<tr><td colspan="7" class="text-center">سلة المشتريات فارغة حالياً.</td></tr>');
                                         $('.checkout-process, .checkout-charge').fadeOut();
                                     }
                                 });
                             }
-                            
+
                             // Update totals immediately (data.total_price is already updated from server)
                             $('.cart-total-price').text(data.total_price + ' ر.س');
                         }
                     },
-                    error: function(err) {
+                    error: function (err) {
                         console.error('Error removing item', err);
                     }
                 });

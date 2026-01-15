@@ -12,29 +12,60 @@
         <h4>بيانات الحساب</h4>
     </div>
     <div class="account-content">
-        <form method="post">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group mb-3">
-                        <label class="form-label">الاسم الكامل</label>
-                        <input type="text" class="form-control" value="{{ request.user.first_name }} {{ request.user.last_name }}" placeholder="الاسم هنا">
+                        <label class="form-label">الاسم الأول</label>
+                        <input type="text" name="first_name" class="form-control" value="{{ request.user.first_name }}"
+                            placeholder="الاسم الأول">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">الاسم الأخير</label>
+                        <input type="text" name="last_name" class="form-control" value="{{ request.user.last_name }}"
+                            placeholder="الاسم الأخير">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label class="form-label">البريد الإلكتروني</label>
                         <input type="email" class="form-control" value="{{ request.user.email }}" readonly>
+                        <small class="text-muted">لا يمكن تغيير البريد الإلكتروني</small>
                     </div>
                 </div>
-                <!-- Add more fields as needed -->
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group mb-3">
                         <label class="form-label">رقم الهاتف</label>
-                        <input type="text" class="form-control" placeholder="05xxxxxxxx">
+                        <input type="text" name="phone_number" class="form-control"
+                            value="{{ request.user.customer.phone_number }}" placeholder="05xxxxxxxx">
                     </div>
                 </div>
-                
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">تاريخ الميلاد</label>
+                        <input type="date" name="birth_date" class="form-control"
+                            value="{{ request.user.customer.birth_date|date:'Y-m-d' }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-3">
+                        <label class="form-label">الصورة الشخصية</label>
+                        <input type="file" name="image" class="form-control">
+                        {% if request.user.customer.image %}
+                        <img src="{{ request.user.customer.image.url }}" alt="Profile Image" class="img-thumbnail mt-2"
+                            style="max-height: 100px;">
+                        {% endif %}
+                    </div>
+                </div>
+
                 <div class="col-md-12 text-end">
                     <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
                 </div>
