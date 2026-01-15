@@ -143,6 +143,8 @@
                 </form>
 
                 <div class="header-media-group">
+                    {% block header_actions %}
+                    {% endblock %}
                     <a href="{% url 'login' %}" class="header-user"><img src="{% static 'ar/images/user.png' %}"
                             alt="user"></a>
                     <button class="header-cart" title="Cartlist">

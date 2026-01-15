@@ -5,6 +5,7 @@ from products.models import Product, Bundle
 class Order(models.Model):
     STATUS_CHOICES = (
         ('pending', 'Pending'), # بانتظار الدفع
+        ('processing', 'Processing'), # جاري التجهيز
         ('paid', 'Paid'),     # تم الدفع
         ('shipped', 'Shipped'), # تم الشحن
         ('delivered', 'Delivered'), # تم التوصيل

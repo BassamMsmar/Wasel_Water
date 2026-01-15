@@ -14,7 +14,8 @@ class OrderListView(LoginRequiredMixin, ListView):
         # User requested "Orders (Paid/Old/New)" vs "Pending (Waiting Payment)"
         # So here we exclude pending/cancelled maybe?
         # Let's show all non-pending for "Orders" to be safe, or just "Paid/Shipped/Delivered"
-        return Order.objects.filter(user=self.request.user).exclude(status='pending').exclude(status='cancelled')
+        # Show all orders ordered by newest first
+        return Order.objects.filter(user=self.request.user).order_by('-created_at')
 
 class PendingOrderListView(LoginRequiredMixin, ListView):
     model = Order
@@ -47,8 +48,9 @@ class CompletePaymentView(LoginRequiredMixin, View):
         payment_method = request.POST.get('payment_method')
         
         if payment_method == 'cod':
-            # Here we might update status to 'processing' or keep 'pending' but mark as confirmed method
-            # For now, let's just show success and go to detail
+            # Update status to processing (confirmed but not yet delivered)
+            order.status = 'processing'
+            order.save()
             messages.success(request, 'تم اختيار طريقة الدفع بنجاح. سنقوم بتجهيز طلبك.')
             return redirect('orders:detail', pk=order.pk)
         

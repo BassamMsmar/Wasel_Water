@@ -12,51 +12,91 @@
 <div class="account-card">
     <div class="account-title">
         <h4>{% if is_pending %}قائمة الانتظار{% else %}سجل الطلبات{% endif %} <span>({{ orders|length }})</span></h4>
-        <div class="filter-short" style="width: auto;">
-             <!-- Filter could go here -->
-        </div>
     </div>
     <div class="account-content">
         {% for order in orders %}
-        <div class="orderlist">
-            <div class="orderlist-head">
-                <h5>الطلب #{{ order.id }}</h5>
-                <h5>{{ order.get_status_display }}</h5>
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-white border-bottom-0 pt-3 pb-0">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                    <div>
+                        <h5 class="mb-0 fw-bold">الطلب #{{ order.id }}</h5>
+                        <small class="text-muted">{{ order.created_at|date:"d M Y, h:i A" }}</small>
+                    </div>
+                    <div>
+                        <span class="badge rounded-pill 
+                            {% if order.status == 'pending' %}bg-warning text-dark
+                            {% elif order.status == 'processing' %}bg-primary
+                            {% elif order.status == 'completed' %}bg-success
+                            {% else %}bg-secondary{% endif %}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </div>
+                </div>
             </div>
-            <div class="orderlist-body pb-0">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <ul class="orderlist-inventory">
-                                        {% for item in order.items.all|slice:":3" %}
-                                        <li>
-                                            <img src="{{ item.get_image_url }}" alt="product">
-                                            <small>{{ item.get_name }}</small>
-                                        </li>
-                                        {% endfor %}
-                                        {% if order.items.count > 3 %}
-                                        <li>+{{ order.items.count|add:"-3" }}</li>
-                                        {% endif %}
-                                    </ul>
-                                </td>
-                                <td class="align-middle border-0">{{ order.created_at|date:"d M Y" }}</td>
-                                <td class="align-middle border-0 fw-bold">{{ order.total_price }} ر.س</td>
-                                <td class="align-middle border-0"><a href="{% url 'orders:detail' order.id %}" class="btn btn-sm btn-info text-white">التفاصيل</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <!-- Products Preview -->
+                    <div class="col-md-8 mb-3 mb-md-0">
+                        <div class="d-flex align-items-center flex-wrap gap-2">
+                            {% for item in order.items.all|slice:":4" %}
+                            <div class="position-relative" title="{{ item.get_name }}">
+                                <img src="{{ item.get_image_url }}" alt="product" class="rounded border"
+                                    style="width: 60px; height: 60px; object-fit: contain; padding: 5px;">
+                                <span
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary"
+                                    style="font-size: 0.6rem;">
+                                    x{{ item.quantity }}
+                                </span>
+                            </div>
+                            {% endfor %}
+                            {% if order.items.count > 4 %}
+                            <div class="rounded border d-flex align-items-center justify-content-center bg-light text-muted"
+                                style="width: 60px; height: 60px;">
+                                +{{ order.items.count|add:"-4" }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Total Price -->
+                    <div class="col-md-4 text-md-end">
+                        <p class="text-muted mb-1">الإجمالي</p>
+                        <h5 class="fw-bold text-primary">{{ order.total_price }} ر.س</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white border-top-0 pb-3 pt-0">
+                <div class="d-flex justify-content-end gap-2">
+                    <a href="{% url 'orders:detail' order.id %}" class="btn btn-outline-primary btn-sm">
+                        <i class="fas fa-eye me-1"></i> التفاصيل
+                    </a>
+                    {% if order.status == 'pending' %}
+                    <a href="{% url 'orders:payment_selection' order.id %}" class="btn btn-success btn-sm text-white">
+                        <i class="fas fa-credit-card me-1"></i> إتمام الدفع
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="text-center py-5">
-            <i class="fas fa-shopping-bag fa-3x mb-3 text-muted"></i>
-            <h4>لا توجد طلبات لعرضها</h4>
-            <a href="{% url 'product_list' %}" class="btn btn-primary mt-3">تسوق الآن</a>
+            <div class="mb-3">
+                <i class="fas fa-shopping-basket fa-4x text-muted opacity-50"></i>
+            </div>
+            <h4 class="text-muted">لا توجد طلبات لعرضها حالياً</h4>
+            <a href="{% url 'product_list' %}" class="btn btn-primary mt-3 px-4 rounded-pill">تسوق الآن</a>
         </div>
         {% endfor %}
     </div>
 </div>
+<style>
+    /* Ensure styles are contained */
+    .account-card .card {
+        transition: transform 0.2s;
+    }
+
+    .account-card .card:hover {
+        transform: translateY(-2px);
+    }
+</style>
 {% endblock %}
