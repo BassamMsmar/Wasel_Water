@@ -4,12 +4,12 @@
 //========================================
 //          HEADER SCROLL FIXED
 //========================================
-$(window).on("scroll", function(){
+$(window).on("scroll", function () {
     var scrolling = $(this).scrollTop();
     // console.log(scrolling)
-    if (scrolling > 130){
+    if (scrolling > 130) {
         $(".header-part").addClass("active");
-    }else{
+    } else {
         $(".header-part").removeClass("active");
     }
 });
@@ -18,11 +18,11 @@ $(window).on("scroll", function(){
 //========================================
 //          BACK TO TOP BUTTON
 //========================================
-$(window).on("scroll", function(){
+$(window).on("scroll", function () {
     var scroll = $(this).scrollTop();
-    if(scroll > 1000){
+    if (scroll > 1000) {
         $(".backtop").show();
-    }else{
+    } else {
         $(".backtop").hide();
     }
 });
@@ -32,23 +32,23 @@ $(window).on("scroll", function(){
 //        DROPDOWN MENU FUNCTION
 //========================================
 $(function () {
-    $(".dropdown-link").click(function() {
+    $(".dropdown-link").click(function () {
         $(this).next().toggle();
         $(this).toggleClass('active');
-        if($('.dropdown-list:visible').length > 1) {
+        if ($('.dropdown-list:visible').length > 1) {
             $('.dropdown-list:visible').hide();
             $(this).next().show();
             $('.dropdown-link').removeClass('active');
             $(this).addClass('active');
         }
-    }); 
+    });
 });
 
 
 //========================================
 //       NAV SIDEBAR MENU ACTIVE
 //========================================
-$('.nav-link').on('click', function(){
+$('.nav-link').on('click', function () {
     $('.nav-list li a').removeClass('active');
     $(this).addClass('active');
 });
@@ -57,10 +57,10 @@ $('.nav-link').on('click', function(){
 //========================================
 //        CATEGORY SIDEBAR FUNCTION
 //========================================
-$('.header-cate, .cate-btn').on('click', function(){
+$('.header-cate, .cate-btn').on('click', function () {
     $('body').css('overflow', 'hidden');
     $('.category-sidebar').addClass('active');
-    $('.category-close').on('click', function(){
+    $('.category-close').on('click', function () {
         $('body').css('overflow', 'inherit');
         $('.category-sidebar').removeClass('active');
         $('.backdrop').fadeOut();
@@ -71,10 +71,10 @@ $('.header-cate, .cate-btn').on('click', function(){
 //========================================
 //         NAV SIDEBAR FUNCTION
 //========================================
-$('.header-user').on('click', function(){
+$('.header-user').on('click', function () {
     $('body').css('overflow', 'hidden');
     $('.nav-sidebar').addClass('active');
-    $('.nav-close').on('click', function(){
+    $('.nav-close').on('click', function () {
         $('body').css('overflow', 'inherit');
         $('.nav-sidebar').removeClass('active');
         $('.backdrop').fadeOut();
@@ -85,10 +85,10 @@ $('.header-user').on('click', function(){
 //========================================
 //         CART SIDEBAR FUNCTION
 //========================================
-$('.header-cart, .cart-btn').on('click', function(){
+$('.header-cart, .cart-btn').on('click', function () {
     $('body').css('overflow', 'hidden');
     $('.cart-sidebar').addClass('active');
-    $('.cart-close').on('click', function(){
+    $('.cart-close').on('click', function () {
         $('body').css('overflow', 'inherit');
         $('.cart-sidebar').removeClass('active');
         $('.backdrop').fadeOut();
@@ -99,10 +99,10 @@ $('.header-cart, .cart-btn').on('click', function(){
 //========================================
 //       BACKDROP SIDEBAR FUNCTION
 //========================================
-$('.header-user, .header-cart, .header-cate, .cart-btn, .cate-btn').on('click', function(){
+$('.header-user, .header-cart, .header-cate, .cart-btn, .cate-btn').on('click', function () {
     $('.backdrop').fadeIn();
 
-    $('.backdrop').on('click', function(){
+    $('.backdrop').on('click', function () {
         $(this).fadeOut();
         $('body').css('overflow', 'inherit');
         $('.nav-sidebar').removeClass('active');
@@ -115,7 +115,7 @@ $('.header-user, .header-cart, .header-cate, .cart-btn, .cate-btn').on('click', 
 //========================================
 //       COUPON FORM FUNCTION
 //========================================
-$('.coupon-btn').on('click', function(){
+$('.coupon-btn').on('click', function () {
     $(this).hide();
     $('.coupon-form').css('display', 'flex');
 });
@@ -124,7 +124,7 @@ $('.coupon-btn').on('click', function(){
 //========================================
 //       RESPONSIVE SEARCH BAR
 //========================================
-$('.header-src').on('click', function(){
+$('.header-src').on('click', function () {
     $('.header-form').toggleClass('active');
     $(this).children('.fa-search').toggleClass('fa-times');
 });
@@ -133,30 +133,48 @@ $('.header-src').on('click', function(){
 //========================================
 //       WISH ICON ACTIVE FUNCTION
 //========================================
-$('.wish').on('click', function(){
+$('.wish').on('click', function () {
     $(this).toggleClass('active');
-}); 
+});
 
 
 //========================================
 //      ADD TO CART BUTTON FUNCTION
 //========================================
-$('.product-add').on('click', function(){
-    var productAdd = $(this).next('.product-action');
+// $('.product-add').on('click', function(){
+//     var productAdd = $(this).next('.product-action');
 
-    $(this).hide();
-    productAdd.css('display', 'flex');
-});
+//     $(this).hide();
+//     productAdd.css('display', 'flex');
+// });
 
 
 //========================================
 //      INCREMENT PRODUCT QUANTITY
 //========================================
-$('.action-plus').on('click', function(){
-    var increamentValue = $(this).closest('.product-action').children('.action-input').get(0).value++
-    var actionMinus = $(this).closest('.product-action').children('.action-minus');
+//========================================
+//      INCREMENT PRODUCT QUANTITY
+//========================================
+$(document).on('click', '.action-plus', function (e) {
+    e.preventDefault();
+    var input = $(this).closest('.product-action').children('.action-input');
+    var val = parseInt(input.val());
 
-    if(increamentValue > 0) {
+    // Optimistic UI update
+    var newVal = val + 1;
+    input.val(newVal);
+
+    // Call Global Update
+    var productId = input.data('id');
+    var itemType = input.data('type');
+    if (window.updateCartQuantity) {
+        window.updateCartQuantity(productId, newVal, itemType, input);
+    } else {
+        input.trigger('change');
+    }
+
+    var actionMinus = $(this).closest('.product-action').children('.action-minus');
+    if (newVal > 0) {
         actionMinus.removeAttr('disabled');
     }
 });
@@ -165,11 +183,28 @@ $('.action-plus').on('click', function(){
 //========================================
 //      DECREMENT PRODUCT QUANTITY
 //========================================
-$('.action-minus').on('click', function(){
-    var decrementValue = $(this).closest('.product-action').children('.action-input').get(0).value--
+$(document).on('click', '.action-minus', function (e) {
+    e.preventDefault();
+    var input = $(this).closest('.product-action').children('.action-input');
+    var val = parseInt(input.val());
 
-    if(decrementValue == 2) {
-        $(this).attr('disabled', 'disabled');
+    if (val > 1) {
+        // Optimistic UI update
+        var newVal = val - 1;
+        input.val(newVal);
+
+        // Call Global Update
+        var productId = input.data('id');
+        var itemType = input.data('type');
+        if (window.updateCartQuantity) {
+            window.updateCartQuantity(productId, newVal, itemType, input);
+        } else {
+            input.trigger('change');
+        }
+    }
+
+    if (val - 1 == 1) { // If it was 2 and becomes 1
+        // $(this).attr('disabled', 'disabled'); // Optional: disable minus at 1
     }
 });
 
@@ -177,7 +212,7 @@ $('.action-minus').on('click', function(){
 //========================================
 //         REVIEW WIDGET BUTTON
 //========================================
-$('.review-widget-btn').on('click', function(){
+$('.review-widget-btn').on('click', function () {
     $(this).next('.review-widget-list').toggle();
 });
 
@@ -185,7 +220,7 @@ $('.review-widget-btn').on('click', function(){
 //========================================
 //          COUPON SELECT TEXT
 //========================================
-$('.offer-select').on('click', function(){
+$('.offer-select').on('click', function () {
     $(this).text('Copied!');
 });
 
@@ -201,7 +236,7 @@ $('.modal').on('shown.bs.modal', function (e) {
 //========================================
 //         PROFILE SCHEDULE ACTIVE
 //========================================
-$('.profile-card.schedule').on('click', function(){
+$('.profile-card.schedule').on('click', function () {
     $('.profile-card.schedule').removeClass('active');
     $(this).addClass('active');
 });
@@ -210,7 +245,7 @@ $('.profile-card.schedule').on('click', function(){
 //========================================
 //         PROFILE CONTACT ACTIVE
 //========================================
-$('.profile-card.contact').on('click', function(){
+$('.profile-card.contact').on('click', function () {
     $('.profile-card.contact').removeClass('active');
     $(this).addClass('active');
 });
@@ -219,7 +254,7 @@ $('.profile-card.contact').on('click', function(){
 //========================================
 //          PROFILE ADDESS ACTIVE
 //========================================
-$('.profile-card.address').on('click', function(){
+$('.profile-card.address').on('click', function () {
     $('.profile-card.address').removeClass('active');
     $(this).addClass('active');
 });
@@ -228,7 +263,7 @@ $('.profile-card.address').on('click', function(){
 //========================================
 //         PROFILE PAYMENT ACTIVE
 //========================================
-$('.payment-card.payment').on('click', function(){
+$('.payment-card.payment').on('click', function () {
     $('.payment-card.payment').removeClass('active');
     $(this).addClass('active');
 });

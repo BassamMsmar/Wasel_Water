@@ -3,16 +3,33 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.db.models import Count, Q
 from django.db.models.aggregates import Avg
 # from .tasks import send_emails
-from .models import Product, Brand, Review, ProductImages, Category, Offer
+from .models import Product, Brand, Review, ProductImages, Category, Offer, Bundle
 # Create your views here.
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
 
+
+class BundleList(ListView):
+    model = Bundle
+    queryset = Bundle.objects.all()
+    template_name = 'products/bundle_list.html'
+    paginate_by = 20
+
+
 class ProductList(ListView):
     model = Product
-    queryset = Product.objects.filter(product_type='single')    
     paginate_by = 20
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(product_type='single')
+        query = self.request.GET.get('q')
+        if query:
+            queryset = queryset.filter(
+                Q(name__icontains=query) | 
+                Q(descriptions__icontains=query)
+            )
+        return queryset
     
 
 
@@ -32,13 +49,13 @@ class ProductDetail(DetailView):
 
 class BrandList(ListView):
     model = Brand    #context : object_list, model_list
-    paginate_by = 20
-    queryset = Brand.objects.all()
+    # paginate_by = 20 # User wants all brands and products on one page
+    queryset = Brand.objects.prefetch_related('product_brand').all()
  
 
 class BrandDetail(ListView):
     model = Product     #context : object_list, model_list
-    template_name = 'product/brand_detail.html'
+    template_name = 'products/brand_detail.html'
 
 
     def get_queryset(self):
@@ -49,6 +66,7 @@ class BrandDetail(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["brand"] = Brand.objects.get(slug=self.kwargs['slug'])
+        return context
 
 
 class CategoryList(ListView):
@@ -59,15 +77,16 @@ class CategoryList(ListView):
 
 class CategoryDetail(ListView):
     model = Product     #context : object_list, model_list
-    template_name = 'product/category_detail.html'
+    template_name = 'products/category_detail.html'
 
     def get_queryset(self):
         category = Category.objects.get(slug=self.kwargs['slug'])
-        return super().get_queryset().filter(categories=category) 
+        return super().get_queryset().filter(category=category)  
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["category"] = Category.objects.get(slug=self.kwargs['slug'])
+        return context
 
 
 class OfferList(ListView):
@@ -80,8 +99,5 @@ class OfferDetail(DetailView):
     model = Offer
     queryset = Offer.objects.all()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["offer"] = Offer.objects.get(slug=self.kwargs['slug'])
-        return context
+
 
